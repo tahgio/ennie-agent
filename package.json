@@ -11,6 +11,7 @@
   },
   "scripts": {
     "build": "pnpm -r build",
+    "agent": "pnpm --filter agent start",
     "typecheck": "tsc --build --force && tsc -p packages/mcp-server/tsconfig.test.json && tsc -p packages/agent/tsconfig.test.json",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",

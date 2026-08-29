@@ -115,14 +115,30 @@ async function main(): Promise<number> {
   }
 }
 
+/**
+ * Exit explicitly once teardown has run.
+ *
+ * VoltAgent's observability stack leaves timers and sockets open after a model
+ * call, so a session that actually asked something would otherwise sit idle
+ * forever instead of returning to the shell. `disconnect()` has already run in
+ * main()'s finally by this point, so there is nothing left to wait for.
+ */
+async function exitNow(code: number): Promise<never> {
+  // Let anything already queued on stdout drain before the process goes away.
+  await new Promise<void>((resolve) => {
+    process.stdout.write('', () => resolve())
+  })
+  process.exit(code)
+}
+
 try {
-  process.exitCode = await main()
+  await exitNow(await main())
 } catch (error) {
   if (error instanceof ConfigError) {
     process.stderr.write(`${error.message}\n`)
-    process.exitCode = error.exitCode
+    await exitNow(error.exitCode)
   } else {
     process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`)
-    process.exitCode = 1
+    await exitNow(1)
   }
 }

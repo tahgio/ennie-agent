@@ -83,6 +83,37 @@ describe('structuralScore — capability selection', () => {
   })
 })
 
+describe('structuralScore — client-side tool name prefixes', () => {
+  it('matches tools that arrive namespaced by their MCP server key', () => {
+    // VoltAgent exposes MCP tools as `<serverKey>_<toolName>`, so a real run
+    // records `gbif_summarize_occurrences`. Exact-name matching scored every
+    // run wrong: mustCall never matched, and mustNotCall passed vacuously.
+    const result = structuralScore(
+      record({ toolCalls: [call('gbif_summarize_occurrences', { taxonKey: 2433451 })] }),
+      { mustCall: ['summarize_occurrences'], mustNotCall: ['search_occurrences'] },
+    )
+
+    expect(result.score).toBe(1)
+  })
+
+  it('still catches a forbidden tool when it arrives prefixed', () => {
+    const result = structuralScore(
+      record({ toolCalls: [call('gbif_search_occurrences', { taxonKey: 2433451 })] }),
+      { mustNotCall: ['search_occurrences'] },
+    )
+
+    expect(result.checks.find((c) => c.name.includes('does not call'))?.passed).toBe(false)
+  })
+
+  it('does not match an unrelated tool', () => {
+    const result = structuralScore(record({ toolCalls: [call('gbif_resolve_taxon')] }), {
+      mustCall: ['summarize_occurrences'],
+    })
+
+    expect(result.checks.find((c) => c.name.includes('calls summarize'))?.passed).toBe(false)
+  })
+})
+
 describe('scoreChainCorrectness', () => {
   it('accepts resolving first and reusing the returned key', () => {
     const checks = scoreChainCorrectness(

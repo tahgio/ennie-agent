@@ -17,7 +17,7 @@ import './stdout-guard.js'
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { logger } from './logging.js'
-import { createServer, SERVER_NAME, SERVER_VERSION } from './server.js'
+import { createServer, SERVER_VERSION } from './server.js'
 
 async function main(): Promise<void> {
   const server = createServer()
@@ -33,7 +33,7 @@ async function main(): Promise<void> {
   process.on('SIGTERM', () => shutdown('SIGTERM'))
 
   await server.connect(transport)
-  logger.info({ name: SERVER_NAME, version: SERVER_VERSION }, 'listening on stdio')
+  logger.info({ version: SERVER_VERSION }, 'listening on stdio')
 }
 
 main().catch((error: unknown) => {

@@ -8,8 +8,8 @@
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "start": "node dist/index.js",
-    "eval": "viteval run"
+    "start": "node --env-file-if-exists=../../.env dist/index.js",
+    "eval": "node --env-file-if-exists=../../.env ../../node_modules/viteval/cli.mjs run"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.0",

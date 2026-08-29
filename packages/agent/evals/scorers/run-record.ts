@@ -78,8 +78,20 @@ export function asksForClarification(answer: string): boolean {
   return QUESTION_MARK.test(lastSentence) || QUESTION_MARK.test(trimmed)
 }
 
+/**
+ * Match a tool by its contract name, tolerating a client-side prefix.
+ *
+ * VoltAgent namespaces MCP tools by the server key they came from, so
+ * `resolve_taxon` arrives as `gbif_resolve_taxon`. Matching on exact equality
+ * silently scored every run wrong — `mustCall` never matched, and `mustNotCall`
+ * passed vacuously, so a run that paged through records looked perfect.
+ */
+export function isTool(call: ToolCallRecord, tool: string): boolean {
+  return call.name === tool || call.name.endsWith(`_${tool}`)
+}
+
 export function callsTo(record: RunRecord, tool: string): readonly ToolCallRecord[] {
-  return record.toolCalls.filter((call) => call.name === tool)
+  return record.toolCalls.filter((call) => isTool(call, tool))
 }
 
 /**
@@ -139,9 +151,9 @@ export function scoreChainCorrectness(record: RunRecord): CheckResult[] {
   const checks: CheckResult[] = []
   const occurrenceTools = ['summarize_occurrences', 'search_occurrences']
 
-  const firstResolveIndex = record.toolCalls.findIndex((call) => call.name === 'resolve_taxon')
+  const firstResolveIndex = record.toolCalls.findIndex((call) => isTool(call, 'resolve_taxon'))
   const firstOccurrenceIndex = record.toolCalls.findIndex((call) =>
-    occurrenceTools.includes(call.name),
+    occurrenceTools.some((tool) => isTool(call, tool)),
   )
 
   if (firstOccurrenceIndex !== -1) {
@@ -168,7 +180,10 @@ export function scoreChainCorrectness(record: RunRecord): CheckResult[] {
     if (resolvedFirst) {
       const passedKey = record.toolCalls
         .slice(firstOccurrenceIndex)
-        .some((call) => occurrenceTools.includes(call.name) && call.input.taxonKey !== undefined)
+        .some(
+          (call) =>
+            occurrenceTools.some((tool) => isTool(call, tool)) && call.input.taxonKey !== undefined,
+        )
       checks.push({
         name: 'passes the resolved taxonKey downstream',
         passed: passedKey,
