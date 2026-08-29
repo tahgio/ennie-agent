@@ -1,0 +1,27 @@
+{
+  "name": "agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Interactive CLI biodiversity agent that consumes the GBIF MCP server over stdio",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "start": "node dist/index.js",
+    "eval": "viteval run"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.0",
+    "@ai-sdk/google": "^3.0.0",
+    "@ai-sdk/openai": "^3.0.0",
+    "@ai-sdk/provider-utils": "^4.0.0",
+    "@voltagent/core": "^2.10.0",
+    "@voltagent/logger": "2.0.2",
+    "ai": "^6.0.0",
+    "zod": "^4.5.2"
+  },
+  "devDependencies": {
+    "viteval": "^0.5.9"
+  }
+}

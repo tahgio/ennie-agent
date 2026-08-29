@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Constitution VI: this workflow runs the deterministic suite only.
+# `pnpm test:live` (hits api.gbif.org) and `pnpm eval` (calls models, costs
+# money) are deliberately absent and must stay that way.
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Assert dependency pins hold
+        run: node scripts/check-deps.mjs
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test (unit + protocol, offline)
+        run: pnpm test

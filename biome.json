@@ -1,0 +1,96 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.11/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/node_modules",
+      "!**/coverage",
+      "!**/tests/fixtures",
+      "!pnpm-lock.yaml"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "suspicious": {
+        "noConsole": {
+          "level": "error",
+          "options": {
+            "allow": ["error", "warn"]
+          }
+        }
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "trailingCommas": "all",
+      "arrowParentheses": "always"
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["packages/agent/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "mcp-server": "Constitution VII: the agent talks to the server only over MCP. Launch the built server as a stdio child process instead of importing it."
+                },
+                "patterns": [
+                  {
+                    "group": [
+                      "mcp-server/**",
+                      "**/packages/mcp-server/**",
+                      "../mcp-server/**",
+                      "../../mcp-server/**",
+                      "../../../packages/mcp-server/**"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages/mcp-server/src/index.ts", "packages/agent/src/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["scripts/**", "**/tests/**", "**/evals/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    }
+  ]
+}

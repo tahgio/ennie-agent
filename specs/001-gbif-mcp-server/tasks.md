@@ -32,16 +32,16 @@ pnpm workspace monorepo per [plan.md](./plan.md):
 
 **Purpose**: Workspace, toolchain, and the dependency pins that keep the tree coherent
 
-- [ ] T001 Create the pnpm workspace root: `package.json` (`"type": "module"`, `packageManager`), `pnpm-workspace.yaml` listing `packages/*`, and `.gitignore`
-- [ ] T002 Create the base `tsconfig.json` at repo root with `strict: true`, `noUncheckedIndexedAccess: true`, `module: "nodenext"`, `target: "es2023"` (Constitution IV)
-- [ ] T003 Scaffold `packages/mcp-server/package.json` with deps `@modelcontextprotocol/sdk@^1.30.0`, `zod@^4.5.2`, `pino@^10.3.1` and a `bin` entry pointing at `dist/index.js`
-- [ ] T004 Scaffold `packages/agent/package.json` with deps `@voltagent/core@^2.10.0`, `ai@^6.0.0`, `@ai-sdk/anthropic@^3`, `@ai-sdk/openai@^3`, `@ai-sdk/google@^3`, `zod@^4.5.2` — and **no dependency on `mcp-server`** (Constitution VII, FR-037)
-- [ ] T005 Add a `pnpm.overrides` entry in the root `package.json` pinning a single `zod@^4.5.2` across the workspace (Constitution IV: one Zod version)
-- [ ] T006 [P] Configure Biome in `biome.json` for lint + format, and wire `lint`/`format` scripts in the root `package.json`
-- [ ] T007 [P] Add a Biome/ESLint-style restricted-import rule in `biome.json` forbidding any import of `packages/mcp-server/**` from `packages/agent/**` (mechanical enforcement of Constitution VII)
-- [ ] T008 [P] Add `packages/mcp-server/tsconfig.json` and `packages/agent/tsconfig.json` extending the root config with per-package `outDir`
-- [ ] T009 [P] Configure Vitest in `vitest.config.ts` with three projects — `unit`, `protocol` (both in the default `test` run) and `live` (excluded by default) — per FR-038/FR-040
-- [ ] T010 Add `.github/workflows/ci.yml` running install → typecheck → lint → test → build only, and asserting the resolved `ai` major is 6 (research D4 guards against `ai@latest` being 7.x). CI must **not** run `test:live` or `eval` (FR-040, Constitution VI)
+- [X] T001 Create the pnpm workspace root: `package.json` (`"type": "module"`, `packageManager`), `pnpm-workspace.yaml` listing `packages/*`, and `.gitignore`
+- [X] T002 Create the base `tsconfig.json` at repo root with `strict: true`, `noUncheckedIndexedAccess: true`, `module: "nodenext"`, `target: "es2023"` (Constitution IV)
+- [X] T003 Scaffold `packages/mcp-server/package.json` with deps `@modelcontextprotocol/sdk@^1.30.0`, `zod@^4.5.2`, `pino@^10.3.1` and a `bin` entry pointing at `dist/index.js`
+- [X] T004 Scaffold `packages/agent/package.json` with deps `@voltagent/core@^2.10.0`, `ai@^6.0.0`, `@ai-sdk/anthropic@^3`, `@ai-sdk/openai@^3`, `@ai-sdk/google@^3`, `zod@^4.5.2` — and **no dependency on `mcp-server`** (Constitution VII, FR-037)
+- [X] T005 Add a `pnpm.overrides` entry in the root `package.json` pinning a single `zod@^4.5.2` across the workspace (Constitution IV: one Zod version)
+- [X] T006 [P] Configure Biome in `biome.json` for lint + format, and wire `lint`/`format` scripts in the root `package.json`
+- [X] T007 [P] Add a Biome/ESLint-style restricted-import rule in `biome.json` forbidding any import of `packages/mcp-server/**` from `packages/agent/**` (mechanical enforcement of Constitution VII)
+- [X] T008 [P] Add `packages/mcp-server/tsconfig.json` and `packages/agent/tsconfig.json` extending the root config with per-package `outDir`
+- [X] T009 [P] Configure Vitest in `vitest.config.ts` with three projects — `unit`, `protocol` (both in the default `test` run) and `live` (excluded by default) — per FR-038/FR-040
+- [X] T010 Add `.github/workflows/ci.yml` running install → typecheck → lint → test → build only, and asserting the resolved `ai` major is 6 (research D4 guards against `ai@latest` being 7.x). CI must **not** run `test:live` or `eval` (FR-040, Constitution VI)
 
 **Checkpoint**: `pnpm install`, `pnpm typecheck`, `pnpm lint` all succeed on an empty skeleton
 

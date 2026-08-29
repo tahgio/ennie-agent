@@ -1,0 +1,30 @@
+{
+  "name": "ennie-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "GBIF biodiversity MCP server and CLI agent",
+  "license": "MIT",
+  "packageManager": "pnpm@11.5.1",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "typecheck": "tsc --build --force && tsc -p packages/mcp-server/tsconfig.test.json && tsc -p packages/agent/tsconfig.test.json",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
+    "test": "vitest run --project unit --project protocol",
+    "test:watch": "vitest --project unit --project protocol",
+    "test:live": "vitest run --project live",
+    "eval": "pnpm --filter @ennie/agent eval",
+    "capture-fixtures": "node --experimental-strip-types scripts/capture-fixtures.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.11",
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.11"
+  }
+}

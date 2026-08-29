@@ -1,0 +1,16 @@
+packages:
+  - 'packages/*'
+
+# Constitution IV: exactly one Zod version must resolve across the workspace, or
+# Zod instances stop being mutually recognisable across the MCP SDK / VoltAgent
+# boundary. pnpm 11 reads `overrides` here, not from package.json's `pnpm` field.
+overrides:
+  zod: ^4.5.2
+
+# No third-party install scripts run. protobufjs arrives transitively through
+# @opentelemetry's protobuf exporters, which this project does not use.
+allowBuilds:
+  protobufjs: false
+
+minimumReleaseAgeExclude:
+  - zod@4.5.2
