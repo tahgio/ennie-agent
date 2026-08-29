@@ -12,9 +12,19 @@
  * The map lives in the process and dies with it. Nothing is written to disk,
  * which keeps the spec's "no persistence" exclusion intact.
  */
+import type { ToolErrorFields } from '../errors.js'
 
-/** Negative outcomes are cached too — an unresolvable name gets asked repeatedly. */
-export type CachedOutcome<T> = { readonly ok: true; readonly value: T } | { readonly ok: false }
+/**
+ * Negative outcomes are cached too — an unresolvable name gets asked
+ * repeatedly, and each miss otherwise costs two upstream calls.
+ *
+ * The failure is stored whole rather than as a bare flag, so a repeat of an
+ * ambiguous name is answered with the same candidate list it got the first
+ * time, instead of degrading into a generic "not found".
+ */
+export type CachedOutcome<T> =
+  | { readonly ok: true; readonly value: T }
+  | { readonly ok: false; readonly error: ToolErrorFields }
 
 interface Entry<T> {
   readonly outcome: CachedOutcome<T>
@@ -82,12 +92,9 @@ export class TtlCache<T> {
     this.set(key, { ok: true, value })
   }
 
-  /**
-   * Record that this name does not resolve. Callers ask for the same bad
-   * spelling more than once, and each miss otherwise costs two upstream calls.
-   */
-  setNegative(key: string): void {
-    this.set(key, { ok: false })
+  /** Record why this name does not resolve, preserving the exact failure. */
+  setNegative(key: string, error: ToolErrorFields): void {
+    this.set(key, { ok: false, error })
   }
 
   get size(): number {

@@ -12,6 +12,12 @@
  *
  * The `live` project deliberately does not load this file.
  */
+// The server logs one structured line per tool call to stderr. That is correct
+// behaviour, but it drowns the test reporter, so the suite runs it silent. The
+// stdout-purity test spawns its own child process with LOG_LEVEL set, so the
+// logging path is still exercised.
+process.env.LOG_LEVEL ??= 'silent'
+
 /** `fetch`'s own first parameter type, which is not a global in this tsconfig. */
 type FetchInput = Parameters<typeof fetch>[0]
 

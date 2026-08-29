@@ -2,7 +2,7 @@
   "name": "search-vernacular-nonsense",
   "why": "The fallback finding nothing — NOT_FOUND rather than a guess",
   "request": {
-    "path": "/species/search?q=zzzzqqq%20xxxxyy&qField=VERNACULAR&rank=SPECIES&limit=20"
+    "path": "/species/search?q=Zzzzqqq%20xxxxyy&qField=VERNACULAR&rank=SPECIES&limit=20"
   },
   "response": {
     "status": 200,

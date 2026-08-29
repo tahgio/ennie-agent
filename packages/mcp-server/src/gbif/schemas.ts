@@ -92,7 +92,10 @@ export const GbifNameMatchSchema = z.looseObject({
    * Only ever populated under `verbose=true` (research F2). Homonym candidates
    * exist nowhere else in the API, so FR-005 is unimplementable without it.
    */
-  alternatives: z.array(GbifNameMatchAlternativeSchema).nullish().default([]),
+  alternatives: z
+    .array(GbifNameMatchAlternativeSchema)
+    .nullish()
+    .transform((v) => v ?? []),
 })
 
 /** One vernacular name attached to a species-search result. */
@@ -111,7 +114,10 @@ export const GbifSpeciesSearchResultSchema = z.looseObject({
   rank: nullableString,
   taxonomicStatus: nullableString,
   kingdom: nullableString,
-  vernacularNames: z.array(GbifVernacularNameSchema).nullish().default([]),
+  vernacularNames: z
+    .array(GbifVernacularNameSchema)
+    .nullish()
+    .transform((v) => v ?? []),
 })
 
 export const GbifSpeciesSearchSchema = z.looseObject({
@@ -119,7 +125,10 @@ export const GbifSpeciesSearchSchema = z.looseObject({
     .number()
     .nullish()
     .transform((v) => v ?? 0),
-  results: z.array(GbifSpeciesSearchResultSchema).nullish().default([]),
+  results: z
+    .array(GbifSpeciesSearchResultSchema)
+    .nullish()
+    .transform((v) => v ?? []),
 })
 
 /**
@@ -156,7 +165,10 @@ export const GbifFacetCountSchema = z.looseObject({
 /** Facet `field` values arrive upper-snake: COUNTRY, YEAR, BASIS_OF_RECORD (F6). */
 export const GbifFacetSchema = z.looseObject({
   field: nullableString,
-  counts: z.array(GbifFacetCountSchema).nullish().default([]),
+  counts: z
+    .array(GbifFacetCountSchema)
+    .nullish()
+    .transform((v) => v ?? []),
 })
 
 /** `GET /v1/occurrence/search` — both the paged and the `limit=0` faceted form. */
@@ -177,9 +189,15 @@ export const GbifOccurrenceSearchSchema = z.looseObject({
     .number()
     .nullish()
     .transform((v) => v ?? 0),
-  results: z.array(GbifOccurrenceRecordSchema).nullish().default([]),
+  results: z
+    .array(GbifOccurrenceRecordSchema)
+    .nullish()
+    .transform((v) => v ?? []),
   /** Absent whenever no `facet` parameter was sent, so it defaults rather than failing. */
-  facets: z.array(GbifFacetSchema).nullish().default([]),
+  facets: z
+    .array(GbifFacetSchema)
+    .nullish()
+    .transform((v) => v ?? []),
 })
 
 export type GbifNameMatch = z.infer<typeof GbifNameMatchSchema>

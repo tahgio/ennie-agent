@@ -225,6 +225,12 @@ export class GbifClient {
         this.#assertNotCancelled(request, error)
         this.#assertBudgetRemains(request)
 
+        // Only an abandoned attempt or a genuine transport failure is worth
+        // retrying. `fetch` signals those as an AbortError/TimeoutError or a
+        // TypeError; anything else came from our own code, and retrying it
+        // three times would bury the real cause under a timeout message.
+        if (!isRetryableFetchFailure(error)) throw error
+
         if (attempt >= this.#maxRetries) {
           throw new ToolError({
             code: 'UPSTREAM_TIMEOUT',
@@ -410,6 +416,17 @@ export class GbifClient {
       retryable: true,
     })
   }
+}
+
+/**
+ * `fetch` rejects with a TypeError for a transport-level failure, and with an
+ * AbortError/TimeoutError DOMException when its signal fires. Everything else
+ * reaching this point is a defect rather than a flaky network.
+ */
+function isRetryableFetchFailure(error: unknown): boolean {
+  if (error instanceof TypeError) return true
+  const name = (error as { name?: unknown } | null)?.name
+  return name === 'AbortError' || name === 'TimeoutError'
 }
 
 function cancelled(): ToolError {

@@ -99,20 +99,20 @@ pnpm workspace monorepo per [plan.md](./plan.md):
 
 > Write these first and confirm they fail before implementing
 
-- [ ] T028 [P] [US1] Unit-test the resolution policy in `packages/mcp-server/tests/unit/resolution.test.ts`, asserting the **ordering** from data-model §3: homonym detected before any confidence test, since GBIF reports both a homonym and a total non-match as `matchType: NONE` with `confidence: 100` (research F1, F2)
-- [ ] T029 [P] [US1] Unit-test the vernacular fallback in `packages/mcp-server/tests/unit/vernacular.test.ts`: `nubKey`-null entries discarded, `vernacularNames` verified against the query rather than trusting rank order, and the surviving hit re-resolved through its accepted taxon (research F4 — "polar bear" ranks a sponge first, then a synonym)
-- [ ] T030 [P] [US1] Protocol-test `resolve_taxon` in `packages/mcp-server/tests/protocol/resolve-taxon.test.ts` against every row of [quickstart.md](./quickstart.md) Scenario 4, asserting `isError: true` with actionable text — not thrown exceptions (FR-023)
+- [X] T028 [P] [US1] Unit-test the resolution policy in `packages/mcp-server/tests/unit/resolution.test.ts`, asserting the **ordering** from data-model §3: homonym detected before any confidence test, since GBIF reports both a homonym and a total non-match as `matchType: NONE` with `confidence: 100` (research F1, F2)
+- [X] T029 [P] [US1] Unit-test the vernacular fallback in `packages/mcp-server/tests/unit/vernacular.test.ts`: `nubKey`-null entries discarded, `vernacularNames` verified against the query rather than trusting rank order, and the surviving hit re-resolved through its accepted taxon (research F4 — "polar bear" ranks a sponge first, then a synonym)
+- [X] T030 [P] [US1] Protocol-test `resolve_taxon` in `packages/mcp-server/tests/protocol/resolve-taxon.test.ts` against every row of [quickstart.md](./quickstart.md) Scenario 4, asserting `isError: true` with actionable text — not thrown exceptions (FR-023)
 
 ### Implementation for User Story 1
 
-- [ ] T031 [P] [US1] Implement `matchName()` in `packages/mcp-server/src/gbif/species.ts` calling `/v1/species/match` **always with `verbose=true`** — homonym candidates exist nowhere else (research F2, FR-005)
-- [ ] T032 [P] [US1] Implement `searchVernacular()` in `packages/mcp-server/src/gbif/species.ts` calling `/v1/species/search?qField=VERNACULAR`
-- [ ] T033 [US1] Implement the resolution policy in `packages/mcp-server/src/domain/resolution.ts` in the exact order from data-model §3, mapping to `ResolvedTaxon` with `taxonKey` set to the **accepted** key (`acceptedUsageKey` for synonyms — using `usageKey` silently under-counts downstream) (research F5, FR-003)
-- [ ] T034 [US1] Implement the vernacular fallback path in `packages/mcp-server/src/domain/resolution.ts` per data-model §3, reached only when the scientific match fails or falls below 90 (FR-001, clarification Q1)
-- [ ] T035 [US1] Wire the resolution cache from T016 into `packages/mcp-server/src/domain/resolution.ts`, recording hit/miss on every call (FR-030)
-- [ ] T036 [US1] Register `resolve_taxon` in `packages/mcp-server/src/tools/resolve-taxon.ts` with the input schema, `outputSchema`, and the **exact description text** from [contracts/resolve-taxon.md](./contracts/resolve-taxon.md) — the description is prompt surface (FR-019, Constitution I)
-- [ ] T037 [US1] Return `structuredContent` plus a human-readable text block from `packages/mcp-server/src/tools/resolve-taxon.ts`, with every GBIF-omittable field `.nullable()` in the output schema so a valid response cannot become a protocol fault (FR-020, plan D8)
-- [ ] T038 [US1] Map every resolution failure in `packages/mcp-server/src/tools/resolve-taxon.ts` to the `ToolError` rows in [contracts/resolve-taxon.md](./contracts/resolve-taxon.md) — `AMBIGUOUS` must **list the competing candidates with their kingdoms** (FR-005, FR-024)
+- [X] T031 [P] [US1] Implement `matchName()` in `packages/mcp-server/src/gbif/species.ts` calling `/v1/species/match` **always with `verbose=true`** — homonym candidates exist nowhere else (research F2, FR-005)
+- [X] T032 [P] [US1] Implement `searchVernacular()` in `packages/mcp-server/src/gbif/species.ts` calling `/v1/species/search?qField=VERNACULAR`
+- [X] T033 [US1] Implement the resolution policy in `packages/mcp-server/src/domain/resolution.ts` in the exact order from data-model §3, mapping to `ResolvedTaxon` with `taxonKey` set to the **accepted** key (`acceptedUsageKey` for synonyms — using `usageKey` silently under-counts downstream) (research F5, FR-003)
+- [X] T034 [US1] Implement the vernacular fallback path in `packages/mcp-server/src/domain/resolution.ts` per data-model §3, reached only when the scientific match fails or falls below 90 (FR-001, clarification Q1)
+- [X] T035 [US1] Wire the resolution cache from T016 into `packages/mcp-server/src/domain/resolution.ts`, recording hit/miss on every call (FR-030)
+- [X] T036 [US1] Register `resolve_taxon` in `packages/mcp-server/src/tools/resolve-taxon.ts` with the input schema, `outputSchema`, and the **exact description text** from [contracts/resolve-taxon.md](./contracts/resolve-taxon.md) — the description is prompt surface (FR-019, Constitution I)
+- [X] T037 [US1] Return `structuredContent` plus a human-readable text block from `packages/mcp-server/src/tools/resolve-taxon.ts`, with every GBIF-omittable field `.nullable()` in the output schema so a valid response cannot become a protocol fault (FR-020, plan D8)
+- [X] T038 [US1] Map every resolution failure in `packages/mcp-server/src/tools/resolve-taxon.ts` to the `ToolError` rows in [contracts/resolve-taxon.md](./contracts/resolve-taxon.md) — `AMBIGUOUS` must **list the competing candidates with their kingdoms** (FR-005, FR-024)
 
 **Checkpoint**: `resolve_taxon` works end to end over a real MCP client. Shippable on its own — it turns colloquial names into authoritative classifications.
 

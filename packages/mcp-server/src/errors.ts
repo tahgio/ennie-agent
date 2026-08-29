@@ -52,8 +52,10 @@ export interface ToolErrorFields {
 
 /** The shape a tool returns on a recoverable failure. */
 export interface ToolErrorResult {
-  readonly isError: true
-  readonly content: ReadonlyArray<{ readonly type: 'text'; readonly text: string }>
+  isError: true
+  content: Array<{ type: 'text'; text: string }>
+  /** The SDK's result type carries an index signature; this matches it. */
+  [key: string]: unknown
 }
 
 export class ToolError extends Error implements ToolErrorFields {

@@ -95,7 +95,7 @@ const CASES: readonly FixtureCase[] = [
   },
   {
     name: 'search-vernacular-nonsense',
-    path: '/species/search?q=zzzzqqq%20xxxxyy&qField=VERNACULAR&rank=SPECIES&limit=20',
+    path: '/species/search?q=Zzzzqqq%20xxxxyy&qField=VERNACULAR&rank=SPECIES&limit=20',
     why: 'The fallback finding nothing — NOT_FOUND rather than a guess',
   },
 

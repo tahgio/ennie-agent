@@ -16,6 +16,7 @@ import type { ResolvedTaxon } from './domain/resolution.js'
 import { TtlCache } from './gbif/cache.js'
 import { GbifClient } from './gbif/client.js'
 import { SERVER_INSTRUCTIONS } from './instructions.js'
+import { registerResolveTaxon } from './tools/resolve-taxon.js'
 
 export const SERVER_NAME = 'gbif-mcp-server'
 export const SERVER_VERSION = '0.1.0'
@@ -42,9 +43,10 @@ export interface ToolContext {
  * Registration is a separate function so each user story adds exactly one line
  * here as it lands, and the protocol tests can see the full surface at once.
  */
-function registerTools(_context: ToolContext): void {
-  // Tools are registered here as each story lands (US1 -> US3), and the
-  // species_distribution_report prompt with US5.
+function registerTools(context: ToolContext): void {
+  registerResolveTaxon(context)
+  // Remaining tools are registered here as each story lands (US2, US3), and
+  // the species_distribution_report prompt with US5.
 }
 
 export function createServer(options: CreateServerOptions = {}): McpServer {
