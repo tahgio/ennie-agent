@@ -1,0 +1,18 @@
+{
+  "name": "match-none-nonsense",
+  "why": "F1: matchType NONE arriving at confidence 100. A confidence-first check accepts this.",
+  "request": {
+    "path": "/species/match?name=Zzzzqqq%20xxxxyy&verbose=true"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "confidence": 100,
+      "matchType": "NONE",
+      "synonym": false
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

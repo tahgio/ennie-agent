@@ -1,0 +1,14 @@
+{
+  "name": "error-backwards-year",
+  "why": "F9: a backwards year range is an upstream 400",
+  "request": {
+    "path": "/occurrence/search?taxonKey=2433451&year=2010,2000&limit=1"
+  },
+  "response": {
+    "status": 400,
+    "contentType": "text/plain",
+    "json": null,
+    "text": "Invalid range: (2010,2000)"
+  },
+  "capturedAt": "2026-08-29"
+}

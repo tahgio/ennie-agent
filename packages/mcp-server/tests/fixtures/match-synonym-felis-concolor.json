@@ -1,0 +1,38 @@
+{
+  "name": "match-synonym-felis-concolor",
+  "why": "F5: SYNONYM carrying acceptedUsageKey. Using usageKey here under-counts downstream.",
+  "request": {
+    "path": "/species/match?name=Felis%20concolor&verbose=true"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "usageKey": 2435104,
+      "acceptedUsageKey": 2435099,
+      "scientificName": "Felis concolor Linnaeus, 1771",
+      "canonicalName": "Felis concolor",
+      "rank": "SPECIES",
+      "status": "SYNONYM",
+      "confidence": 98,
+      "note": "Similarity: name=110; authorship=0; classification=-2; rank=6; status=0; score=114; singleMatch=5",
+      "matchType": "EXACT",
+      "kingdom": "Animalia",
+      "phylum": "Chordata",
+      "order": "Carnivora",
+      "family": "Felidae",
+      "genus": "Puma",
+      "species": "Puma concolor",
+      "kingdomKey": 1,
+      "phylumKey": 44,
+      "classKey": 359,
+      "orderKey": 732,
+      "familyKey": 9703,
+      "genusKey": 2435098,
+      "speciesKey": 2435099,
+      "class": "Mammalia"
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

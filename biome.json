@@ -73,7 +73,11 @@
       }
     },
     {
-      "includes": ["packages/mcp-server/src/index.ts", "packages/agent/src/**"],
+      "includes": [
+        "packages/mcp-server/src/index.ts",
+        "packages/mcp-server/src/stdout-guard.ts",
+        "packages/agent/src/**"
+      ],
       "linter": {
         "rules": {
           "suspicious": {

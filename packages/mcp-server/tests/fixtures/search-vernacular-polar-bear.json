@@ -1,0 +1,2475 @@
+{
+  "name": "search-vernacular-polar-bear",
+  "why": "F4: ranks a sponge first, so rank order cannot be trusted",
+  "request": {
+    "path": "/species/search?q=polar%20bear&qField=VERNACULAR&rank=SPECIES&limit=20"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "offset": 0,
+      "limit": 20,
+      "endOfRecords": true,
+      "count": 16,
+      "results": [
+        {
+          "key": 121516153,
+          "nameKey": 16352954,
+          "datasetKey": "c33ce2f2-c3cc-43a5-a380-fe4526d63650",
+          "nubKey": 2433451,
+          "parentKey": 121516009,
+          "parent": "Ursus",
+          "phylum": "Chordata",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "phylumKey": 121445866,
+          "genusKey": 121516009,
+          "speciesKey": 121516153,
+          "scientificName": "Ursus maritimus (Phipps, 1774)",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "(Phipps, 1774) ",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 2,
+          "numOccurrences": 0,
+          "taxonID": "52609",
+          "extinct": false,
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "polar bear",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "121445866": "Chordata",
+            "121516009": "Ursus"
+          }
+        },
+        {
+          "key": 137374358,
+          "nameKey": 11148132,
+          "datasetKey": "c33ce2f2-c3cc-43a5-a380-fe4526d63650",
+          "nubKey": 4409348,
+          "parentKey": 121516009,
+          "parent": "Ursus",
+          "acceptedKey": 121516153,
+          "accepted": "Ursus maritimus (Phipps, 1774)",
+          "basionymKey": 121516153,
+          "basionym": "Ursus maritimus (Phipps, 1774)",
+          "phylum": "Chordata",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "phylumKey": 121445866,
+          "genusKey": 121516009,
+          "speciesKey": 121516153,
+          "scientificName": "Thalarctos maritimus (Phipps, 1774)",
+          "canonicalName": "Thalarctos maritimus",
+          "authorship": "(Phipps, 1774) ",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "SYNONYM",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "104037",
+          "extinct": false,
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "polar bear",
+              "language": "eng"
+            }
+          ],
+          "synonym": true,
+          "higherClassificationMap": {
+            "121445866": "Chordata",
+            "121516009": "Ursus",
+            "121516153": "Ursus maritimus"
+          }
+        },
+        {
+          "key": 100696981,
+          "datasetKey": "672aca30-f1b5-43d3-8a2b-c1606125fa1b",
+          "nubKey": 2433451,
+          "parentKey": 100696914,
+          "parent": "Ursus",
+          "kingdom": "Animalia",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 336665008,
+          "classKey": 336665009,
+          "orderKey": 100688735,
+          "familyKey": 100696894,
+          "genusKey": 100696914,
+          "speciesKey": 100696981,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "Phipps 1774",
+          "publishedIn": "Voyage Towards North Pole p.185",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "14000987",
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "100688735": "Carnivora",
+            "100696894": "Ursidae",
+            "100696914": "Ursus",
+            "336665008": "Animalia",
+            "336665009": "Mammalia"
+          },
+          "class": "Mammalia"
+        },
+        {
+          "key": 4409348,
+          "nameKey": 11148132,
+          "datasetKey": "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c",
+          "constituentKey": "19491596-35ae-4a91-9a98-85cf505f1bd3",
+          "nubKey": 4409348,
+          "parentKey": 2433406,
+          "parent": "Ursus",
+          "acceptedKey": 2433451,
+          "accepted": "Ursus maritimus Phipps, 1774",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 1,
+          "phylumKey": 44,
+          "classKey": 359,
+          "orderKey": 732,
+          "familyKey": 9681,
+          "genusKey": 2433406,
+          "speciesKey": 2433451,
+          "scientificName": "Thalarctos maritimus (Phipps, 1774)",
+          "canonicalName": "Thalarctos maritimus",
+          "authorship": "(Phipps, 1774) ",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "HOMOTYPIC_SYNONYM",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "gbif:4409348",
+          "extinct": false,
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "polar bear",
+              "language": "eng"
+            }
+          ],
+          "synonym": true,
+          "higherClassificationMap": {
+            "1": "Animalia",
+            "44": "Chordata",
+            "359": "Mammalia",
+            "732": "Carnivora",
+            "9681": "Ursidae",
+            "2433406": "Ursus",
+            "2433451": "Ursus maritimus"
+          },
+          "class": "Mammalia"
+        },
+        {
+          "key": 104060754,
+          "nameKey": 11658858,
+          "datasetKey": "fab88965-e69d-4491-a04d-e3198b626e52",
+          "parentKey": 104060710,
+          "parent": "Ursus",
+          "kingdom": "Metazoa",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 103832354,
+          "phylumKey": 103882489,
+          "classKey": 104045725,
+          "orderKey": 104059711,
+          "familyKey": 104060672,
+          "genusKey": 104060710,
+          "speciesKey": 104060754,
+          "scientificName": "Ursus maritimus",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "29073",
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "white bear"
+            },
+            {
+              "vernacularName": "polar bear"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "103832354": "Metazoa",
+            "103882489": "Chordata",
+            "104045725": "Mammalia",
+            "104059711": "Carnivora",
+            "104060672": "Ursidae",
+            "104060710": "Ursus"
+          },
+          "class": "Mammalia"
+        },
+        {
+          "key": 116906712,
+          "nameKey": 11658870,
+          "datasetKey": "71667154-257d-4d8e-a2a5-711aaf9b2d74",
+          "nubKey": 2433451,
+          "parentKey": 116906695,
+          "parent": "Ursus",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "classKey": 116891947,
+          "orderKey": 116906073,
+          "familyKey": 116906669,
+          "genusKey": 116906695,
+          "speciesKey": 116906712,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "Phipps, 1774",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "02895922-4a79-45ee-96ca-261b6bb07eb3",
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "Polar bear",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "116891947": "Mammals",
+            "116906073": "Carnivora",
+            "116906669": "Ursidae",
+            "116906695": "Ursus"
+          },
+          "class": "Mammals"
+        },
+        {
+          "key": 299315973,
+          "datasetKey": "7ddf754f-d193-4cc9-b351-99906754a03b",
+          "nubKey": 12188241,
+          "parentKey": 299315971,
+          "parent": "Xestospongia",
+          "kingdom": "Animalia",
+          "phylum": "Porifera",
+          "order": "Haplosclerida",
+          "family": "Petrosiidae",
+          "genus": "Xestospongia",
+          "species": "Xestospongia ursa",
+          "kingdomKey": 296374190,
+          "phylumKey": 302140945,
+          "classKey": 302141011,
+          "orderKey": 302141080,
+          "familyKey": 302141101,
+          "genusKey": 299315971,
+          "speciesKey": 299315973,
+          "scientificName": "Xestospongia ursa Turner & Lonhart, 2023",
+          "canonicalName": "Xestospongia ursa",
+          "authorship": "Turner & Lonhart, 2023",
+          "publishedIn": "Turner, T. L., & Lonhart, S. I. (2023). The Sponges of the Carmel Pinnacles Marine Protected Area. Zootaxa, 5318. https://doi.org/10.11646/zootaxa.5318.2.1",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "BLZJ5",
+          "extinct": false,
+          "habitats": [
+            "MARINE"
+          ],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "Polar Bear Sponge",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "296374190": "Animalia",
+            "299315971": "Xestospongia",
+            "302140945": "Porifera",
+            "302141011": "Demospongiae",
+            "302141080": "Haplosclerida",
+            "302141101": "Petrosiidae"
+          },
+          "class": "Demospongiae"
+        },
+        {
+          "key": 231548345,
+          "datasetKey": "3f0f641c-cd4b-4694-8e47-c47be23ac2a9",
+          "nubKey": 2433451,
+          "parentKey": 336511358,
+          "parent": "Ursus",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 336511257,
+          "phylumKey": 336511258,
+          "classKey": 336511259,
+          "orderKey": 336511260,
+          "familyKey": 336511356,
+          "genusKey": 336511358,
+          "speciesKey": 231548345,
+          "scientificName": "Ursus maritimus Phipps 1774",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "Phipps 1774",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "33C56BBC04781878FB1FDC8DFF0A77CA.taxon",
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [
+            {
+              "description": "Conservation: CITES – Appendix II; IUCN – Lower Risk (cd)."
+            },
+            {
+              "description": "Discussion: Revised by Wilson (1976). Reviewed by DeMaster and Stirling (1981). Placed in subgenus Thalarctos by Gromov and Baranova (1981). U. maritimus is considered the sister species to arctos (Goldman et al., 1989; Shields and Kocher, 1991). Synonyms allocated according to Ellerman and Morrison-Scott (1951) and Hall (1981)."
+            },
+            {
+              "description": "Distribution: Canada, Greenland, USA (Alaska), Russia. Circumpolar in the Arctic, S limits determined by ice pack."
+            },
+            {
+              "description": "Type Locality: \" on the main land of Spitsbergen \" [Norway]."
+            }
+          ],
+          "vernacularNames": [
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "336511257": "Animalia",
+            "336511258": "Chordata",
+            "336511259": "Mammalia",
+            "336511260": "Carnivora",
+            "336511356": "Ursidae",
+            "336511358": "Ursus"
+          },
+          "class": "Mammalia"
+        },
+        {
+          "key": 113393650,
+          "datasetKey": "cbb6498e-8927-405a-916b-576d00a6289b",
+          "parentKey": 144099573,
+          "parent": "Ursus",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "genusKey": 144099573,
+          "speciesKey": 113393650,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "Phipps, 1774",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "24408",
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [
+            {
+              "description": "The polar bear (Ursus maritimus) is a hypercarnivorous bear whose native range lies largely within the Arctic Circle, encompassing the Arctic Ocean, its surrounding seas and surrounding land masses. It is the largest extant bear species, as well as the largest extant land carnivore. A boar (adult male) weighs around 350 –, while a sow (adult female) is about half that size. Although it is the sister species of the brown bear, it has evolved to occupy a narrower ecological niche, with many body characteristics adapted for cold temperatures, for moving across snow, ice and open water, and for hunting seals, which make up most of its diet. Although most polar bears are born on land, they spend most of their time on the sea ice. Their scientific name means \"maritime bear\" and derives from this fact. Polar bears hunt their preferred food of seals from the edge of sea ice, often living off fat reserves when no sea ice is present. Because of their dependence on the sea ice, polar bears are classified as marine mammals. Because of expected habitat loss caused by climate change, the polar bear is classified as a vulnerable species. For decades, large-scale hunting raised international concern for the future of the species, but populations rebounded after controls and quotas began to take effect. For thousands of years, the polar bear has been a key figure in the material, spiritual, and cultural life of circumpolar peoples, and polar bears remain important in their cultures. Historically, the polar bear has also been known as the \"white bear\". It is sometimes referred to as the \"nanook\", based on the Inuit term nanuq."
+            },
+            {
+              "description": "Map from the U.S. Geological Survey shows projected changes in polar bear habitat from 2001 to 2010 and 2041 to 2050. Red areas indicate loss of optimal polar bear habitat; blue areas indicate gain. Polar bear population sizes and trends are difficult to estimate accurately because they occupy remote home ranges and exist at low population densities. Polar bear fieldwork can also be hazardous to researchers. As of 2015, the International Union for Conservation of Nature (IUCN) reports that the global population of polar bears is 22,000 to 31,000, and the current population trend is unknown. Nevertheless, polar bears are listed as \"Vulnerable\" under criterion A3c, which indicates an expected population decrease of ≥30% over the next three generations (~34.5 years) due to \"decline in area of occupancy, extent of occurrence and/or quality of habitat\". Risks to the polar bear include climate change, pollution in the form of toxic contaminants, conflicts with shipping, oil and gas exploration and development, and human-bear interactions including harvesting and possible stresses from recreational polar-bear watching. According to the World Wildlife Fund, the polar bear is important as an indicator of Arctic ecosystem health. Polar bears are studied to gain understanding of what is happening throughout the Arctic, because at-risk polar bears are often a sign of something wrong with the Arctic marine ecosystem.WWF: A Leader in Polar Bear Conservation. Retrieved: 1 August 2015. Climate change The International Union for Conservation of Nature, Arctic Climate Impact Assessment, United States Geological Survey and many leading polar bear biologists have expressed grave concerns about the impact of climate change, with some predicting extinction by 2100. The key danger posed by climate change is malnutrition or starvation due to habitat loss. Polar bears hunt seals from a platform of sea ice. Rising temperatures cause the sea ice to melt earlier in the year, driving the bears to shore before they have built sufficient fat reserves to survive the period of scarce food in the late summer and early fall. Reduction in sea-ice cover also forces bears to swim longer distances, which further depletes their energy stores and occasionally leads to drowning. Thinner sea ice tends to deform more easily, which appears to make it more difficult for polar bears to access seals. Insufficient nourishment leads to lower reproductive rates in adult females and lower survival rates in cubs and juvenile bears, in addition to poorer body condition in bears of all ages. Mothers and cubs have high nutritional requirements, which are not met if the seal-hunting season is too short In addition to creating nutritional stress, a warming climate is expected to affect various other aspects of polar bear life: changes in sea ice affect the ability of pregnant females to build suitable maternity dens. As the distance increases between the pack ice and the coast, females must swim longer distances to reach favoured denning areas on land. Thawing of permafrost would affect the bears who traditionally den underground, and warm winters could result in den roofs collapsing or having reduced insulative value. For the polar bears that currently den on multi-year ice, increased ice mobility may result in longer distances for mothers and young cubs to walk when they return to seal-hunting areas in the spring. Disease-causing bacteria and parasites would flourish more readily in a warmer climate. Problematic interactions between polar bears and humans, such as foraging by bears in garbage dumps, have historically been more prevalent in years when ice-floe breakup occurred early and local polar bears were relatively thin. Increased human-bear interactions, including fatal attacks on humans, are likely to increase as the sea ice shrinks and hungry bears try to find food on land. Starving bear near Svalbard The effects of climate change are most profound in the southern part of the polar bear's range, and this is indeed where significant degradation of local populations has been observed.. The Western Hudson Bay subpopulation, in a southern part of the range, also happens to be one of the best-studied polar bear subpopulations. This subpopulation feeds heavily on ringed seals in late spring, when newly weaned and easily hunted seal pups are abundant. The late spring hunting season ends for polar bears when the ice begins to melt and break up, and they fast or eat little during the summer until the sea freezes again. Due to warming air temperatures, ice-floe breakup in western Hudson Bay is currently occurring three weeks earlier than it did 30 years ago, reducing the duration of the polar bear feeding season. The body condition of polar bears has declined during this period; the average weight of lone (and likely pregnant) female polar bears was approximately 290 kg in 1980 and 230 kg in 2004. Between 1987 and 2004, the Western Hudson Bay population declined by 22%, although the population was listed as \"stable\" as of 2017. As the climate change melts sea ice, the U.S. Geological Survey projects that two-thirds of polar bears will disappear by 2050. In Alaska, the effects of sea ice shrinkage have contributed to higher mortality rates in polar bear cubs, and have led to changes in the denning locations of pregnant females. The proportion of maternity dens on sea ice has changed from 62% between the years 1985 through 1994, to 37% over the years 1998 through 2004. Thus, now the Alaskan population more resembles the world population in that it is more likely to den on land. In recent years, polar bears in the Arctic have undertaken longer than usual swims to find prey, possibly resulting in four recorded drownings in the unusually large ice pack regression of 2005. A new development is that polar bears have begun ranging to new territory. While not unheard of but still uncommon, polar bears have been sighted increasingly in larger numbers ashore, staying on the mainland for longer periods of time during the summer months, particularly in North Canada, traveling farther inland. This may cause an increased reliance on terrestrial diets, such as goose eggs, waterfowl and caribou, as well as increased human–bear conflict. Pollution Polar bears accumulate high levels of persistent organic pollutants such as polychlorinated biphenyl (PCBs) and chlorinated pesticides. Due to their position at the top of the ecological pyramid, with a diet heavy in blubber in which halocarbons concentrate, their bodies are among the most contaminated of Arctic mammals. Halocarbons (also known as organohalogens) are known to be toxic to other animals, because they mimic hormone chemistry, and biomarkers such as immunoglobulin G and retinol suggest similar effects on polar bears. PCBs have received the most study, and they have been associated with birth defects and immune system deficiency. Many chemicals, such as PCBs and DDT, have been internationally banned due to the recognition of their harm on the environment. Their concentrations in polar bear tissues continued to rise for decades after being banned, as these chemicals spread through the food chain. Since then, the trend seems to have abated, with tissue concentrations of PCBs declining between studies performed from 1989 to 1993 and studies performed from 1996 to 2002. During the same time periods, DDT was found to be notably lower in the Western Hudson Bay population only. Oil and gas development Oil and gas development in polar bear habitat can affect the bears in a variety of ways. An oil spill in the Arctic would most likely concentrate in the areas where polar bears and their prey are also concentrated, such as sea ice leads. Because polar bears rely partly on their fur for insulation and soiling of the fur by oil reduces its insulative value, oil spills put bears at risk of dying from hypothermia. Polar bears exposed to oil spill conditions have been observed to lick the oil from their fur, leading to fatal kidney failure. Maternity dens, used by pregnant females and by females with infants, can also be disturbed by nearby oil exploration and development. Disturbance of these sensitive sites may trigger the mother to abandon her den prematurely, or abandon her litter altogether. Predictions Steven Amstrup and other U.S. Geological Survey scientists have predicted two-thirds of the world's polar bears may disappear by 2050, based on moderate projections for the shrinking of summer sea ice caused by climate change, though the validity of this study has been debated. The bears could disappear from Europe, Asia, and Alaska, and be depleted from the Canadian Arctic Archipelago and areas off the northern Greenland coast. By 2080, they could disappear from Greenland entirely and from the northern Canadian coast, leaving only dwindling numbers in the interior Arctic Archipelago. However, in the short term, some polar bear populations in historically colder regions of the Arctic may temporarily benefit from a milder climate, as multiyear ice that is too thick for seals to create breathing holes is replaced by thinner annual ice. Polar bears diverged from brown bears 400,000–600,000 years ago and have survived past periods of climate fluctuation. It has been claimed that polar bears will be able to adapt to terrestrial food sources as the sea ice they use to hunt seals disappears. However, most polar bear biologists think that polar bears will be unable to completely offset the loss of calorie-rich seal blubber with terrestrial foods, and that they will be outcompeted by brown bears in this terrestrial niche, ultimately leading to a population decline. Controversy over species protection Swimming Warnings about the future of the polar bear are often contrasted with the fact that worldwide population estimates have increased over the past 50 years and are relatively stable today. Some estimates of the global population are around 5,000 to 10,000 in the early 1970s; other estimates were 20,000 to 40,000 during the 1980s. Current estimates put the global population at between 20,000 and 25,000 or 22,000 and 31,000. Despite the encouraging rebound of some populations, there is little evidence to suggest polar bears are thriving overall. There are several reasons for the apparent discordance between past and projected population trends: estimates from the 1950s and 1960s were based on stories from explorers and hunters rather than on scientific surveys.Bruemmer, p. 101. In a meeting of the five circumpolar nations on 6 September 1965, estimates of the worldwide population ranged from 5,000 to 19,000. \"The truth was, no one knew... Scientific research had been sketchy and knowledge of the polar bear was based largely on stories brought back by explorers and hunters.\" Second, controls of harvesting were introduced that allowed this previously overhunted species to recover. Third, the recent effects of climate change have affected sea ice abundance in different areas to varying degrees. Debate over the listing of the polar bear under endangered species legislation has put conservation groups and Canada's Inuit at opposing positions; the Nunavut government and many northern residents have condemned the U.S. initiative to list the polar bear under the Endangered Species Act. Many Inuit believe the polar bear population is increasing, and restrictions on commercial sport-hunting are likely to lead to a loss of income to their communities.Northern Research Forum. Polar bear as a resource. A position paper presented for the 3rd NRF Open Meeting in Yellowknife and Rae Edzo, Canada. 15–18 September 2004"
+            },
+            {
+              "description": "Polar bear jumping on fast ice in Spitsbergen Island, Svalbard Archipelago, Norway The polar bear is a marine mammal because it spends many months of the year at sea. However, it is the only living marine mammal with powerful, large limbs and feet that allow them to cover kilometres on foot and run on land. Its preferred habitat is the annual sea ice covering the waters over the continental shelf and the Arctic inter-island archipelagos. These areas, known as the \"Arctic ring of life\", have high biological productivity in comparison to the deep waters of the high Arctic. The polar bear tends to frequent areas where sea ice meets water, such as polynyas and leads (temporary stretches of open water in Arctic ice), to hunt the seals that make up most of its diet. Freshwater is limited in these environments because it is either locked up in snow or saline. Polar bears are able to produce water through the metabolism of fats found in seal blubber, and are therefore found primarily along the perimeter of the polar ice pack, rather than in the Polar Basin close to the North Pole where the density of seals is low.Matthews, p. 15 Annual ice contains areas of water that appear and disappear throughout the year as the weather changes. Seals migrate in response to these changes, and polar bears must follow their prey. In Hudson Bay, James Bay, and some other areas, the ice melts completely each summer (an event often referred to as \"ice-floe breakup\"), forcing polar bears to go onto land and wait through the months until the next freeze-up. In the Chukchi and Beaufort seas, polar bears retreat each summer to the ice further north that remains frozen year-round."
+            },
+            {
+              "description": "Indigenous people Skins of hunted bears Polar bears have long provided important raw materials for Arctic peoples, including the Inuit, Yupik, Chukchi, Nenets, Russian Pomors and others. Hunters commonly used teams of dogs to distract the bear, allowing the hunter to spear the bear or shoot it with arrows at closer range. Almost all parts of captured animals had a use. The fur was used in particular to make trousers and, by the Nenets, to make galoshes-like outer footwear called ; the meat is edible, despite some risk of trichinosis; the fat was used in food and as a fuel for lighting homes, alongside seal and whale blubber; sinews were used as thread for sewing clothes; the gallbladder and sometimes heart were dried and powdered for medicinal purposes; the large canine teeth were highly valued as talismans. Only the liver was not used, as its high concentration of vitamin A is poisonous. As a carnivore, which feeds largely upon fish-eating carnivores, the polar bear ingests large amounts of vitamin A that is stored in their livers. The resulting high concentrations cause hypervitaminosis A, Hunters make sure to either toss the liver into the sea or bury it in order to spare their dogs from potential poisoning. Traditional subsistence hunting was on a small enough scale to not significantly affect polar bear populations, mostly because of the sparseness of the human population in polar bear habitat. History of commercial harvest In Russia, polar bear furs were already being commercially traded in the 14th century, though it was of low value compared to Arctic fox or even reindeer fur. The growth of the human population in the Eurasian Arctic in the 16th and 17th century, together with the advent of firearms and increasing trade, dramatically increased the harvest of polar bears. However, since polar bear fur has always played a marginal commercial role, data on the historical harvest is fragmentary. It is known, for example, that already in the winter of 1784/1785 Russian Pomors on Spitsbergen harvested 150 polar bears in Magdalenefjorden. In the early 20th century, Norwegian hunters were harvesting 300 bears per year at the same location. Estimates of total historical harvest suggest that from the beginning of the 18th century, roughly 400 to 500 animals were being harvested annually in northern Eurasia, reaching a peak of 1,300 to 1,500 animals in the early 20th century, and falling off as the numbers began dwindling. In the first half of the 20th century, mechanized and overpoweringly efficient methods of hunting and trapping came into use in North America as well. Polar bears were chased from snowmobiles, icebreakers, and airplanes, the latter practice described in a 1965 New York Times editorial as being \"about as sporting as machine gunning a cow.\"Bruemmer, pp. 93–111 Norwegians used \"self-killing guns\", comprising a loaded rifle in a baited box that was placed at the level of a bear's head, and which fired when the string attached to the bait was pulled. The numbers taken grew rapidly in the 1960s, peaking around 1968 with a global total of 1,250 bears that year. Contemporary regulations Road sign warning about the presence of bears. The Norwegian text translates into \"Applies to all of Svalbard\". Concerns over the future survival of the species led to the development of national regulations on polar bear hunting, beginning in the mid-1950s. The Soviet Union banned all hunting in 1956. Canada began imposing hunting quotas in 1968. Norway passed a series of increasingly strict regulations from 1965 to 1973, and has completely banned hunting since then. The United States began regulating hunting in 1971 and adopted the Marine Mammal Protection Act in 1972. In 1973, the International Agreement on the Conservation of Polar Bears was signed by all five nations whose territory is inhabited by polar bears: Canada, Denmark, Norway, the Soviet Union, and the United States. Member countries agreed to place restrictions on recreational and commercial hunting, ban hunting from aircraft and icebreakers, and conduct further research.International Agreement on the Conservation of Polar Bears, 15 November 1973, Oslo The treaty allows hunting \"by local people using traditional methods\". Norway is the only country of the five in which all harvest of polar bears is banned. The agreement was a rare case of international cooperation during the Cold War. Biologist Ian Stirling commented, \"For many years, the conservation of polar bears was the only subject in the entire Arctic that nations from both sides of the Iron Curtain could agree upon sufficiently to sign an agreement. Such was the intensity of human fascination with this magnificent predator, the only marine bear.\"Stirling, Ian Foreword in Agreements have been made between countries to co-manage their shared polar bear subpopulations. After several years of negotiations, Russia and the United States signed an agreement in October 2000 to jointly set quotas for indigenous subsistence hunting in Alaska and Chukotka. The treaty was ratified in October 2007. In September 2015, the polar bear range states agreed upon a \"circumpolar action plan\" describing their conservation strategy for polar bears. Although the United States government has proposed that polar bears be transferred to Appendix I of CITES, which would ban all international trade in polar bear parts, polar bears currently remain listed under Appendix II. This decision was approved of by members of the IUCN and TRAFFIC, who determined that such an uplisting was unlikely to confer a conservation benefit. Canada Dogsleds are used for recreational hunting of polar bears in Canada Polar bears were designated \"Not at Risk\" in April 1986 and uplisted to \"Special Concern\" in April 1991. This status was re-evaluated and confirmed in April 1999, November 2002, and April 2008. Polar bears continue to be listed as a species of special concern in Canada because of their sensitivity to overharvest and because of an expected range contraction caused by loss of Arctic sea ice. More than 600 bears are killed per year by humans across Canada, a rate calculated by scientists to be unsustainable for some areas, notably Baffin Bay. Canada has allowed sport hunters accompanied by local guides and dog-sled teams since 1970, but the practice was not common until the 1980s. The guiding of sport hunters provides meaningful employment and an important source of income for northern communities in which economic opportunities are few. Sport hunting can bring CDN$20,000 to $35,000 per bear into northern communities, which until recently has been mostly from American hunters. The territory of Nunavut accounts for the location 80% of annual kills in Canada. In 2005, the government of Nunavut increased the quota from 400 to 518 bears, despite protests from the IUCN Polar Bear Specialist Group. In two areas where harvest levels have been increased based on increased sightings, science-based studies have indicated declining populations, and a third area is considered data-deficient. While most of that quota is hunted by the indigenous Inuit, a growing share is sold to recreational hunters. (0.8% in the 1970s, 7.1% in the 1980s, and 14.6% in the 1990s) Nunavut polar bear biologist, Mitchell Taylor, who was formerly responsible for polar bear conservation in the territory, has insisted that bear numbers are being sustained under current hunting limits. In 2010, the 2005 increase was partially reversed. Government of Nunavut officials announced that the polar bear quota for the Baffin Bay region would be gradually reduced from 105 per year to 65 by 2013. The Government of the Northwest Territories maintain their own quota of 72 to 103 bears within the Inuvialuit communities of which some are set aside for sports hunters. Environment Canada also banned the export from Canada of fur, claws, skulls and other products from polar bears harvested in Baffin Bay as of 1 January 2010. Because of the way polar bear hunting quotas are managed in Canada, attempts to discourage sport hunting would actually increase the number of bears killed in the short term. Canada allocates a certain number of permits each year to sport and subsistence hunting, and those that are not used for sport hunting are re-allocated to indigenous subsistence hunting. Whereas northern communities kill all the polar bears they are permitted to take each year, only half of sport hunters with permits actually manage to kill a polar bear. If a sport hunter does not kill a polar bear before his or her permit expires, the permit cannot be transferred to another hunter. In August 2011, Environment Canada published a national polar bear conservation strategy.National Polar Bear Conservation Strategy for Canada Greenland In Greenland, hunting restrictions were first introduced in 1994 and expanded by executive order in 2005. Until 2005 Greenland placed no limit on hunting by indigenous people. However, in 2006 it imposed a limit of 150, while also allowed recreational hunting for the first time.Rose, Naomi A. (16 February 2006) Hitting Polar Bears When They Are Down. The Humane Society of the United States. Other provisions included year-round protection of cubs and mothers, restrictions on weapons used and various administrative requirements to catalogue kills. Norway Polar bears were hunted heavily in Svalbard, Norway throughout the 19th century and to as recently as 1973, when the conservation treaty was signed. 900 bears a year were harvested in the 1920s and after World War II, there were as many as 400–500 harvested annually. Some regulations of hunting did exist. In 1927, poisoning was outlawed while in 1939, certain denning sights were declared off limits. The killing of females and cubs was made illegal in 1965. Killing of polar bears decreased somewhat 25–30 years before the treaty. Despite this, the polar bear population continued to decline and by 1973, only around 1000 bears were left in Svalbard. Only with the passage of the treaty did they begin to recover. Russia The Soviet Union banned the harvest of polar bears in 1956; however, poaching continued, and is estimated to pose a serious threat to the polar bear population. In recent years, polar bears have approached coastal villages in Chukotka more frequently due to the shrinking of the sea ice, endangering humans and raising concerns that illegal hunting would become even more prevalent. In 2007, the Russian government made subsistence hunting legal for indigenous Chukotkan peoples only, a move supported by Russia's most prominent bear researchers and the World Wide Fund for Nature as a means to curb poaching. Polar bears are currently listed as \"Rare\", of \"Uncertain Status\", or \"Rehabilitated and rehabilitating\" in the Red Data Book of Russia, depending on population. In 2010, the Ministry of Natural Resources and Environment published a strategy for polar bear conservation in Russia. United States The Marine Mammal Protection Act of 1972 afforded polar bears some protection in the United States. It banned hunting (except by indigenous subsistence hunters), banned importing of polar bear parts (except polar bear pelts taken legally in Canada), and banned the harassment of polar bears. On 15 May 2008, the United States Department of the Interior listed the polar bear as a threatened species under the Endangered Species Act, citing the melting of Arctic sea ice as the primary threat to the polar bear. It banned all importing of polar bear trophies. Importing products made from polar bears had been prohibited from 1972 to 1994 under the Marine Mammal Protection Act, and restricted between 1994 and 2008. Under those restrictions, permits from the United States Fish and Wildlife Service were required to import sport-hunted polar bear trophies taken in hunting expeditions in Canada. The permit process required that the bear be taken from an area with quotas based on sound management principles. Since 1994, hundreds of sport-hunted polar bear trophies have been imported into the U.S.\"Support the Polar Bear Protection Act\". The Humane Society of the United States In 2015, the U.S. Fish and Wildlife Service published a draft conservation management plan for polar bears to improve their status under the Endangered Species Act and the Marine Mammal Protection Act.Draft. Polar bear in Denver Zoo."
+            },
+            {
+              "description": "Engraving, made by Chukchi carvers in the 1940s on a walrus tusk, depicts polar bears hunting walrus Indigenous folklore For the indigenous peoples of the Arctic, polar bears have long played an important cultural and material role.Lockwood, pp. 6–9 Polar bear remains have been found at hunting sites dating to 2,500 to 3,000 years agoLockwood, pp. 31–36 and 1,500-year-old cave paintings of polar bears have been found in the Chukchi Peninsula. Indeed, it has been suggested that Arctic peoples' skills in seal hunting and igloo construction has been in part acquired from the polar bears themselves. The Inuit and Alaska Natives have many folk tales featuring the bears including legends in which bears are humans when inside their own houses and put on bear hides when going outside, and stories of how the constellation that is said to resemble a great bear surrounded by dogs came into being. These legends reveal a deep respect for the polar bear, which is portrayed as both spiritually powerful and closely akin to humans. The human-like posture of bears when standing and sitting, and the resemblance of a skinned bear carcass to the human body, have probably contributed to the belief that the spirits of humans and bears were interchangeable. Among the Chukchi and Yupik of eastern Siberia, there was a longstanding shamanistic ritual of \"thanksgiving\" to the hunted polar bear. After killing the animal, its head and skin were removed and cleaned and brought into the home, and a feast was held in the hunting camp in its honor. To appease the spirit of the bear, traditional song and drum music was played, and the skull was ceremonially fed and offered a pipe. Only once the spirit was appeased was the skull be separated from the skin, taken beyond the bounds of the homestead, and placed in the ground, facing north. The Nenets of north-central Siberia placed particular value on the talismanic power of the prominent canine teeth. These were traded in the villages of the lower Yenisei and Khatanga rivers to the forest-dwelling peoples further south, who would sew them into their hats as protection against brown bears. It was believed that the \"little nephew\" (the brown bear) would not dare to attack a man wearing the tooth of its powerful \"big uncle\", the polar bear. The skulls of killed polar bears were buried at sacred sites, and altars, called sedyangi, were constructed out of the skulls. Several such sites have been preserved on the Yamal Peninsula. Symbols and mascots Greenland's 1911 five kroner note depicting a polar bear Their distinctive appearance and their association with the Arctic have made polar bears popular icons, especially in those areas where they are native. The Canadian two-dollar coin carries an image of a lone polar bear on its reverse side, while a special millennium edition featured three. Vehicle licence plates in the Northwest Territories in Canada are in the shape of a polar bear, as was the case in Nunavut until 2012; these now display polar bear artwork instead. The polar bear is the mascot of Bowdoin College, Maine; the University of Alaska Fairbanks; and the 1988 Winter Olympics held in Calgary. The Eisbären Berlin hockey team uses a roaring polar bear as their logo, and the Charlotte, North Carolina hockey team the Charlotte Checkers uses a polar bear named Chubby Checker as their mascot. Coca-Cola has used images of the polar bear in its advertising, and Polar Beverages, Nelvana, Bundaberg Rum, Klondike bars, and Fox's Glacier Mints all feature polar bears in their logos. Fiction Polar bears are popular in fiction, particularly in books for children or teenagers. For example, The Polar Bear Son is adapted from a traditional Inuit tale. The animated television series Noah's Island features a polar bear named Noah as the protagonist. Polar bears feature prominently in East (North Child in the UK) by Edith Pattou,East (2003), A novel by Edith Pattou, Fantastic Fiction The Bear by Raymond Briggs (adapted into an animated short in 1998),The Bear, Toonhound and Chris d'Lacey's The Fire Within series.The Fire Within , Chris d'Lacey's official website The panserbjørne of Philip Pullman's fantasy trilogy His Dark Materials are sapient, dignified polar bears who exhibit anthropomorphic qualities, and feature prominently in the 2007 film adaptation of The Golden Compass. The television series Lost features polar bears living on the tropical island setting."
+            },
+            {
+              "description": "Subadult males frequently play-fight. During the mating season, actual fighting is intense and often leaves scars or broken teeth. Unlike brown bears, polar bears are not territorial. Although stereotyped as being voraciously aggressive, they are normally cautious in confrontations, and often choose to escape rather than fight.Matthews, pp. 27–29 Satiated polar bears rarely attack humans unless severely provoked.Conflicts and Encounters . Polar Bears International. 2015.Polar Bear Attacks Surprisingly Rare. Kieran Mulvaney, Discovery News. 5 August 2011. However, due to their lack of prior human interaction, hungry polar bears are extremely unpredictable, fearless towards people and are known to kill and sometimes eat humans.Bruemmer, pp. 25–33 Many attacks by brown bears are the result of surprising the animal, which is not the case with the polar bear. Polar bears are stealth hunters, and the victim is often unaware of the bear's presence until the attack is underway. Whereas brown bears often maul a person and then leave, polar bear attacks are more likely to be predatory and are almost always fatal. However, due to the very small human population around the Arctic, such attacks are rare. Michio Hoshino, a Japanese wildlife photographer, was once pursued briefly by a hungry male polar bear in northern Alaska. According to Hoshino, the bear started running but Hoshino made it to his truck. The bear was able to reach the truck and tore one of the doors off the truck before Hoshino was able to drive off. In general, adult polar bears live solitary lives. Yet, they have often been seen playing together for hours at a time and even sleeping in an embrace, and polar bear zoologist Nikita Ovsianikov has described adult males as having \"well-developed friendships.\" Cubs are especially playful as well. Among young males in particular, play-fighting may be a means of practicing for serious competition during mating seasons later in life.Matthews, p. 95 Polar bears are usually quiet but do communicate with various sounds and vocalizations. Females communicate with their young with moans and chuffs, and the distress calls of both cubs and subadults consists of bleats. Cubs may hum while nursing. When nervous, bears produce huffs, chuffs and snorts while hisses, growls and roars are signs of aggression. Chemical communication can also be important: bears leave behind their scent in their tracks which allow individuals to keep track of one another in the vast Arctic wilderness. In 1992, a photographer near Churchill took a now widely circulated set of photographs of a polar bear playing with a Canadian Eskimo Dog (Canis familiaris) a tenth of its size.Why Didn't the Wild Polar Bear eat the Husky? The National Institute for Play The pair wrestled harmlessly together each afternoon for 10 days in a row for no apparent reason, although the bear may have been trying to demonstrate its friendliness in the hope of sharing the kennel's food. This kind of social interaction is uncommon; it is far more typical for polar bears to behave aggressively towards dogs.Rosing, pp. 128–132 Hunting and diet The polar bear's long muzzle and neck help it to search in deep holes for seals, while its powerful hindquarters enable it to drag massive prey The polar bear is the most carnivorous member of the bear family, and throughout most of its range, its diet primarily consists of ringed (Pusa hispida) and bearded seals (Erignathus barbatus). The Arctic is home to millions of seals, which become prey when they surface in holes in the ice in order to breathe, or when they haul out on the ice to rest.Matthews, pp. 73–88 Polar bears hunt primarily at the interface between ice, water, and air; they only rarely catch seals on land or in open water. The polar bear's most common hunting method is called still-hunting:Hemstock, pp. 24–27 the bear uses its excellent sense of smell to locate a seal breathing hole, and crouches nearby in silence for a seal to appear. The bear may lie in wait for several hours. When the seal exhales, the bear smells its breath, reaches into the hole with a forepaw, and drags it out onto the ice. The polar bear kills the seal by biting its head to crush its skull. The polar bear also hunts by stalking seals resting on the ice: upon spotting a seal, it walks to within 100 yd, and then crouches. If the seal does not notice, the bear creeps to within 30 to of the seal and then suddenly rushes forth to attack. A third hunting method is to raid the birth lairs that female seals create in the snow. A widespread legend tells that polar bears cover their black noses with their paws when hunting. This behaviour, if it happens, is rare – although the story exists in the oral history of northern peoples and in accounts by early Arctic explorers, there is no record of an eyewitness account of the behaviour in recent decades. Bear feeding on a bearded seal Mature bears tend to eat only the calorie-rich skin and blubber of the seal, which are highly digestible, whereas younger bears consume the protein-rich red meat. Studies have also photographed polar bears scaling near-vertical cliffs, to eat birds' chicks and eggs. For subadult bears, which are independent of their mother but have not yet gained enough experience and body size to successfully hunt seals, scavenging the carcasses from other bears' kills is an important source of nutrition. Subadults may also be forced to accept a half-eaten carcass if they kill a seal but cannot defend it from larger polar bears. After feeding, polar bears wash themselves with water or snow. Although polar bears are extraordinarily powerful, its primary prey species, the ringed seal, is much smaller than itself, and many of the seals hunted are pups rather than adults. Ringed seals are born weighing 5.4 kg and grown to an estimated average weight of only 60 kg. They also in places prey heavily upon the harp seal (Pagophilus groenlandicus), the harbour seal (Phoca vitulina), or the hooded seal (Cystophora cristata). The bearded seal, on the other hand, can be nearly the same size as the bear itself, averaging 270 kg. Adult male bearded seals, at 350 to are too large for a female bear to overtake, and so are potential prey only for mature male bears. Large males also occasionally attempt to hunt and kill even larger prey items. It can kill an adult walrus (Odobenus rosmarus), although this is rarely attempted. At up to 2000 kg and a typical adult mass range of 600 to, a walrus can be more than twice the bear's weight, has extremely thick skin and has up to 3 ft-long ivory tusks that can be used as formidable weapons. A polar bear may charge a group of walruses, with the goal of separating a young, infirm, or injured walrus from the pod. They will even attack adult walruses when their diving holes have frozen over or intercept them before they can get back to the diving hole in the ice. Yet, polar bears will very seldom attack full-grown adult walruses, with the largest male walrus probably invulnerable unless otherwise injured or incapacitated. Since an attack on a walrus tends to be an extremely protracted and exhausting venture, bears have been known to back down from the attack after making the initial injury to the walrus. Polar bears have also been seen to prey on beluga whales (Delphinapterus leucas) and narwhals (Monodon monoceros), by swiping at them at breathing holes. The whales are of similar size to the walrus and nearly as difficult for the bear to subdue. Most terrestrial animals in the Arctic can outrun the polar bear on land as polar bears overheat quickly, and most marine animals the bear encounters can outswim it. In some areas, the polar bear's diet is supplemented by walrus calves and by the carcasses of dead adult walruses or whales, whose blubber is readily devoured even when rotten. Polar bears sometimes swim underwater to catch fish like the Arctic charr or the fourhorn sculpin. Some characteristic postures: With the exception of pregnant females, polar bears are active year-round, although they have a vestigial hibernation induction trigger in their blood. Unlike brown and black bears, polar bears are capable of fasting for up to several months during late summer and early fall, when they cannot hunt for seals because the sea is unfrozen. When sea ice is unavailable during summer and early autumn, some populations live off fat reserves for months at a time, as polar bears do not 'hibernate' any time of the year. Being both curious animals and scavengers, polar bears investigate and consume garbage where they come into contact with humans. Polar bears may attempt to consume almost anything they can find, including hazardous substances such as styrofoam, plastic, car batteries, ethylene glycol, hydraulic fluid, and motor oil. The dump in Churchill, Manitoba was closed in 2006 to protect bears, and waste is now recycled or transported to Thompson, Manitoba. Dietary flexibility Although seal predation is the primary and an indispensable way of life for most polar bears, when alternatives are present they are quite flexible. Polar bears consume a wide variety of other wild foods, including muskox (Ovibos moschatus), reindeer (Rangifer tarandus), birds, eggs, rodents, crabs, other crustaceans, fish and other polar bears. They may also eat plants, including berries, roots, and kelp; however, none of these have been a significant part of their diet, except for beachcast marine mammal carcasses. Given the change in climate, with ice breaking up in areas such as the Hudson Bay earlier than it used to, polar bears are exploiting food resources such as snow geese and eggs, and plants such as lyme grass in increased quantities. When stalking land animals, such as muskox, reindeer, and even willow ptarmigan (Lagopus lagopus), polar bears appear to make use of vegetative cover and wind direction to bring them as close to their prey as possible before attacking. Polar bears have been observed to hunt the small Svalbard reindeer (R. t. platyrhynchus), which weigh only 40 to as adults, as well as the barren-ground caribou (R. t. groenlandicus), which is about twice as heavy as the former. Adult muskox, which can weigh 450 kg or more, are a more formidable quarry. Although ungulates are not typical prey, the killing of one during the summer months can greatly increase the odds of survival during that lean period. Like the brown bear, most ungulate prey of polar bears is likely to be young, sickly or injured specimens rather than healthy adults. The polar bear's metabolism is specialized to require large amounts of fat from marine mammals, and it cannot derive sufficient caloric intake from terrestrial food. In their southern range, especially near Hudson Bay and James Bay, Canadian polar bears endure all summer without sea ice to hunt from. Here, their food ecology shows their dietary flexibility. They still manage to consume some seals, but they are food-deprived in summer as only marine mammal carcasses are an important alternative without sea ice, especially carcasses of the beluga whale. These alternatives may reduce the rate of weight loss of bears when on land. One scientist found that 71% of the Hudson Bay bears had fed on seaweed (marine algae) and that about half were feeding on birds such as the dovekie and sea ducks, especially the long-tailed duck (53%) and common eider, by swimming underwater to catch them. They were also diving to feed on blue mussels and other underwater food sources like the green sea urchin. 24% had eaten moss recently, 19% had consumed grass, 34% had eaten black crowberry and about half had consumed willows. This study illustrates the polar bear's dietary flexibility but it does not represent its life history elsewhere. Most polar bears elsewhere will never have access to these alternatives, except for the marine mammal carcasses that are important wherever they occur. In Svalbard, polar bears were observed to kill white-beaked dolphins during spring, when the dolphins were trapped in the sea ice. The bears then proceeded to cache the carcasses, which remained and were eaten during the ice-free summer and autumn. Reproduction and lifecycle Cubs are born helpless and typically nurse for two and a half years Courtship and mating take place on the sea ice in April and May, when polar bears congregate in the best seal hunting areas. A male may follow the tracks of a breeding female for 100 km or more, and after finding her engage in intense fighting with other males over mating rights, fights that often result in scars and broken teeth. Polar bears have a generally polygynous mating system; recent genetic testing of mothers and cubs, however, has uncovered cases of litters in which cubs have different fathers. Partners stay together and mate repeatedly for an entire week; the mating ritual induces ovulation in the female.Rosing, pp. 42–48 After mating, the fertilized egg remains in a suspended state until August or September. During these four months, the pregnant female eats prodigious amounts of food, gaining at least 200 kg and often more than doubling her body weight. Maternity denning and early life Mother and cub on Svalbard, Norway When the ice floes are at their minimum in the fall, ending the possibility of hunting, each pregnant female digs a maternity den consisting of a narrow entrance tunnel leading to one to three chambers. Most maternity dens are in snowdrifts, but may also be made underground in permafrost if it is not sufficiently cold yet for snow. In most subpopulations, maternity dens are situated on land a few kilometres from the coast, and the individuals in a subpopulation tend to reuse the same denning areas each year. The polar bears that do not den on land make their dens on the sea ice. In the den, she enters a dormant state similar to hibernation. This hibernation-like state does not consist of continuous sleeping; however, the bear's heart rate slows from 46 to 27 beats per minute.Lockwood, pp.17–21 Her body temperature does not decrease during this period as it would for a typical mammal in hibernation. Between November and February, cubs are born blind, covered with a light down fur, and weighing less than 0.9 kg, but in captivity they might be delivered in the earlier months. The earliest recorded birth of polar bears in captivity was on 11 October 2011 in the Toronto Zoo. On average, each litter has two cubs. The family remains in the den until mid-February to mid-April, with the mother maintaining her fast while nursing her cubs on a fat-rich milk. By the time the mother breaks open the entrance to the den, her cubs weigh about 10 to. For about 12 to 15 days, the family spends time outside the den while remaining in its vicinity, the mother grazing on vegetation while the cubs become used to walking and playing. Then they begin the long walk from the denning area to the sea ice, where the mother can once again catch seals. Depending on the timing of ice-floe breakup in the fall, she may have fasted for up to eight months. During this time, cubs playfully imitate the mother's hunting methods in preparation for later life. Cub nursing Female polar bears have been known to adopt other cubs. Multiple cases of adoption of wild cubs have been confirmed by genetic testing. Adult bears of either sex occasionally kill and eat polar bear cubs. As of 2006, in Alaska, 42% of cubs were reaching 12 months of age, down from 65% in 1991. In most areas, cubs are weaned at two and a half years of age, when the mother chases them away or abandons them. The Western Hudson Bay subpopulation is unusual in that its female polar bears sometimes wean their cubs at only one and a half years. This was the case for 40% of cubs there in the early 1980s; however by the 1990s, fewer than 20% of cubs were weaned this young. After the mother leaves, sibling cubs sometimes travel and share food together for weeks or months. Later life Females begin to breed at the age of four years in most areas, and five years in the area of the Beaufort Sea. Males usually reach sexual maturity at six years; however, as competition for females is fierce, many do not breed until the age of eight or ten. A study in Hudson Bay indicated that both the reproductive success and the maternal weight of females peaked in their mid-teens. Maternal success appeared to decline after this point, possibly because of an age-related impairment in the ability to store the fat necessary to rear cubs. Polar bears appear to be less affected by infectious diseases and parasites than most terrestrial mammals. Polar bears are especially susceptible to Trichinella, a parasitic roundworm they contract through cannibalism, although infections are usually not fatal. Only one case of a polar bear with rabies has been documented, even though polar bears frequently interact with Arctic foxes, which often carry rabies. Bacterial leptospirosis and Morbillivirus have been recorded. Polar bears sometimes have problems with various skin diseases that may be caused by mites or other parasites. Life expectancy Polar bears rarely live beyond 25 years.Hemstock, pp. 29–35 The oldest wild bears on record died at age 32, whereas the oldest captive was a female who died in 1991, age 43. The causes of death in wild adult polar bears are poorly understood, as carcasses are rarely found in the species's frigid habitat. In the wild, old polar bears eventually become too weak to catch food, and gradually starve to death. Polar bears injured in fights or accidents may either die from their injuries, or become unable to hunt effectively, leading to starvation. Ecological role The polar bear is the apex predator within its range, and is a keystone species for the Arctic. Several animal species, particularly Arctic foxes (Vulpes lagopus) and glaucous gulls (Larus hyperboreus), routinely scavenge polar bear kills. The relationship between ringed seals and polar bears is so close that the abundance of ringed seals in some areas appears to regulate the density of polar bears, while polar bear predation in turn regulates density and reproductive success of ringed seals. The evolutionary pressure of polar bear predation on seals probably accounts for some significant differences between Arctic and Antarctic seals. Compared to the Antarctic, where there is no major surface predator, Arctic seals use more breathing holes per individual, appear more restless when hauled out on the ice, and rarely defecate on the ice. The baby fur of most Arctic seal species is white, presumably to provide camouflage from predators, whereas Antarctic seals all have dark fur at birth. Brown bears tend to dominate polar bears in disputes over carcasses,O'Harra, Dough (24 April 2005) Polar bears, grizzlies increasingly gather on North Slope. Anchorage Daily News. and dead polar bear cubs have been found in brown bear dens. Wolves are rarely encountered by polar bears, though there are two records of Arctic wolf (Canis lupus arctos) packs killing polar bear cubs. Adult polar bears are occasionally vulnerable to predation by orcas (Orcinus orca) while swimming, but they are rarely reported as taken and bears are likely to avoid entering the water if possible if they detect an orca pod in the area. The melting sea ice in the Arctic may be causing an increase of orcas in the Arctic sea, which may increase the risk of predation on polar bears but also may benefit the bears by providing more whale carcasses that they can scavenge.Peacock, E., Derocher, A. E., Thiemann, G. W., & Stirling, I. (2011). Conservation and management of Canada’s polar bears (Ursus maritimus) in a changing Arctic 1 1 This review is part of the virtual symposium “Flagship Species–Flagship Problems” that deals with ecology, biodiversity and management issues, and climate impacts on species at risk and of Canadian importance, including the polar bear (Ursus maritimus), Atlantic cod (Gadus morhua), Piping Plover (Charadrius melodus), and caribou (Rangifer tarandus). Canadian Journal of Zoology, 89(5), 371-385.Ferguson, S. H., Higdon, J. W., & Westdal, K. H. (2012). Prey items and predation behavior of killer whales (Orcinus orca) in Nunavut, Canada based on Inuit hunter interviews. Aquatic biosystems, 8(1), 3. The remains of polar bears have been found in the stomachs of large Greenland sharks (Somniosus microcephalus), although it certainly cannot be ruled out that the bears were merely scavenged by this slow-moving, unusual shark. A rather unlikely killer of a grown polar bear has reportedly included a wolverine (Gulo gulo), anecdotally reported to have suffocated a bear in a zoo with a bite to the throat during a conflict. This report may well be dubious, however. Polar bears are sometimes the host of arctic mites such as Alaskozetes antarcticus. Long-distance swimming and diving Researchers tracked 52 sows in the southern Beaufort Sea off Alaska with GPS system collars; no boars were involved in the study due to males' necks being too thick for the GPS-equipped collars. Fifty long-distance swims were recorded; the longest at 354 km, with an average of 155 km. The length of these swims ranged from most of a day to ten days. Ten of the sows had a cub swim with them and after a year, six cubs survived. The study did not determine if the others lost their cubs before, during, or some time after their long swims. Researchers do not know whether or not this is a new behaviour; before polar ice shrinkage, they opined that there was probably neither the need nor opportunity to swim such long distances. The polar bear may swim underwater for up to three minutes to approach seals on shore or on ice floes."
+            },
+            {
+              "description": "Constantine John Phipps was the first to describe the polar bear as a distinct species in 1774 in his report about his 1773 expedition towards the North Pole. He chose the scientific name Ursus maritimus, the Latin for \"maritime bear\", due to the animal's native habitat. The Inuit refer to the animal as nanook (transliterated as nanuq in the Inupiat language). The Yupik also refer to the bear as nanuuk in Siberian Yupik.Hall, Sam (1988) The fourth world: the heritage of the Arctic and its destruction, Vintage Books, , pp. 29, 232. The bear is umka in the Chukchi language. In Russian, it is usually called бе́лый медве́дь (bélyj medvédj, the white bear), though an older word still in use is ошку́й (Oshkúj, which comes from the Komi oski, \"bear\"). In Quebec, the polar bear is referred to as ours blanc (\"white bear\") or ours polaire (\"polar bear\").. In the Norwegian-administered Svalbard archipelago, the polar bear is referred to as Isbjørn (\"ice bear\"). The polar bear was previously considered to be in its own genus, Thalarctos.This combines the Ancient Greek words thalassa/θαλασσα 'sea', and arctos/αρκτος 'bear' and also, with reference to Ursa Major, 'northern' or 'of the north pole' However, evidence of hybrids between polar bears and brown bears, and of the recent evolutionary divergence of the two species, does not support the establishment of this separate genus, and the accepted scientific name is now therefore Ursus maritimus, as Phipps originally proposed."
+            },
+            {
+              "description": "The only other bear of comparable size to the polar bear is the Kodiak bear, which is a subspecies of brown bear. Adult male polar bears weigh 350 - and measure 2.4 - in total length.Hemstock, p. 4 Around the Beaufort Sea, however, mature males reportedly average 450 kg. Adult females are roughly half the size of males and normally weigh 150 -, measuring 1.8 - in length. Elsewhere, a slightly larger estimated average weight of 260 kg was claimed for adult females. When pregnant, however, females can weigh as much as 500 kg. The polar bear is among the most sexually dimorphic of mammals, surpassed only by the pinnipeds such as elephant seals. The largest polar bear on record, reportedly weighing 1002 kg, was a male shot at Kotzebue Sound in northwestern Alaska in 1960. This specimen, when mounted, stood 3.39 m tall on its hindlegs. The shoulder height of an adult polar bear is 122 to.Polar bear Ursus maritimus – Appearance/Morphology: Measurement and Weight (Literature Reports). Wildlife1.wildlifeinformation.org. Retrieved 15 September 2011. While all bears are short-tailed, the polar bear's tail is relatively the shortest amongst living bears, ranging from 7 to in length. Compared with its closest relative, the brown bear, the polar bear has a more elongated body build and a longer skull and nose. As predicted by Allen's rule for a northerly animal, the legs are stocky and the ears and tail are small. However, the feet are very large to distribute load when walking on snow or thin ice and to provide propulsion when swimming; they may measure 30 cm across in an adult.Lockwood, pp. 10–16 The pads of the paws are covered with small, soft papillae (dermal bumps), which provide traction on the ice. The polar bear's claws are short and stocky compared to those of the brown bear, perhaps to serve the former's need to grip heavy prey and ice. The claws are deeply scooped on the underside which assists in digging in the ice of the natural habitat. Research of injury patterns in polar bear forelimbs found injuries to the right forelimb to be more frequent than those to the left, suggesting, perhaps, right-handedness. Unlike the brown bear, polar bears in captivity are rarely overweight or particularly large, possibly as a reaction to the warm conditions of most zoos. The 42 teeth of a polar bear reflect its highly carnivorous diet. The cheek teeth are smaller and more jagged than in the brown bear, and the canines are larger and sharper. The dental formula is . Polar bears are superbly insulated by up to 10 cm of adipose tissue, their hide and their fur. Polar bear fur consists of a layer of dense underfur and an outer layer of guard hairs, which appear white to tan but are actually transparent. Two genes that are known to influence melanin production, LYST and AIM1, are both mutated in polar bears, possibly leading to the absence on this pigment in their fur. The guard hair is 5 - over most of the body. Polar bears gradually moult from May to August,Kolenosky G. B. 1987. Polar bear. pp. 475–485 in Wild furbearer management and conservation in North America (M. Novak, J. A. Baker, M. E. Obbard, and B. Malloch, eds.). Ontario Fur Trappers Association, North Bay, Ontario, Canada. but, unlike other Arctic mammals, they do not shed their coat for a darker shade to provide camouflage in summer conditions. The hollow guard hairs of a polar bear coat were once thought to act as fiber-optic tubes to conduct light to its black skin, where it could be absorbed; however, this hypothesis was disproved by a study in 1998. The white coat usually yellows with age. When kept in captivity in warm, humid conditions, the fur may turn a pale shade of green due to algae growing inside the guard hairs.In unusually warm conditions, the hollow tubes provide an excellent home for algae. While the algae is harmless to the bears, it is often a worry to the zoos housing them, and affected animals are sometimes washed in a salt solution, or mild peroxide bleach to make the fur white again. Males have significantly longer hairs on their forelegs, which increase in length until the bear reaches 14 years of age. The male's ornamental foreleg hair is thought to attract females, serving a similar function to the lion's mane. The polar bear has an extremely well developed sense of smell, being able to detect seals nearly 1 mi away and buried under 3 ft of snow. Its hearing is about as acute as that of a human, and its vision is also good at long distances.Rosing, pp. 20–23 The polar bear is an excellent swimmer and often will swim for days. One bear swam continuously for 9 days in the frigid Bering Sea for 700 km to reach ice far from land. She then travelled another 1800 km. During the swim, the bear lost 22% of her body mass and her yearling cub died. With its body fat providing buoyancy, the bear swims in a dog paddle fashion using its large forepaws for propulsion. Polar bears can swim at 6 mph. When walking, the polar bear tends to have a lumbering gait and maintains an average speed of around 3.5 mph. When sprinting, they can reach up to 25 mph.Polar Bears: VI. Behavior., SeaWorld. Retrieved 21 January 2011."
+            },
+            {
+              "description": "Bears investigate the submarine USS Honolulu 280 mi from the North Pole The polar bear is found in the Arctic Circle and adjacent land masses as far south as Newfoundland. Due to the absence of human development in its remote habitat, it retains more of its original range than any other extant carnivore. While they are rare north of 88°, there is evidence that they range all the way across the Arctic, and as far south as James Bay in Canada. Their southernmost range is near the boundary between the subarctic and humid continental climate zones. They can occasionally drift widely with the sea ice, and there have been anecdotal sightings as far south as Berlevåg on the Norwegian mainland and the Kuril Islands in the Sea of Okhotsk. It is difficult to estimate a global population of polar bears as much of the range has been poorly studied; however, biologists use a working estimate of about 20–25,000 or 22–31,000 polar bears worldwide. With the discovery of a southeast Greenland population in 2022, there are 20 generally recognized, discrete subpopulations of polar bears.Aars, pp. 33–55. The subpopulations display seasonal fidelity to particular areas, but DNA studies show that they are not reproductively isolated. The 14 North American subpopulations range from the Beaufort Sea south to Hudson Bay and east to eastern Greenland and account for about 54% of the global population.Supplementary material for Ursus maritimus Red List assessment Bears play-fighting The usual range includes the territory of five nations: Denmark (Greenland), Norway (Svalbard), Russia, the United States (Alaska) and Canada. These five nations are the signatories of the International Agreement on the Conservation of Polar Bears, which mandates cooperation on research and conservation efforts throughout the polar bear's range. Bears sometimes swim to Iceland from Greenland—about 600 sightings since the country's settlement in the 9th century, and five in the 21st century —and are always killed because of their danger, as well as the cost and difficulty of repatriation. Modern methods of tracking polar bear populations have been implemented only since the mid-1980s, and are expensive to perform consistently over a large area. The most accurate counts require flying a helicopter in the Arctic climate to find polar bears, shooting a tranquilizer dart at the bear to sedate it, and then tagging the bear. In Nunavut, some Inuit have reported increases in bear sightings around human settlements in recent years, leading to a belief that populations are increasing. Scientists have responded by noting that hungry bears may be congregating around human settlements, leading to the illusion that populations are higher than they actually are. The Polar Bear Specialist Group of the IUCN Species Survival Commission takes the position that \"estimates of subpopulation size or sustainable harvest levels should not be made solely on the basis of traditional ecological knowledge without supporting scientific studies.\"Aars, pp. 61–62 Of the 19 polar bear subpopulations recognized in 2017, one was in decline, two were increasing, seven were stable, and nine had insufficient data.IUCN Polar Bear Specialist Group, 2017.Summary of polar bear population status ."
+            },
+            {
+              "description": "Polar bears have evolved adaptations for Arctic life. For example, large furry feet and short, sharp, stocky claws give them good traction on ice. The bear family, Ursidae, is thought to have split from other carnivorans about 38 million years ago. The subfamily Ursinae originated approximately 4.2 million years ago. The oldest known polar bear fossil is a 130,000 to 110,000-year-old jaw bone, found on Prince Charles Foreland in 2004. Fossils show that between 10,000 and 20,000 years ago, the polar bear's molar teeth changed significantly from those of the brown bear. Polar bears are thought to have diverged from a population of brown bears that became isolated during a period of glaciation in the Pleistocene from the eastern part of Siberia (from Kamchatka and the Kolym Peninsula). The evidence from DNA analysis is more complex. The mitochondrial DNA (mtDNA) of the polar bear diverged from the brown bear, Ursus arctos, roughly 150,000 years ago. Further, some clades of brown bear, as assessed by their mtDNA, were thought to be more closely related to polar bears than to other brown bears, meaning that the brown bear might not be considered a species under some species concepts, but paraphyletic. The mtDNA of extinct Irish brown bears is particularly close to polar bears. A comparison of the nuclear genome of polar bears with that of brown bears revealed a different pattern, the two forming genetically distinct clades that diverged approximately 603,000 years ago, although the latest research is based on analysis of the complete genomes (rather than just the mitochondria or partial nuclear genomes) of polar and brown bears, and establishes the divergence of polar and brown bears at 400,000 years ago. However, the two species have mated intermittently for all that time, most likely coming into contact with each other during warming periods, when polar bears were driven onto land and brown bears migrated northward. Most brown bears have about 2 percent genetic material from polar bears, but one population, the ABC Islands bears, has between 5 percent and 10 percent polar bear genes, indicating more frequent and recent mating. Polar bears can breed with brown bears to produce fertile grizzly–polar bear hybrids; rather than indicating that they have only recently diverged, the new evidence suggests more frequent mating has continued over a longer period of time, and thus the two bears remain genetically similar. However, because neither species can survive long in the other's ecological niche, and because they have different morphology, metabolism, social and feeding behaviours, and other phenotypic characteristics, the two bears are generally classified as separate species. When the polar bear was originally documented, two subspecies were identified: the American polar bear (Ursus maritimus maritimus) by Constantine J. Phipps in 1774, and the Siberian polar bear (Ursus maritimus marinus) by Peter Simon Pallas in 1776. This distinction has since been invalidated. One alleged fossil subspecies has been identified: Ursus maritimus tyrannus, which became extinct during the Pleistocene. U.m. tyrannus was significantly larger than the living subspecies. However, recent reanalysis of the fossil suggests that it was actually a brown bear."
+            }
+          ],
+          "vernacularNames": [
+            {
+              "vernacularName": "Polar bear",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "144099573": "Ursus"
+          }
+        },
+        {
+          "key": 12188241,
+          "nameKey": 127282570,
+          "datasetKey": "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c",
+          "constituentKey": "2d59e5db-57ad-41ff-97d6-11f5fb264527",
+          "parentKey": 2239914,
+          "parent": "Xestospongia",
+          "kingdom": "Animalia",
+          "phylum": "Porifera",
+          "order": "Haplosclerida",
+          "family": "Petrosiidae",
+          "genus": "Xestospongia",
+          "species": "Xestospongia ursa",
+          "kingdomKey": 1,
+          "phylumKey": 105,
+          "classKey": 199,
+          "orderKey": 1239,
+          "familyKey": 3913,
+          "genusKey": 2239914,
+          "speciesKey": 12188241,
+          "scientificName": "Xestospongia ursa Turner & Lonhart, 2023",
+          "canonicalName": "Xestospongia ursa",
+          "authorship": "Turner & Lonhart, 2023",
+          "publishedIn": "Turner, T.L.; Lonhart, S.I. (2023). The Sponges of the Carmel Pinnacles Marine Protected Area. <em>Zootaxa.</em> 5318(2): 151-194.",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "gbif:12188241",
+          "extinct": false,
+          "habitats": [
+            "MARINE"
+          ],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [
+            {
+              "description": "Material examined. Holotype: CASIZ 236663 / IZC 00048474, Inner Carmel Pinnacle, (36.55852, - 121.96820), 10 – 24 m, 9 / 22 / 21; paratypes: IZC 00048472, Fire Rock, Pescadero Point, Carmel, (36.55898, - 121.9511), 10 – 22 m, 8 / 10 / 21; SBMNH 700926, Tower house arches, Carmel, (36.56187, - 121.95950), 9 – 21 m, 9 / 21 / 21; IZC 00048473, Whaler's Cove, Point Lobos, Carmel, (36.52172, - 121.93894), 6 – 15 m, 11 / 23 / 19; SBMNH 700921, Whaler's Cove, Point Lobos, Carmel, (36.52172, - 121.93894), 6 – 15 m, 11 / 23 / 19. Comparative material: Xestospongia diprosopia (de Laubenfels 1932), CASIZ 190441 and CASIZ 190442, Rittenburg Bank, Farallon Islands, Northern California, 85 m, 10 / 9 / 12."
+            },
+            {
+              "description": "Etymology. Bright white and furry-looking, this sponge is named after Ursa maritimus. Morphology. Thickly encrusting with irregular lobes and ridges; collected fragments are up to 3 cm thick, but sponges likely exceed this thickness in life. Oscules prominent but sparse and irregular, flush with surface, placed atop high points on lobes and ridges. Surface covered in minute conules that give the sponge a furry appearance. Chalky white alive, but often has brownish patches due to fouling by microscopic algae. Produces copious slime when collected. Very firm and incompressible. Skeleton. Ectosome and choanosome possess a chaotic, reticulated network of single spicules and paucispicular bundles 3 – 7 spicules across; in some places these form a polygonal mesh. Spongin is not apparent. Spicules. Oxeas, smoothly curved or with one or two subtle bends. Most commonly with two sharp points, but a substantial minority with one end tapering to a blunt tip; a small minority taper at only one end and are therefore styles. Some with extra spines forming a x-shape at one tip; this was very rare in any one sponge, but seen across multiple sponges. Spicules in one length category but variable in thickness; thickness unimodal but some much thinner than average; these may be immature. Holotype 218 – 290 – 332 x 4 – 13 – 18 μm (n = 48), all samples pooled 185 – 281 – 332 x 2 – 14 – 21 μm (n = 201). Mean lengths for each sample vary from 266 to 290 μm."
+            },
+            {
+              "description": "Distribution and habitat. Common on rocky reefs in the shallow subtidal from Pescadero Point, on the northern end of Carmel Bay, to the Carmel Highlands, just south of Carmel Bay; it was seen on six of eight locations in this region. Not seen at any other location to date, including the 6 reefs searched in nearby Monterey Bay."
+            },
+            {
+              "description": "Remarks. Xestospongia diprosopia (de Laubenfels, 1930) is a deep-water species from Central California, and the type species for the genus. Xestospongia ursa sp. nov. is very similar in terms of skeletal structure, spicule shape, and gross morphology. To verify that X. ursa sp. nov. is not a shallow water form of X. diprosopia, we examined the spicules of two X. diprosopia from 85 m depth. The samples average 351 and 365 μm in length, matching published data from the holotype (352 μm; Desqueyroux-Faúndez & Valentine 2002). This is about 20 % longer than X. ursa sp. nov., which averages 266 – 290 μm in length depending on the sponge. The holotype and other X. diprosopia also average about 60 % thicker spicules (23 – 26 μm per sample, vs. 13 – 15 μm for X. ursa sp. nov.). We successfully sequenced a portion of the 28 S locus from one X. diprosopia sample: this sequence was 6 % divergent from X. ursa sp. nov. across the aligned 827 bp, supporting the species-level difference of these shallow and deep-water forms (figure 15). The genetic data also support the allocation of the new species to Xestospongia, as it is more closely related to the type species than any other species with publicly available data at this locus. Previous phylogenies of the Haplosclerida have found that most families and genera are polyphyletic, and the position of X. disprotopia adds to this conclusion. Most Haplosclerida fall into five clades, designated A – E (Pankey et al. 2022; Redmond et al. 2013): we include representatives of each in the 28 S phylogeny shown in figure 15. The type species of Xestospongia falls within clade E, otherwise populated mainly by members of the Phloeodictyidae. In contrast, other Xestospongia have been found to be members of clades B and D (Pankey et al. 2022; Redmond et al. 2013). Two other Xestospongia are known from the region: X. dubia (Ristau, 1978) has much smaller spicules and a different morphology, and X. hispida (Ridley & Dendy, 1886) is hispid, with a different morphology and larger spicules. Xestospongia ursa sp. nov. may be identifiable in the field due to its chalky white color, lobe-like growth form, and furry appearance. To date, all samples were correctly identified as conspecifics by the authors before looking at spicules, and no other samples were incorrectly identified as this species among the other samples collected."
+            },
+            {
+              "description": "Figures 15, 16"
+            }
+          ],
+          "vernacularNames": [
+            {
+              "vernacularName": "Polar Bear Sponge",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "1": "Animalia",
+            "105": "Porifera",
+            "199": "Demospongiae",
+            "1239": "Haplosclerida",
+            "3913": "Petrosiidae",
+            "2239914": "Xestospongia"
+          },
+          "class": "Demospongiae"
+        },
+        {
+          "key": 102115849,
+          "nameKey": 11658870,
+          "datasetKey": "9ca92552-f23a-41a8-a140-01abaa31c931",
+          "nubKey": 2433451,
+          "parentKey": 102115812,
+          "parent": "Ursus",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 101683523,
+          "phylumKey": 102017110,
+          "classKey": 102114218,
+          "orderKey": 102114749,
+          "familyKey": 102115798,
+          "genusKey": 102115812,
+          "speciesKey": 102115849,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "Phipps, 1774",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "180542",
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "ours blanc",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "101683523": "Animalia",
+            "102017110": "Chordata",
+            "102114218": "Mammalia",
+            "102114749": "Carnivora",
+            "102115798": "Ursidae",
+            "102115812": "Ursus"
+          },
+          "class": "Mammalia"
+        },
+        {
+          "key": 190308896,
+          "datasetKey": "af527510-2032-4025-89ea-c5a2091de173",
+          "nubKey": 2433451,
+          "parentKey": 334360802,
+          "parent": "Ursus",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 334360793,
+          "phylumKey": 334360794,
+          "classKey": 334360795,
+          "orderKey": 334360796,
+          "familyKey": 334360797,
+          "genusKey": 334360802,
+          "speciesKey": 190308896,
+          "scientificName": "Ursus maritimus (Phipps 1774)",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "(Phipps 1774)",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "039D8794F660C76A95CD786DF94FFD51.taxon",
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [
+            {
+              "description": "Activity patterns. Appear to be mainly diurnal. Seasonal changes in activity vary regionally with dynamics of sea ice and abundance of prey. Activity, measured by percent of time active and distance moved, is elevated when seal pups are particularly naive and vulnerable to predation, and when older seals are molting and basking on the ice. In contrast to other predators, Polar Bears are most active when prey is most abundant. They become hyperphagic, and are able to store fat to withstand extended periods when foraging is more difficult, such as during the winter on the pack ice. Periods of rapid annual ice formation and ablation, during summer and fall, also result in greater activity. Parturient females den for about six months (mid-September to mid-March in most areas); non-pregnant Polar Bears do not hibernate."
+            },
+            {
+              "description": "Habitat. Arctic ice provides a necessary platform for hunting seals. Annual ice adjacent to coastlines (shore fast ice) regularly fractures, providing open leads where seals can breathe. The seasonal fluctuations between freezing and open water also promotes high productivity of fish, the prey of seals. Thus, this habitat is preferred by seals, and is consequently a favored habitat for Polar Bears, which hunt seals along the ice cracks and edges. Polar Bears also hunt from large chunks of drifting ice, and to a lesser extent, multiannual pack ice, where seal density is lower and access to seals more difficult. For this reason, density of Polar Bearsis low close to the North Pole. In summer, when the ice retreats, bears either migrate northward or use nearshore terrestrial habitats. Parturient females stay ashore to den and give birth. In Hudson Bay (Canada) they den 10 - 80 km inland in peat banks; elsewhere maternity dens are typically in snow caves along coastal areas. However, in the Beaufort Sea, half the pregnant females den on drifting sea ice. Non-pregnant bears do not hibernate, but do use shelter dens. At lower latitudes, they use shelters on land during ice-free periods to escape heat and conserve energy when precluded from hunting seals; at high latitudes (above 75 ° N) they seek shelters on thick sea ice during winter, when foraging is most difficult and weather conditions harshest."
+            },
+            {
+              "description": "Movements, Home range and Social organization. Although once thought to wander aimlessly or be carried passively on shifting ice, recent data collected using satellite radio collars have shown that Polar Bears have definite home ranges that are used year to year. However, these ranges can be enormous: one female bear traveled over 5200 km from Alaska to Greenland in four months. Nevertheless, most bears seem to remain within a discrete population, or stock; 19 or 20 such populations have been identified across the geographic range. Home ranges and movements are highly variable by region, habitat, season, and reproductive condition or family association. Around Svalbard, nearshore bears tend to have smaller home ranges than pelagic bears. In the Canadian Arctic, bears that live in areas with highly variable and unpredictable ice conditions (including ice-free periods) have larger ranges than bears living on more stable ice. Individual ranges as large as 600,000 km * have been reported, but so have ranges of less than 1000 km ®. Means among different populations range from 20,000 - 250,000 km?. Little movement data have been collected on males, because they cannot be radio-collared (their necks are bigger than their heads), but data from implanted transmitters indicate that, unlike terrestrial bears, their ranges are not larger than those of females. With females being so mobile, and having highly overlapping ranges, males can include multiple potential breeding partners within their range, even if their range is not larger than the females’. Female maternity dens are highly congregated in some areas, such as Wrangel Island, parts of Svalbard, Franz Josef Land, Novaya Zemlya, and near Churchill, Manitoba."
+            },
+            {
+              "description": "Breeding. Breeding occurs from March to June. Mating induces ovulation, and males spar for mating partners. Implantation of the fertilized egg is delayed until autumn, about the time that females enter maternity dens. In some areas this follows a period of on-shore fasting, so by the time these mothers emerge from dens the following spring they may not have eaten for eight months. Birthing occurs mid-November to January, so the total gestation, including the period of delayed implantation, is from 6: 5 to more than 8 - 5 months. Cubs stay in the den until March or early April. Two-cublitters are most common, and average litter size is less than two in virtually all populations; however, litters of three are not uncommon in some areas, and litters of four have been reported. Females have only four mammae (other bears, except Sun Bears and Giant Pandas have six), so this is the maximum litter size. Average age offirst birthing ranges among different populations from 4 - 6 - 7 - 2 years. Productivity increases into the teen years, but then declines through the early 20 s, and ceases by the late 20 s. Intervals between litters average 2 - 1 - 3 - 6 years. Cubs separate from their mother either at 17 months, or more commonly a year later. Cubs may nurse through their second birthday. The fat content of milk is very high initially (more than 30 %), but declines through the nursing period."
+            },
+            {
+              "description": "Status and Conservation. CITES Appendix II. In 2006 The IUCN Red List status was upgraded to Vulnerable due to projections of dramatic reductions in habitat (coverage and stability of the ice sheet) over the next 50 - 100 years. Demographic consequences to Polar Bears are already becoming apparent in some areas, in terms of reduced numbers and reduced survival ofjuveniles and old adults. Ringed Seals are also suffering increased mortality from Polar Bear predation because of melting of their subnivian dens. Accordingly, the USA listed the species as nationally threatened and Canada listed it as a species of special concern. This would impose further constraints on activities that affect these bears or their habitat, such as hunting, recreational viewing, shipping, and oil and gas exploration and development. The effects of sea ice change will vary enormously by region, which is difficult to forecast, but overall arelikely to be dramatic and permanent. Nineteen fairly discrete populations have been identified, with a total world population estimated at 20,000 - 25,000; about half this number resides in the Canadian territory of Nunavut. Under an agreement for co-management of Polar Bear populations that was ratified in 1976, the five range countries coordinate and consult with each other on research activities, methods of population estimation and monitoring, and proposals for increased protection. Most importantly, under this treaty, harvestis restricted: the taking of cubs or females with cubs is prohibited, and harvest is limited to native people for subsistence use. This includes consumption of meat, use of hides for clothing, and creation of handicrafts. In some territories of Canada, a portion of the annual harvest is allocated to non-native sport hunters who employ native guides and hunt using dogsleds and other traditional methods. This generates income for the native communities. Harvests are regulated to be sustainable. Recently, pressure has mounted to reduce or prohibit harvests so as not to compound the effects of diminishing sea ice habitat from global warming."
+            },
+            {
+              "description": "Descriptive notes. Head-body 180 - 280 cm, shoulder height up to 170 cm, tail 6 - 13 cm; adult males are about twice as heavy (300 - 650 kg, but up to 800 kg) as adult females (150 - 250 kg, but up to 500 kg when pregnant), making them one of the most sexuallydimorphic mammals. Size varies regionally, being smallest in eastern Greenland, and progressively larger westward to the Bering Sea. Facial profile is straight, the neck is longer than in other bears, and the ears are small in relation to head and body size. Coat color appears white or yellowish, with no other markings, but can accumulate colors from the environment (e. g. blood and oils from killed prey). In reality, both guard hairs and underfur are translucent, and guard hairs are hollow, thus enhancing their insulation properties. However, a previous assertion that they act as fiber optic tubes, funneling sunlight to the skin for warmth, has been disproven. The skin is black, but only the black nose is visible. Summer coats are shorter than winter coats, but unlike other bears, coat thickness is not sparser ventrally. Additionally, the paws are well-furred on the underside, and have small soft papillae and vacuoles that may act as suction cups for traction on ice. The feet are also relatively large, providing more surface area for swimming and walking on thin ice. The claws are shorter and more curved than Brown Bears, and are usually dark-colored."
+            },
+            {
+              "description": "Considered a sister species to U. arctos. Most closely related to Brown Bears on the Admiralty, Baranof, Chichagof islands of south-east Alaska. Although several distinct populations or stocks have been delineated, small genetic differences have been found among these, and no subspecies have been differentiated. Monotypic."
+            },
+            {
+              "description": "Distribution. Arctic Ocean: Canada, USA (Alaska), Greenland, Norway (Svalbard), Russia. Have been sighted within 0 - 5 ° of North Pole."
+            },
+            {
+              "description": "Food and Feeding. Almoststrictly carnivorous, preying mainly on young Ringed Seals (Pusa hispida), to a lesser extent Bearded Seals (Erignathus barbatus), and in some areas, Harp Seals (Pagophilus groenlandicus). The principal focus on Ringed Seals is evident in the close association between Polar Bear density and Ringed Seal density, and in the unique behavior of these seals, which give birth in subnivian lairs as an anti-predation strategy. One study found that an average Polar Bear consumes fewer than 50 Ringed Seals a year, 80 % being pups caught either in their lairs or shortly after emerging from their lairs. Polar Bears also occasionally prey on other marine mammals, such as Walruses (Odobenus rosmarus), and Beluga (Delphinapterus leucas) whales. These large prey, including Bearded Seals (which are much larger than Ringed Seals), are taken mainly by adult male bears. When ashore, depending on availability, Polar Bears have been observed to prey on Reindeer (Rangifer tarandus), seabirds, or fish; and eat carrion (dead whales), berries, vegetation, and human garbage."
+            },
+            {
+              "description": "Spitsbergen, (Svalbard) Norway."
+            }
+          ],
+          "vernacularNames": [
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Ours blanc",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Eisbar",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "\\ White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Nanook",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "334360793": "Animalia",
+            "334360794": "Chordata",
+            "334360795": "Mammalia",
+            "334360796": "Carnivora",
+            "334360797": "Ursidae",
+            "334360802": "Ursus"
+          },
+          "class": "Mammalia"
+        },
+        {
+          "key": 176684166,
+          "datasetKey": "19491596-35ae-4a91-9a98-85cf505f1bd3",
+          "nubKey": 2433451,
+          "parentKey": 336606203,
+          "parent": "Ursus",
+          "kingdom": "ANIMALIA",
+          "phylum": "CHORDATA",
+          "order": "CARNIVORA",
+          "family": "URSIDAE",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 336598482,
+          "phylumKey": 336598673,
+          "classKey": 336605913,
+          "orderKey": 336606139,
+          "familyKey": 336606200,
+          "genusKey": 336606203,
+          "speciesKey": 176684166,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "Phipps, 1774",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "22823",
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [
+            "VULNERABLE"
+          ],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Ours blanc",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Ours polaire",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Isbjørn",
+              "language": "nor"
+            },
+            {
+              "vernacularName": "Bely Medved",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "Oso Polar",
+              "language": "spa"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "336598482": "ANIMALIA",
+            "336598673": "CHORDATA",
+            "336605913": "MAMMALIA",
+            "336606139": "CARNIVORA",
+            "336606200": "URSIDAE",
+            "336606203": "Ursus"
+          },
+          "class": "MAMMALIA"
+        },
+        {
+          "key": 155304187,
+          "datasetKey": "2d59e5db-57ad-41ff-97d6-11f5fb264527",
+          "nubKey": 2433451,
+          "parentKey": 155304184,
+          "parent": "Ursus",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 154946057,
+          "phylumKey": 155295572,
+          "classKey": 155300309,
+          "orderKey": 155303901,
+          "familyKey": 155304181,
+          "genusKey": 155304184,
+          "speciesKey": 155304187,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "Phipps, 1774",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "urn:lsid:marinespecies.org:taxname:137085",
+          "habitats": [
+            "MARINE"
+          ],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "polar bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "ijsbeer",
+              "language": "nld"
+            },
+            {
+              "vernacularName": "niedźwiedź polarny",
+              "language": "pol"
+            },
+            {
+              "vernacularName": "oso polar",
+              "language": "spa"
+            },
+            {
+              "vernacularName": "Ведмідь білий",
+              "language": "ukr"
+            },
+            {
+              "vernacularName": "beli medved",
+              "language": "slv"
+            },
+            {
+              "vernacularName": "Eisbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "isbjørn",
+              "language": "nob"
+            },
+            {
+              "vernacularName": "isbjørn",
+              "language": "nno"
+            },
+            {
+              "vernacularName": "kutup ayisi",
+              "language": "tur"
+            },
+            {
+              "vernacularName": "Polarbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "белый медведь",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "Білий ведмідь",
+              "language": "ukr"
+            },
+            {
+              "vernacularName": "Πολική αρκούδα",
+              "language": "ell"
+            },
+            {
+              "vernacularName": "kutup ayısı",
+              "language": "tur"
+            },
+            {
+              "vernacularName": "baltasis lokys",
+              "language": "lit"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "154946057": "Animalia",
+            "155295572": "Chordata",
+            "155300309": "Mammalia",
+            "155303901": "Carnivora",
+            "155304181": "Ursidae",
+            "155304184": "Ursus"
+          },
+          "class": "Mammalia"
+        },
+        {
+          "key": 2433451,
+          "nameKey": 11658870,
+          "datasetKey": "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c",
+          "constituentKey": "7ddf754f-d193-4cc9-b351-99906754a03b",
+          "nubKey": 2433451,
+          "parentKey": 2433406,
+          "parent": "Ursus",
+          "basionymKey": 4409348,
+          "basionym": "Thalarctos maritimus (Phipps, 1774)",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 1,
+          "phylumKey": 44,
+          "classKey": 359,
+          "orderKey": 732,
+          "familyKey": 9681,
+          "genusKey": 2433406,
+          "speciesKey": 2433451,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "Phipps, 1774",
+          "publishedIn": "Voyage Towards North Pole p.185",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 1,
+          "numOccurrences": 0,
+          "taxonID": "gbif:2433451",
+          "extinct": false,
+          "habitats": [
+            "MARINE"
+          ],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [
+            "VULNERABLE"
+          ],
+          "descriptions": [
+            {
+              "description": "TYPE LOCALITY: Norway, Spitzbergen Isis."
+            },
+            {
+              "description": "DISTRIBUTION: Circumpolar in the Arctic."
+            },
+            {
+              "description": "COMMENT: Placed in genus Ursus, subgenus Thalarctos by Gromov and Baranova, 1981: 253, and in genus Thalarctos by Corbet, 1978: 166. Reviewed by DeMaster and Stirling, 1981, Mamm. Species, 145: 1 - 7."
+            },
+            {
+              "description": "PROTECTED STATUS: CITES - Appendix II as U. (— Thalarctos) maritimus."
+            },
+            {
+              "description": "Type Locality: \" on the main land of Spitsbergen \" [Norway]."
+            },
+            {
+              "description": "Distribution: Canada, Greenland, USA (Alaska), Russia. Circumpolar in the Arctic, S limits determined by ice pack."
+            },
+            {
+              "description": "Discussion: Revised by Wilson (1976). Reviewed by DeMaster and Stirling (1981). Placed in subgenus Thalarctos by Gromov and Baranova (1981). U. maritimus is considered the sister species to arctos (Goldman et al., 1989; Shields and Kocher, 1991). Synonyms allocated according to Ellerman and Morrison-Scott (1951) and Hall (1981)."
+            },
+            {
+              "description": "Conservation: CITES – Appendix II; IUCN – Lower Risk (cd)."
+            },
+            {
+              "description": "Spitsbergen, (Svalbard) Norway."
+            },
+            {
+              "description": "Food and Feeding. Almoststrictly carnivorous, preying mainly on young Ringed Seals (Pusa hispida), to a lesser extent Bearded Seals (Erignathus barbatus), and in some areas, Harp Seals (Pagophilus groenlandicus). The principal focus on Ringed Seals is evident in the close association between Polar Bear density and Ringed Seal density, and in the unique behavior of these seals, which give birth in subnivian lairs as an anti-predation strategy. One study found that an average Polar Bear consumes fewer than 50 Ringed Seals a year, 80 % being pups caught either in their lairs or shortly after emerging from their lairs. Polar Bears also occasionally prey on other marine mammals, such as Walruses (Odobenus rosmarus), and Beluga (Delphinapterus leucas) whales. These large prey, including Bearded Seals (which are much larger than Ringed Seals), are taken mainly by adult male bears. When ashore, depending on availability, Polar Bears have been observed to prey on Reindeer (Rangifer tarandus), seabirds, or fish; and eat carrion (dead whales), berries, vegetation, and human garbage."
+            },
+            {
+              "description": "Distribution. Arctic Ocean: Canada, USA (Alaska), Greenland, Norway (Svalbard), Russia. Have been sighted within 0 - 5 ° of North Pole."
+            },
+            {
+              "description": "Considered a sister species to U. arctos. Most closely related to Brown Bears on the Admiralty, Baranof, Chichagof islands of south-east Alaska. Although several distinct populations or stocks have been delineated, small genetic differences have been found among these, and no subspecies have been differentiated. Monotypic."
+            },
+            {
+              "description": "Descriptive notes. Head-body 180 - 280 cm, shoulder height up to 170 cm, tail 6 - 13 cm; adult males are about twice as heavy (300 - 650 kg, but up to 800 kg) as adult females (150 - 250 kg, but up to 500 kg when pregnant), making them one of the most sexuallydimorphic mammals. Size varies regionally, being smallest in eastern Greenland, and progressively larger westward to the Bering Sea. Facial profile is straight, the neck is longer than in other bears, and the ears are small in relation to head and body size. Coat color appears white or yellowish, with no other markings, but can accumulate colors from the environment (e. g. blood and oils from killed prey). In reality, both guard hairs and underfur are translucent, and guard hairs are hollow, thus enhancing their insulation properties. However, a previous assertion that they act as fiber optic tubes, funneling sunlight to the skin for warmth, has been disproven. The skin is black, but only the black nose is visible. Summer coats are shorter than winter coats, but unlike other bears, coat thickness is not sparser ventrally. Additionally, the paws are well-furred on the underside, and have small soft papillae and vacuoles that may act as suction cups for traction on ice. The feet are also relatively large, providing more surface area for swimming and walking on thin ice. The claws are shorter and more curved than Brown Bears, and are usually dark-colored."
+            },
+            {
+              "description": "Status and Conservation. CITES Appendix II. In 2006 The IUCN Red List status was upgraded to Vulnerable due to projections of dramatic reductions in habitat (coverage and stability of the ice sheet) over the next 50 - 100 years. Demographic consequences to Polar Bears are already becoming apparent in some areas, in terms of reduced numbers and reduced survival ofjuveniles and old adults. Ringed Seals are also suffering increased mortality from Polar Bear predation because of melting of their subnivian dens. Accordingly, the USA listed the species as nationally threatened and Canada listed it as a species of special concern. This would impose further constraints on activities that affect these bears or their habitat, such as hunting, recreational viewing, shipping, and oil and gas exploration and development. The effects of sea ice change will vary enormously by region, which is difficult to forecast, but overall arelikely to be dramatic and permanent. Nineteen fairly discrete populations have been identified, with a total world population estimated at 20,000 - 25,000; about half this number resides in the Canadian territory of Nunavut. Under an agreement for co-management of Polar Bear populations that was ratified in 1976, the five range countries coordinate and consult with each other on research activities, methods of population estimation and monitoring, and proposals for increased protection. Most importantly, under this treaty, harvestis restricted: the taking of cubs or females with cubs is prohibited, and harvest is limited to native people for subsistence use. This includes consumption of meat, use of hides for clothing, and creation of handicrafts. In some territories of Canada, a portion of the annual harvest is allocated to non-native sport hunters who employ native guides and hunt using dogsleds and other traditional methods. This generates income for the native communities. Harvests are regulated to be sustainable. Recently, pressure has mounted to reduce or prohibit harvests so as not to compound the effects of diminishing sea ice habitat from global warming."
+            },
+            {
+              "description": "Breeding. Breeding occurs from March to June. Mating induces ovulation, and males spar for mating partners. Implantation of the fertilized egg is delayed until autumn, about the time that females enter maternity dens. In some areas this follows a period of on-shore fasting, so by the time these mothers emerge from dens the following spring they may not have eaten for eight months. Birthing occurs mid-November to January, so the total gestation, including the period of delayed implantation, is from 6: 5 to more than 8 - 5 months. Cubs stay in the den until March or early April. Two-cublitters are most common, and average litter size is less than two in virtually all populations; however, litters of three are not uncommon in some areas, and litters of four have been reported. Females have only four mammae (other bears, except Sun Bears and Giant Pandas have six), so this is the maximum litter size. Average age offirst birthing ranges among different populations from 4 - 6 - 7 - 2 years. Productivity increases into the teen years, but then declines through the early 20 s, and ceases by the late 20 s. Intervals between litters average 2 - 1 - 3 - 6 years. Cubs separate from their mother either at 17 months, or more commonly a year later. Cubs may nurse through their second birthday. The fat content of milk is very high initially (more than 30 %), but declines through the nursing period."
+            },
+            {
+              "description": "Movements, Home range and Social organization. Although once thought to wander aimlessly or be carried passively on shifting ice, recent data collected using satellite radio collars have shown that Polar Bears have definite home ranges that are used year to year. However, these ranges can be enormous: one female bear traveled over 5200 km from Alaska to Greenland in four months. Nevertheless, most bears seem to remain within a discrete population, or stock; 19 or 20 such populations have been identified across the geographic range. Home ranges and movements are highly variable by region, habitat, season, and reproductive condition or family association. Around Svalbard, nearshore bears tend to have smaller home ranges than pelagic bears. In the Canadian Arctic, bears that live in areas with highly variable and unpredictable ice conditions (including ice-free periods) have larger ranges than bears living on more stable ice. Individual ranges as large as 600,000 km * have been reported, but so have ranges of less than 1000 km ®. Means among different populations range from 20,000 - 250,000 km?. Little movement data have been collected on males, because they cannot be radio-collared (their necks are bigger than their heads), but data from implanted transmitters indicate that, unlike terrestrial bears, their ranges are not larger than those of females. With females being so mobile, and having highly overlapping ranges, males can include multiple potential breeding partners within their range, even if their range is not larger than the females’. Female maternity dens are highly congregated in some areas, such as Wrangel Island, parts of Svalbard, Franz Josef Land, Novaya Zemlya, and near Churchill, Manitoba."
+            },
+            {
+              "description": "Habitat. Arctic ice provides a necessary platform for hunting seals. Annual ice adjacent to coastlines (shore fast ice) regularly fractures, providing open leads where seals can breathe. The seasonal fluctuations between freezing and open water also promotes high productivity of fish, the prey of seals. Thus, this habitat is preferred by seals, and is consequently a favored habitat for Polar Bears, which hunt seals along the ice cracks and edges. Polar Bears also hunt from large chunks of drifting ice, and to a lesser extent, multiannual pack ice, where seal density is lower and access to seals more difficult. For this reason, density of Polar Bearsis low close to the North Pole. In summer, when the ice retreats, bears either migrate northward or use nearshore terrestrial habitats. Parturient females stay ashore to den and give birth. In Hudson Bay (Canada) they den 10 - 80 km inland in peat banks; elsewhere maternity dens are typically in snow caves along coastal areas. However, in the Beaufort Sea, half the pregnant females den on drifting sea ice. Non-pregnant bears do not hibernate, but do use shelter dens. At lower latitudes, they use shelters on land during ice-free periods to escape heat and conserve energy when precluded from hunting seals; at high latitudes (above 75 ° N) they seek shelters on thick sea ice during winter, when foraging is most difficult and weather conditions harshest."
+            },
+            {
+              "description": "Activity patterns. Appear to be mainly diurnal. Seasonal changes in activity vary regionally with dynamics of sea ice and abundance of prey. Activity, measured by percent of time active and distance moved, is elevated when seal pups are particularly naive and vulnerable to predation, and when older seals are molting and basking on the ice. In contrast to other predators, Polar Bears are most active when prey is most abundant. They become hyperphagic, and are able to store fat to withstand extended periods when foraging is more difficult, such as during the winter on the pack ice. Periods of rapid annual ice formation and ablation, during summer and fall, also result in greater activity. Parturient females den for about six months (mid-September to mid-March in most areas); non-pregnant Polar Bears do not hibernate."
+            },
+            {
+              "description": "TYPE LOCALITY: \" on the main land of Spitsbergen \" [Norway]."
+            },
+            {
+              "description": "DISTRIBUTION: Circumpolar in the Arctic, S limits determined by ice pack."
+            },
+            {
+              "description": "COMMENTS: Revised by Wilson (1976). Reviewed by DeMaster and Stirling (1981, Mammalian Species, 145). Placed in subgenus Thalarctos by Gromov and Baranova (1981). Sister species to arctos (Goldman et al., 1989; Shields and Kocher, 1991)."
+            },
+            {
+              "description": "STATUS: CITES - Appendix II; IUCN - Vulnerable."
+            }
+          ],
+          "vernacularNames": [
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Oso Polar",
+              "language": "spa"
+            },
+            {
+              "vernacularName": "Bely Medved",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "Isbjørn",
+              "language": "nor"
+            },
+            {
+              "vernacularName": "Ours polaire",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Ours blanc",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Isbjörn",
+              "language": "swe"
+            },
+            {
+              "vernacularName": "Ariu i bardhe",
+              "language": "sqi"
+            },
+            {
+              "vernacularName": "Beli medved",
+              "language": "slv"
+            },
+            {
+              "vernacularName": "Urs-polar",
+              "language": "ron"
+            },
+            {
+              "vernacularName": "Urso-polar",
+              "language": "por"
+            },
+            {
+              "vernacularName": "Isbjørn",
+              "language": "nor"
+            },
+            {
+              "vernacularName": "Ijsbeer",
+              "language": "nld"
+            },
+            {
+              "vernacularName": "Baltasis lokys",
+              "language": "lit"
+            },
+            {
+              "vernacularName": "Äisbier",
+              "language": "ltz"
+            },
+            {
+              "vernacularName": "Orso polare",
+              "language": "ita"
+            },
+            {
+              "vernacularName": "Hvítabjörn",
+              "language": "isl"
+            },
+            {
+              "vernacularName": "Jegesmedve",
+              "language": "hun"
+            },
+            {
+              "vernacularName": "Polarni medvjed",
+              "language": "hrv"
+            },
+            {
+              "vernacularName": "Ours polaire",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Jääkarhu",
+              "language": "fin"
+            },
+            {
+              "vernacularName": "Jääkaru",
+              "language": "est"
+            },
+            {
+              "vernacularName": "Oso polar",
+              "language": "spa"
+            },
+            {
+              "vernacularName": "Polar bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Eisbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "Isbjørn",
+              "language": "dan"
+            },
+            {
+              "vernacularName": "белый медведь",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "Ведмідь білий",
+              "language": "ukr"
+            },
+            {
+              "vernacularName": "Білий ведмідь",
+              "language": "ukr"
+            },
+            {
+              "vernacularName": "Πολική αρκούδα",
+              "language": "ell"
+            },
+            {
+              "vernacularName": "polar bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "oso polar",
+              "language": "spa"
+            },
+            {
+              "vernacularName": "niedźwiedź polarny",
+              "language": "pol"
+            },
+            {
+              "vernacularName": "kutup ayısı",
+              "language": "tur"
+            },
+            {
+              "vernacularName": "kutup ayisi",
+              "language": "tur"
+            },
+            {
+              "vernacularName": "isbjørn",
+              "language": "nob"
+            },
+            {
+              "vernacularName": "isbjørn",
+              "language": "nno"
+            },
+            {
+              "vernacularName": "ijsbeer",
+              "language": "nld"
+            },
+            {
+              "vernacularName": "beli medved",
+              "language": "slv"
+            },
+            {
+              "vernacularName": "baltasis lokys",
+              "language": "lit"
+            },
+            {
+              "vernacularName": "Polarbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "Eisbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Polar bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Heşo sıpê"
+            },
+            {
+              "vernacularName": "白熊",
+              "language": "zho"
+            },
+            {
+              "vernacularName": "冰熊",
+              "language": "zho"
+            },
+            {
+              "vernacularName": "北極熊"
+            },
+            {
+              "vernacularName": "ჩე თუნთი"
+            },
+            {
+              "vernacularName": "Gấu trắng Bắc Cực",
+              "language": "vie"
+            },
+            {
+              "vernacularName": "Oq ayiq",
+              "language": "uzb"
+            },
+            {
+              "vernacularName": "قطبی ریچھ",
+              "language": "urd"
+            },
+            {
+              "vernacularName": "Ведмідь білий",
+              "language": "ukr"
+            },
+            {
+              "vernacularName": "Білий ведмідь",
+              "language": "ukr"
+            },
+            {
+              "vernacularName": "شىمالىي قۇتۇپ ئېيىقى",
+              "language": "uig"
+            },
+            {
+              "vernacularName": "Тӧдьы гондыр"
+            },
+            {
+              "vernacularName": "kutup ayisi",
+              "language": "tur"
+            },
+            {
+              "vernacularName": "หมีขาว",
+              "language": "tha"
+            },
+            {
+              "vernacularName": "หมีขั้วโลก",
+              "language": "tha"
+            },
+            {
+              "vernacularName": "పోలార్ బేర్",
+              "language": "tel"
+            },
+            {
+              "vernacularName": "పోలార్ ఎలుగుబంటి",
+              "language": "tel"
+            },
+            {
+              "vernacularName": "ధృవపు ఎలుగుబంటి",
+              "language": "tel"
+            },
+            {
+              "vernacularName": "ак аю",
+              "language": "tat"
+            },
+            {
+              "vernacularName": "aq ayu",
+              "language": "tat"
+            },
+            {
+              "vernacularName": "போலார் கரடி",
+              "language": "tam"
+            },
+            {
+              "vernacularName": "பனிக்கரடி",
+              "language": "tam"
+            },
+            {
+              "vernacularName": "துருவக் கரடி",
+              "language": "tam"
+            },
+            {
+              "vernacularName": "isbjörn",
+              "language": "swe"
+            },
+            {
+              "vernacularName": "Dubu barafu",
+              "language": "swa"
+            },
+            {
+              "vernacularName": "Biruang kutub",
+              "language": "sun"
+            },
+            {
+              "vernacularName": "бели медвед",
+              "language": "srp"
+            },
+            {
+              "vernacularName": "Бели медвед / Beli medved",
+              "language": "srp"
+            },
+            {
+              "vernacularName": "Ariu polar",
+              "language": "sqi"
+            },
+            {
+              "vernacularName": "oso polar",
+              "language": "spa"
+            },
+            {
+              "vernacularName": "jieŋâkuobžâ"
+            },
+            {
+              "vernacularName": "jiekŋaguovža",
+              "language": "sme"
+            },
+            {
+              "vernacularName": "beli medved",
+              "language": "slv"
+            },
+            {
+              "vernacularName": "medveď biely",
+              "language": "slk"
+            },
+            {
+              "vernacularName": "හිම වලසා",
+              "language": "sin"
+            },
+            {
+              "vernacularName": "polar beir"
+            },
+            {
+              "vernacularName": "ᱦᱤᱢ ᱵᱟᱱᱟ"
+            },
+            {
+              "vernacularName": "Үрүҥ эһэ"
+            },
+            {
+              "vernacularName": "полярный медведь",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "белый медведь",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "Bely Medved",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "Urs polar",
+              "language": "ron"
+            },
+            {
+              "vernacularName": "Yuraq ukumari",
+              "language": "que"
+            },
+            {
+              "vernacularName": "قطبي اېږ",
+              "language": "pus"
+            },
+            {
+              "vernacularName": "Urso-polar",
+              "language": "por"
+            },
+            {
+              "vernacularName": "niedźwiedź polarny",
+              "language": "pol"
+            },
+            {
+              "vernacularName": "برفانی رچھ"
+            },
+            {
+              "vernacularName": "ਧਰੁਵੀ ਭਾਲੂ",
+              "language": "pan"
+            },
+            {
+              "vernacularName": "Урс арс",
+              "language": "oss"
+            },
+            {
+              "vernacularName": "Ors polar",
+              "language": "oci"
+            },
+            {
+              "vernacularName": "Ors blanc",
+              "language": "oci"
+            },
+            {
+              "vernacularName": "isbjørn",
+              "language": "nob"
+            },
+            {
+              "vernacularName": "Polarbjørn",
+              "language": "nob"
+            },
+            {
+              "vernacularName": "Hvitbjørn",
+              "language": "nob"
+            },
+            {
+              "vernacularName": "ijsbeer",
+              "language": "nld"
+            },
+            {
+              "vernacularName": "ध्रुविय भालु",
+              "language": "nep"
+            },
+            {
+              "vernacularName": "Iesboor"
+            },
+            {
+              "vernacularName": "Shash łigaígíí",
+              "language": "nav"
+            },
+            {
+              "vernacularName": "Pe̍h-hîm"
+            },
+            {
+              "vernacularName": "اسپه اش"
+            },
+            {
+              "vernacularName": "ဝင်ရိုးစွန်းဝက်ဝံ",
+              "language": "mya"
+            },
+            {
+              "vernacularName": "Beruang Polar",
+              "language": "msa"
+            },
+            {
+              "vernacularName": "Цагаан баавгай",
+              "language": "mon"
+            },
+            {
+              "vernacularName": "Поларна мечка",
+              "language": "mkd"
+            },
+            {
+              "vernacularName": "Бела мечка",
+              "language": "mkd"
+            },
+            {
+              "vernacularName": "ош маска"
+            },
+            {
+              "vernacularName": "ध्रुवीय अस्वल",
+              "language": "mar"
+            },
+            {
+              "vernacularName": "ധ്രുവക്കരടി",
+              "language": "mal"
+            },
+            {
+              "vernacularName": "Äisbier",
+              "language": "ltz"
+            },
+            {
+              "vernacularName": "Polarbier",
+              "language": "ltz"
+            },
+            {
+              "vernacularName": "baltasis lokys",
+              "language": "lit"
+            },
+            {
+              "vernacularName": "Iesbeer",
+              "language": "lim"
+            },
+            {
+              "vernacularName": "Лацу сев"
+            },
+            {
+              "vernacularName": "Polārlācis",
+              "language": "lav"
+            },
+            {
+              "vernacularName": "Lonso polar"
+            },
+            {
+              "vernacularName": "북극곰",
+              "language": "kor"
+            },
+            {
+              "vernacularName": "Чочком ош"
+            },
+            {
+              "vernacularName": "ខ្លាឃ្មុំទឹកកក",
+              "language": "khm"
+            },
+            {
+              "vernacularName": "Ақ аю",
+              "language": "kaz"
+            },
+            {
+              "vernacularName": "თეთრი დათვი",
+              "language": "kat"
+            },
+            {
+              "vernacularName": "ಹಿಮಕರಡಿ",
+              "language": "kan"
+            },
+            {
+              "vernacularName": "Nanoq",
+              "language": "kal"
+            },
+            {
+              "vernacularName": "Nanok",
+              "language": "kal"
+            },
+            {
+              "vernacularName": "Ursu amellal"
+            },
+            {
+              "vernacularName": "白クマ",
+              "language": "jpn"
+            },
+            {
+              "vernacularName": "ホッキョクグマ",
+              "language": "jpn"
+            },
+            {
+              "vernacularName": "bercribe"
+            },
+            {
+              "vernacularName": "Orso polare",
+              "language": "ita"
+            },
+            {
+              "vernacularName": "Orso bianco",
+              "language": "ita"
+            },
+            {
+              "vernacularName": "Ísbjörn",
+              "language": "isl"
+            },
+            {
+              "vernacularName": "Hvítabjörn",
+              "language": "isl"
+            },
+            {
+              "vernacularName": "Nanuq",
+              "language": "ipk"
+            },
+            {
+              "vernacularName": "Beruang kutub",
+              "language": "ind"
+            },
+            {
+              "vernacularName": "Beruang es",
+              "language": "ind"
+            },
+            {
+              "vernacularName": "ᓇᓄᖅ",
+              "language": "iku"
+            },
+            {
+              "vernacularName": "Nanuk",
+              "language": "iku"
+            },
+            {
+              "vernacularName": "Սպիտակ Արջ"
+            },
+            {
+              "vernacularName": "jegesmedve",
+              "language": "hun"
+            },
+            {
+              "vernacularName": "běły mjedwjedź"
+            },
+            {
+              "vernacularName": "Polarni medvjed",
+              "language": "hrv"
+            },
+            {
+              "vernacularName": "דוב קוטב",
+              "language": "heb"
+            },
+            {
+              "vernacularName": "Nanuka"
+            },
+            {
+              "vernacularName": "ધ્રુવીય રીંછ",
+              "language": "guj"
+            },
+            {
+              "vernacularName": "Mucawin bane",
+              "language": "glv"
+            },
+            {
+              "vernacularName": "Oso branco",
+              "language": "glg"
+            },
+            {
+              "vernacularName": "Béar bán",
+              "language": "gle"
+            },
+            {
+              "vernacularName": "Iisbear",
+              "language": "fry"
+            },
+            {
+              "vernacularName": "ours blanc",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Ours polaire",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Jääkarhu",
+              "language": "fin"
+            },
+            {
+              "vernacularName": "خرس قطبی",
+              "language": "fas"
+            },
+            {
+              "vernacularName": "Hvítabjørn",
+              "language": "fao"
+            },
+            {
+              "vernacularName": "Hartz zuri",
+              "language": "eus"
+            },
+            {
+              "vernacularName": "Hartz polar",
+              "language": "eus"
+            },
+            {
+              "vernacularName": "Jääkaru",
+              "language": "est"
+            },
+            {
+              "vernacularName": "blanka urso",
+              "language": "epo"
+            },
+            {
+              "vernacularName": "\\\\ White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Nanook",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Ice Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Great White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Πολική αρκούδα",
+              "language": "ell"
+            },
+            {
+              "vernacularName": "Běły mjadwjeź"
+            },
+            {
+              "vernacularName": "Polarbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "Eisbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "Eisbar",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "arth wen",
+              "language": "cym"
+            },
+            {
+              "vernacularName": "Arth gwynn",
+              "language": "cor"
+            },
+            {
+              "vernacularName": "ورچی بەستەڵەک"
+            },
+            {
+              "vernacularName": "Vóhpenáhkohe"
+            },
+            {
+              "vernacularName": "Шурă упа",
+              "language": "chv"
+            },
+            {
+              "vernacularName": "Ош мӧскӓ"
+            },
+            {
+              "vernacularName": "Polární medvěd",
+              "language": "ces"
+            },
+            {
+              "vernacularName": "Medvěd lední",
+              "language": "ces"
+            },
+            {
+              "vernacularName": "Bílý medvěd",
+              "language": "ces"
+            },
+            {
+              "vernacularName": "Ós polar",
+              "language": "cat"
+            },
+            {
+              "vernacularName": "Ós blanc",
+              "language": "cat"
+            },
+            {
+              "vernacularName": "Os polar",
+              "language": "cat"
+            },
+            {
+              "vernacularName": "Полярна мечка",
+              "language": "bul"
+            },
+            {
+              "vernacularName": "Бяла мечка",
+              "language": "bul"
+            },
+            {
+              "vernacularName": "Arzh gwenn",
+              "language": "bre"
+            },
+            {
+              "vernacularName": "བྱང་སྣེའི་དོམ་དཀར།",
+              "language": "bod"
+            },
+            {
+              "vernacularName": "ध्रुवीय भालू"
+            },
+            {
+              "vernacularName": "মেরু ভালুক",
+              "language": "ben"
+            },
+            {
+              "vernacularName": "Мядзведзь белы",
+              "language": "bel"
+            },
+            {
+              "vernacularName": "Ağ ayı",
+              "language": "aze"
+            },
+            {
+              "vernacularName": "آغ آیی"
+            },
+            {
+              "vernacularName": "batakaf rupoleem"
+            },
+            {
+              "vernacularName": "ХъахӀаб ци",
+              "language": "ava"
+            },
+            {
+              "vernacularName": "Ошкуй",
+              "language": "ava"
+            },
+            {
+              "vernacularName": "বগা ভালুক",
+              "language": "asm"
+            },
+            {
+              "vernacularName": "nookox"
+            },
+            {
+              "vernacularName": "Onso polar",
+              "language": "arg"
+            },
+            {
+              "vernacularName": "دب قطبي",
+              "language": "ara"
+            },
+            {
+              "vernacularName": "የዋልታ ድብ",
+              "language": "amh"
+            },
+            {
+              "vernacularName": "Ysbeer",
+              "language": "afr"
+            },
+            {
+              "vernacularName": "Poolbeer",
+              "language": "afr"
+            },
+            {
+              "vernacularName": "Eisbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "ours blanc",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "jiekŋaguovža",
+              "language": "sme"
+            },
+            {
+              "vernacularName": "isbjørn",
+              "language": "nno"
+            },
+            {
+              "vernacularName": "isbjørn",
+              "language": "nob"
+            },
+            {
+              "vernacularName": "Nanook",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "\\ White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Oso polar"
+            },
+            {
+              "vernacularName": "Eisbar",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "Ours blanc",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "polar bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "ours blanc",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "1": "Animalia",
+            "44": "Chordata",
+            "359": "Mammalia",
+            "732": "Carnivora",
+            "9681": "Ursidae",
+            "2433406": "Ursus"
+          },
+          "class": "Mammalia"
+        },
+        {
+          "key": 299458633,
+          "datasetKey": "7ddf754f-d193-4cc9-b351-99906754a03b",
+          "nubKey": 2433451,
+          "parentKey": 299458207,
+          "parent": "Ursus",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 296374190,
+          "phylumKey": 299312263,
+          "classKey": 302160612,
+          "orderKey": 302161013,
+          "familyKey": 299458141,
+          "genusKey": 299458207,
+          "speciesKey": 299458633,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "canonicalName": "Ursus maritimus",
+          "authorship": "Phipps, 1774",
+          "publishedIn": "Voyage Towards North Pole p.185",
+          "nameType": "SCIENTIFIC",
+          "taxonomicStatus": "ACCEPTED",
+          "rank": "SPECIES",
+          "origin": "SOURCE",
+          "numDescendants": 0,
+          "numOccurrences": 0,
+          "taxonID": "7F2J9",
+          "extinct": false,
+          "habitats": [],
+          "nomenclaturalStatus": [],
+          "threatStatuses": [],
+          "descriptions": [],
+          "vernacularNames": [
+            {
+              "vernacularName": "Poolbeer",
+              "language": "afr"
+            },
+            {
+              "vernacularName": "Ysbeer",
+              "language": "afr"
+            },
+            {
+              "vernacularName": "የዋልታ ድብ",
+              "language": "amh"
+            },
+            {
+              "vernacularName": "دب قطبي",
+              "language": "ara"
+            },
+            {
+              "vernacularName": "Onso polar",
+              "language": "arg"
+            },
+            {
+              "vernacularName": "বগা ভালুক",
+              "language": "asm"
+            },
+            {
+              "vernacularName": "Ошкуй",
+              "language": "ava"
+            },
+            {
+              "vernacularName": "ХъахӀаб ци",
+              "language": "ava"
+            },
+            {
+              "vernacularName": "Ağ ayı",
+              "language": "aze"
+            },
+            {
+              "vernacularName": "Мядзведзь белы",
+              "language": "bel"
+            },
+            {
+              "vernacularName": "মেরু ভালুক",
+              "language": "ben"
+            },
+            {
+              "vernacularName": "བྱང་སྣེའི་དོམ་དཀར།",
+              "language": "bod"
+            },
+            {
+              "vernacularName": "Arzh gwenn",
+              "language": "bre"
+            },
+            {
+              "vernacularName": "Бяла мечка",
+              "language": "bul"
+            },
+            {
+              "vernacularName": "Полярна мечка",
+              "language": "bul"
+            },
+            {
+              "vernacularName": "Os polar",
+              "language": "cat"
+            },
+            {
+              "vernacularName": "Ós blanc",
+              "language": "cat"
+            },
+            {
+              "vernacularName": "Ós polar",
+              "language": "cat"
+            },
+            {
+              "vernacularName": "Bílý medvěd",
+              "language": "ces"
+            },
+            {
+              "vernacularName": "Medvěd lední",
+              "language": "ces"
+            },
+            {
+              "vernacularName": "Polární medvěd",
+              "language": "ces"
+            },
+            {
+              "vernacularName": "Шурă упа",
+              "language": "chv"
+            },
+            {
+              "vernacularName": "ورچی بەستەڵەک"
+            },
+            {
+              "vernacularName": "Arth gwynn",
+              "language": "cor"
+            },
+            {
+              "vernacularName": "arth wen",
+              "language": "cym"
+            },
+            {
+              "vernacularName": "Eisbar",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "Eisbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "Polarbär",
+              "language": "deu"
+            },
+            {
+              "vernacularName": "Běły mjadwjeź"
+            },
+            {
+              "vernacularName": "Πολική αρκούδα",
+              "language": "ell"
+            },
+            {
+              "vernacularName": "Great White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Ice Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Nanook",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "Polar Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "\\\\ White Bear",
+              "language": "eng"
+            },
+            {
+              "vernacularName": "blanka urso",
+              "language": "epo"
+            },
+            {
+              "vernacularName": "Jääkaru",
+              "language": "est"
+            },
+            {
+              "vernacularName": "Hartz polar",
+              "language": "eus"
+            },
+            {
+              "vernacularName": "Hartz zuri",
+              "language": "eus"
+            },
+            {
+              "vernacularName": "Hvítabjørn",
+              "language": "fao"
+            },
+            {
+              "vernacularName": "خرس قطبی",
+              "language": "fas"
+            },
+            {
+              "vernacularName": "Jääkarhu",
+              "language": "fin"
+            },
+            {
+              "vernacularName": "Ours polaire",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "ours blanc",
+              "language": "fra"
+            },
+            {
+              "vernacularName": "Iisbear",
+              "language": "fry"
+            },
+            {
+              "vernacularName": "Béar bán",
+              "language": "gle"
+            },
+            {
+              "vernacularName": "Oso branco",
+              "language": "glg"
+            },
+            {
+              "vernacularName": "Mucawin bane",
+              "language": "glv"
+            },
+            {
+              "vernacularName": "ધ્રુવીય રીંછ",
+              "language": "guj"
+            },
+            {
+              "vernacularName": "Nanuka"
+            },
+            {
+              "vernacularName": "דוב קוטב",
+              "language": "heb"
+            },
+            {
+              "vernacularName": "Polarni medvjed",
+              "language": "hrv"
+            },
+            {
+              "vernacularName": "běły mjedwjedź"
+            },
+            {
+              "vernacularName": "jegesmedve",
+              "language": "hun"
+            },
+            {
+              "vernacularName": "Nanuk",
+              "language": "iku"
+            },
+            {
+              "vernacularName": "ᓇᓄᖅ",
+              "language": "iku"
+            },
+            {
+              "vernacularName": "Beruang es",
+              "language": "ind"
+            },
+            {
+              "vernacularName": "Beruang kutub",
+              "language": "ind"
+            },
+            {
+              "vernacularName": "Nanuq",
+              "language": "ipk"
+            },
+            {
+              "vernacularName": "Hvítabjörn",
+              "language": "isl"
+            },
+            {
+              "vernacularName": "Ísbjörn",
+              "language": "isl"
+            },
+            {
+              "vernacularName": "Orso bianco",
+              "language": "ita"
+            },
+            {
+              "vernacularName": "Orso polare",
+              "language": "ita"
+            },
+            {
+              "vernacularName": "ホッキョクグマ",
+              "language": "jpn"
+            },
+            {
+              "vernacularName": "白クマ",
+              "language": "jpn"
+            },
+            {
+              "vernacularName": "Ursu amellal"
+            },
+            {
+              "vernacularName": "Nanok",
+              "language": "kal"
+            },
+            {
+              "vernacularName": "Nanoq",
+              "language": "kal"
+            },
+            {
+              "vernacularName": "ಹಿಮಕರಡಿ",
+              "language": "kan"
+            },
+            {
+              "vernacularName": "თეთრი დათვი",
+              "language": "kat"
+            },
+            {
+              "vernacularName": "Ақ аю",
+              "language": "kaz"
+            },
+            {
+              "vernacularName": "ខ្លាឃ្មុំទឹកកក",
+              "language": "khm"
+            },
+            {
+              "vernacularName": "북극곰",
+              "language": "kor"
+            },
+            {
+              "vernacularName": "Polārlācis",
+              "language": "lav"
+            },
+            {
+              "vernacularName": "Iesbeer",
+              "language": "lim"
+            },
+            {
+              "vernacularName": "baltasis lokys",
+              "language": "lit"
+            },
+            {
+              "vernacularName": "Polarbier",
+              "language": "ltz"
+            },
+            {
+              "vernacularName": "Äisbier",
+              "language": "ltz"
+            },
+            {
+              "vernacularName": "ധ്രുവക്കരടി",
+              "language": "mal"
+            },
+            {
+              "vernacularName": "ध्रुवीय अस्वल",
+              "language": "mar"
+            },
+            {
+              "vernacularName": "Бела мечка",
+              "language": "mkd"
+            },
+            {
+              "vernacularName": "Поларна мечка",
+              "language": "mkd"
+            },
+            {
+              "vernacularName": "Цагаан баавгай",
+              "language": "mon"
+            },
+            {
+              "vernacularName": "Beruang Polar",
+              "language": "msa"
+            },
+            {
+              "vernacularName": "ဝင်ရိုးစွန်းဝက်ဝံ",
+              "language": "mya"
+            },
+            {
+              "vernacularName": "اسپه اش"
+            },
+            {
+              "vernacularName": "Shash łigaígíí",
+              "language": "nav"
+            },
+            {
+              "vernacularName": "Iesboor"
+            },
+            {
+              "vernacularName": "ध्रुविय भालु",
+              "language": "nep"
+            },
+            {
+              "vernacularName": "ijsbeer",
+              "language": "nld"
+            },
+            {
+              "vernacularName": "Hvitbjørn",
+              "language": "nob"
+            },
+            {
+              "vernacularName": "Polarbjørn",
+              "language": "nob"
+            },
+            {
+              "vernacularName": "isbjørn",
+              "language": "nob"
+            },
+            {
+              "vernacularName": "Ors blanc",
+              "language": "oci"
+            },
+            {
+              "vernacularName": "Ors polar",
+              "language": "oci"
+            },
+            {
+              "vernacularName": "Урс арс",
+              "language": "oss"
+            },
+            {
+              "vernacularName": "ਧਰੁਵੀ ਭਾਲੂ",
+              "language": "pan"
+            },
+            {
+              "vernacularName": "niedźwiedź polarny",
+              "language": "pol"
+            },
+            {
+              "vernacularName": "Urso-polar",
+              "language": "por"
+            },
+            {
+              "vernacularName": "قطبي اېږ",
+              "language": "pus"
+            },
+            {
+              "vernacularName": "Yuraq ukumari",
+              "language": "que"
+            },
+            {
+              "vernacularName": "Urs polar",
+              "language": "ron"
+            },
+            {
+              "vernacularName": "Bely Medved",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "белый медведь",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "полярный медведь",
+              "language": "rus"
+            },
+            {
+              "vernacularName": "Үрүҥ эһэ"
+            },
+            {
+              "vernacularName": "ᱦᱤᱢ ᱵᱟᱱᱟ"
+            },
+            {
+              "vernacularName": "හිම වලසා",
+              "language": "sin"
+            },
+            {
+              "vernacularName": "medveď biely",
+              "language": "slk"
+            },
+            {
+              "vernacularName": "beli medved",
+              "language": "slv"
+            },
+            {
+              "vernacularName": "severni medved",
+              "language": "slv"
+            },
+            {
+              "vernacularName": "jiekŋaguovža",
+              "language": "sme"
+            },
+            {
+              "vernacularName": "jieŋâkuobžâ"
+            },
+            {
+              "vernacularName": "oso polar",
+              "language": "spa"
+            },
+            {
+              "vernacularName": "Ariu polar",
+              "language": "sqi"
+            },
+            {
+              "vernacularName": "Бели медвед / Beli medved",
+              "language": "srp"
+            },
+            {
+              "vernacularName": "бели медвед",
+              "language": "srp"
+            },
+            {
+              "vernacularName": "Biruang kutub",
+              "language": "sun"
+            },
+            {
+              "vernacularName": "Dubu barafu",
+              "language": "swa"
+            },
+            {
+              "vernacularName": "isbjörn",
+              "language": "swe"
+            },
+            {
+              "vernacularName": "துருவக் கரடி",
+              "language": "tam"
+            },
+            {
+              "vernacularName": "பனிக்கரடி",
+              "language": "tam"
+            },
+            {
+              "vernacularName": "போலார் கரடி",
+              "language": "tam"
+            },
+            {
+              "vernacularName": "aq ayu",
+              "language": "tat"
+            },
+            {
+              "vernacularName": "ак аю",
+              "language": "tat"
+            },
+            {
+              "vernacularName": "ధృవపు ఎలుగుబంటి",
+              "language": "tel"
+            },
+            {
+              "vernacularName": "పోలార్ ఎలుగుబంటి",
+              "language": "tel"
+            },
+            {
+              "vernacularName": "పోలార్ బేర్",
+              "language": "tel"
+            },
+            {
+              "vernacularName": "หมีขั้วโลก",
+              "language": "tha"
+            },
+            {
+              "vernacularName": "หมีขาว",
+              "language": "tha"
+            },
+            {
+              "vernacularName": "kutup ayisi",
+              "language": "tur"
+            },
+            {
+              "vernacularName": "شىمالىي قۇتۇپ ئېيىقى",
+              "language": "uig"
+            },
+            {
+              "vernacularName": "Білий ведмідь",
+              "language": "ukr"
+            },
+            {
+              "vernacularName": "Ведмідь білий",
+              "language": "ukr"
+            },
+            {
+              "vernacularName": "قطبی ریچھ",
+              "language": "urd"
+            },
+            {
+              "vernacularName": "Oq ayiq",
+              "language": "uzb"
+            },
+            {
+              "vernacularName": "Gấu trắng Bắc Cực",
+              "language": "vie"
+            },
+            {
+              "vernacularName": "北極熊"
+            },
+            {
+              "vernacularName": "冰熊",
+              "language": "zho"
+            },
+            {
+              "vernacularName": "白熊",
+              "language": "zho"
+            }
+          ],
+          "synonym": false,
+          "higherClassificationMap": {
+            "296374190": "Animalia",
+            "299312263": "Chordata",
+            "299458141": "Ursidae",
+            "299458207": "Ursus",
+            "302160612": "Mammalia",
+            "302161013": "Carnivora"
+          },
+          "class": "Mammalia"
+        }
+      ],
+      "facets": []
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

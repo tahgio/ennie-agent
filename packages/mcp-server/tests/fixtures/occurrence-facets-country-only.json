@@ -1,0 +1,67 @@
+{
+  "name": "occurrence-facets-country-only",
+  "why": "A single-dimension summary, to show one call still answers it",
+  "request": {
+    "path": "/occurrence/search?taxonKey=2433451&limit=0&facet=country&country.facetLimit=10"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "offset": 0,
+      "limit": 0,
+      "endOfRecords": false,
+      "count": 11141,
+      "results": [],
+      "facets": [
+        {
+          "field": "COUNTRY",
+          "counts": [
+            {
+              "name": "CA",
+              "count": 3554
+            },
+            {
+              "name": "US",
+              "count": 2788
+            },
+            {
+              "name": "GL",
+              "count": 1251
+            },
+            {
+              "name": "SJ",
+              "count": 1125
+            },
+            {
+              "name": "NO",
+              "count": 852
+            },
+            {
+              "name": "RU",
+              "count": 379
+            },
+            {
+              "name": "DE",
+              "count": 59
+            },
+            {
+              "name": "ZZ",
+              "count": 42
+            },
+            {
+              "name": "SE",
+              "count": 18
+            },
+            {
+              "name": "DK",
+              "count": 12
+            }
+          ]
+        }
+      ]
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

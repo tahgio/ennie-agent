@@ -1,0 +1,14 @@
+{
+  "name": "error-offset-exceeded",
+  "why": "F8: a 400 whose body is plain text. Proves the error path reads text first.",
+  "request": {
+    "path": "/occurrence/search?taxonKey=2433451&limit=1&offset=100001"
+  },
+  "response": {
+    "status": 400,
+    "contentType": "text/plain",
+    "json": null,
+    "text": "Max offset of 100001 exceeded: 100001 + 1"
+  },
+  "capturedAt": "2026-08-29"
+}

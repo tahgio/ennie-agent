@@ -17,6 +17,7 @@ export default defineConfig({
         test: {
           name: 'unit',
           environment: 'node',
+          setupFiles: ['packages/mcp-server/tests/helpers/no-network.ts'],
           include: [
             'packages/mcp-server/tests/unit/**/*.test.ts',
             'packages/agent/tests/**/*.test.ts',
@@ -27,6 +28,7 @@ export default defineConfig({
         test: {
           name: 'protocol',
           environment: 'node',
+          setupFiles: ['packages/mcp-server/tests/helpers/no-network.ts'],
           include: ['packages/mcp-server/tests/protocol/**/*.test.ts'],
         },
       },

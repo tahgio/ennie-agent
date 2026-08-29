@@ -55,35 +55,35 @@ pnpm workspace monorepo per [plan.md](./plan.md):
 
 ### Upstream contract and fixtures
 
-- [ ] T011 [P] Write lenient upstream Zod schemas in `packages/mcp-server/src/gbif/schemas.ts` per [data-model.md](./data-model.md) §1: `.passthrough()`, every non-essential field `.nullable()`, `confidence` accepting negatives (research F2), `matchType` as a plain string not an enum, `facets` defaulting to `[]`
-- [ ] T012 Write `scripts/capture-fixtures.ts` and capture real GBIF responses into `packages/mcp-server/tests/fixtures/` — the exact cases from [research.md](./research.md) Part 1: exact match, fuzzy typo, `NONE` at confidence 100, homonym with `verbose=true` alternatives, `HIGHERRANK`, synonym with `acceptedUsageKey`, vernacular search, faceted `limit=0` response, a full 95-field occurrence record, and a plain-text 400 body (FR-038, Constitution VI)
+- [X] T011 [P] Write lenient upstream Zod schemas in `packages/mcp-server/src/gbif/schemas.ts` per [data-model.md](./data-model.md) §1: `.passthrough()`, every non-essential field `.nullable()`, `confidence` accepting negatives (research F2), `matchType` as a plain string not an enum, `facets` defaulting to `[]`
+- [X] T012 Write `scripts/capture-fixtures.ts` and capture real GBIF responses into `packages/mcp-server/tests/fixtures/` — the exact cases from [research.md](./research.md) Part 1: exact match, fuzzy typo, `NONE` at confidence 100, homonym with `verbose=true` alternatives, `HIGHERRANK`, synonym with `acceptedUsageKey`, vernacular search, faceted `limit=0` response, a full 95-field occurrence record, and a plain-text 400 body (FR-038, Constitution VI)
 
 ### Cross-cutting server infrastructure
 
-- [ ] T013 [P] Implement `ToolError` in `packages/mcp-server/src/errors.ts` with **required** `what`, `next`, and `retryable` fields, plus a `toToolResult()` producing `{ isError: true }` with both sentences rendered. The required `next` field is what makes "Invalid input" unrepresentable (FR-023, FR-024, Constitution V)
-- [ ] T014 [P] Implement logging in `packages/mcp-server/src/logging.ts`: a pino instance writing to **stderr only**, plus a helper emitting MCP logging notifications for tool events (FR-025, FR-029)
-- [ ] T015 In `packages/mcp-server/src/index.ts`, reassign `console.log`/`console.info` to `console.error` **before importing any other module**, so a stray log from any dependency cannot corrupt the protocol stream (Constitution I)
-- [ ] T016 Implement the TTL cache in `packages/mcp-server/src/gbif/cache.ts`: in-process `Map`, 1-hour TTL, keyed on normalised name + rank + kingdom hints, **caching negative outcomes too**, exposing hit/miss for logging (FR-030, data-model §4)
+- [X] T013 [P] Implement `ToolError` in `packages/mcp-server/src/errors.ts` with **required** `what`, `next`, and `retryable` fields, plus a `toToolResult()` producing `{ isError: true }` with both sentences rendered. The required `next` field is what makes "Invalid input" unrepresentable (FR-023, FR-024, Constitution V)
+- [X] T014 [P] Implement logging in `packages/mcp-server/src/logging.ts`: a pino instance writing to **stderr only**, plus a helper emitting MCP logging notifications for tool events (FR-025, FR-029)
+- [X] T015 In `packages/mcp-server/src/index.ts`, reassign `console.log`/`console.info` to `console.error` **before importing any other module**, so a stray log from any dependency cannot corrupt the protocol stream (Constitution I)
+- [X] T016 Implement the TTL cache in `packages/mcp-server/src/gbif/cache.ts`: in-process `Map`, 1-hour TTL, keyed on normalised name + rank + kingdom hints, **caching negative outcomes too**, exposing hit/miss for logging (FR-030, data-model §4)
 
 ### GBIF HTTP client
 
-- [ ] T017 Implement the core request path in `packages/mcp-server/src/gbif/client.ts`: native `fetch`, descriptive `User-Agent` (with optional `GBIF_USER_AGENT_CONTACT`), 10s per-attempt timeout and 30s per-call budget composed via `AbortSignal.any([AbortSignal.timeout(...), budgetSignal, mcpRequestSignal])` (FR-026a, FR-028)
-- [ ] T018 Add retry and backoff to `packages/mcp-server/src/gbif/client.ts`: retry **only** on 429/502/503/504 and network errors, max 3 retries, exponential backoff with jitter, honouring `Retry-After` (FR-026)
-- [ ] T019 Add the fail-fast rule to `packages/mcp-server/src/gbif/client.ts`: when `Retry-After` exceeds the remaining call budget, abandon immediately and raise a `ToolError` naming the requested wait rather than sleeping through it (FR-026b)
-- [ ] T020 Add error-response handling to `packages/mcp-server/src/gbif/client.ts`: read the body as **text first**, attempt JSON only opportunistically — GBIF returns plain text on a 400 (research F8, data-model §1)
-- [ ] T021 [P] Implement the shared filter schema in `packages/mcp-server/src/domain/filters.ts`: `country` (`^[A-Z]{2}$`, uppercased first), `yearFrom`/`yearTo` bounds, `hasCoordinate`, plus cross-field rules rejecting a backwards year range and `offset + limit > 100000` — all **before any network call** (FR-011, FR-012, research F8, F9)
+- [X] T017 Implement the core request path in `packages/mcp-server/src/gbif/client.ts`: native `fetch`, descriptive `User-Agent` (with optional `GBIF_USER_AGENT_CONTACT`), 10s per-attempt timeout and 30s per-call budget composed via `AbortSignal.any([AbortSignal.timeout(...), budgetSignal, mcpRequestSignal])` (FR-026a, FR-028)
+- [X] T018 Add retry and backoff to `packages/mcp-server/src/gbif/client.ts`: retry **only** on 429/502/503/504 and network errors, max 3 retries, exponential backoff with jitter, honouring `Retry-After` (FR-026)
+- [X] T019 Add the fail-fast rule to `packages/mcp-server/src/gbif/client.ts`: when `Retry-After` exceeds the remaining call budget, abandon immediately and raise a `ToolError` naming the requested wait rather than sleeping through it (FR-026b)
+- [X] T020 Add error-response handling to `packages/mcp-server/src/gbif/client.ts`: read the body as **text first**, attempt JSON only opportunistically — GBIF returns plain text on a 400 (research F8, data-model §1)
+- [X] T021 [P] Implement the shared filter schema in `packages/mcp-server/src/domain/filters.ts`: `country` (`^[A-Z]{2}$`, uppercased first), `yearFrom`/`yearTo` bounds, `hasCoordinate`, plus cross-field rules rejecting a backwards year range and `offset + limit > 100000` — all **before any network call** (FR-011, FR-012, research F8, F9)
 
 ### Server skeleton
 
-- [ ] T022 Implement `createServer()` in `packages/mcp-server/src/server.ts` returning a configured `McpServer` with **no knowledge of transports**, so an HTTP entrypoint later is additive rather than a refactor (plan D7)
-- [ ] T023 Complete `packages/mcp-server/src/index.ts` as the stdio entrypoint: construct `StdioServerTransport`, connect the server from T022, and do nothing else
+- [X] T022 Implement `createServer()` in `packages/mcp-server/src/server.ts` returning a configured `McpServer` with **no knowledge of transports**, so an HTTP entrypoint later is additive rather than a refactor (plan D7)
+- [X] T023 Complete `packages/mcp-server/src/index.ts` as the stdio entrypoint: construct `StdioServerTransport`, connect the server from T022, and do nothing else
 
 ### Test harness
 
-- [ ] T024 [P] Build the HTTP stub helper in `packages/mcp-server/tests/helpers/stub-gbif.ts`, serving the T012 fixtures and asserting **no real network call escapes** during the default suite (FR-038)
-- [ ] T025 [P] Build the protocol test harness in `packages/mcp-server/tests/helpers/mcp-harness.ts`: a real `Client` and a real server from `createServer()` joined by the SDK's `InMemoryTransport` (FR-039)
-- [ ] T026 [P] Write unit tests for retry, backoff, timeout, budget, and `Retry-After` handling in `packages/mcp-server/tests/unit/gbif-client.test.ts` covering every row of [quickstart.md](./quickstart.md) Scenario 6 (SC-010, SC-012)
-- [ ] T027 [P] Write the stdout-purity protocol test in `packages/mcp-server/tests/protocol/stdout-purity.test.ts`, asserting that across a full client session stdout carried **only** parseable JSON-RPC frames (SC-009, Constitution I)
+- [X] T024 [P] Build the HTTP stub helper in `packages/mcp-server/tests/helpers/stub-gbif.ts`, serving the T012 fixtures and asserting **no real network call escapes** during the default suite (FR-038)
+- [X] T025 [P] Build the protocol test harness in `packages/mcp-server/tests/helpers/mcp-harness.ts`: a real `Client` and a real server from `createServer()` joined by the SDK's `InMemoryTransport` (FR-039)
+- [X] T026 [P] Write unit tests for retry, backoff, timeout, budget, and `Retry-After` handling in `packages/mcp-server/tests/unit/gbif-client.test.ts` covering every row of [quickstart.md](./quickstart.md) Scenario 6 (SC-010, SC-012)
+- [X] T027 [P] Write the stdout-purity protocol test in `packages/mcp-server/tests/protocol/stdout-purity.test.ts`, asserting that across a full client session stdout carried **only** parseable JSON-RPC frames (SC-009, Constitution I)
 
 **Checkpoint**: A bare server starts, connects over both stdio and in-memory transports, logs to stderr, and the GBIF client is fully tested against fixtures — user stories can now begin
 

@@ -1,0 +1,149 @@
+{
+  "name": "occurrence-facets-ursus",
+  "why": "F6: the mechanism behind Principle II — counts with an empty results[]",
+  "request": {
+    "path": "/occurrence/search?taxonKey=2433451&limit=0&facet=country&facet=year&facet=basisOfRecord&country.facetLimit=10&year.facetLimit=10&basisOfRecord.facetLimit=10"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "offset": 0,
+      "limit": 0,
+      "endOfRecords": false,
+      "count": 11141,
+      "results": [],
+      "facets": [
+        {
+          "field": "BASIS_OF_RECORD",
+          "counts": [
+            {
+              "name": "PRESERVED_SPECIMEN",
+              "count": 4921
+            },
+            {
+              "name": "HUMAN_OBSERVATION",
+              "count": 4709
+            },
+            {
+              "name": "MATERIAL_SAMPLE",
+              "count": 1131
+            },
+            {
+              "name": "MACHINE_OBSERVATION",
+              "count": 235
+            },
+            {
+              "name": "OCCURRENCE",
+              "count": 49
+            },
+            {
+              "name": "MATERIAL_CITATION",
+              "count": 48
+            },
+            {
+              "name": "FOSSIL_SPECIMEN",
+              "count": 27
+            },
+            {
+              "name": "OBSERVATION",
+              "count": 21
+            }
+          ]
+        },
+        {
+          "field": "YEAR",
+          "counts": [
+            {
+              "name": "2025",
+              "count": 438
+            },
+            {
+              "name": "2005",
+              "count": 343
+            },
+            {
+              "name": "2024",
+              "count": 330
+            },
+            {
+              "name": "2017",
+              "count": 297
+            },
+            {
+              "name": "2015",
+              "count": 281
+            },
+            {
+              "name": "2023",
+              "count": 271
+            },
+            {
+              "name": "2019",
+              "count": 255
+            },
+            {
+              "name": "2022",
+              "count": 253
+            },
+            {
+              "name": "2026",
+              "count": 233
+            },
+            {
+              "name": "1967",
+              "count": 229
+            }
+          ]
+        },
+        {
+          "field": "COUNTRY",
+          "counts": [
+            {
+              "name": "CA",
+              "count": 3554
+            },
+            {
+              "name": "US",
+              "count": 2788
+            },
+            {
+              "name": "GL",
+              "count": 1251
+            },
+            {
+              "name": "SJ",
+              "count": 1125
+            },
+            {
+              "name": "NO",
+              "count": 852
+            },
+            {
+              "name": "RU",
+              "count": 379
+            },
+            {
+              "name": "DE",
+              "count": 59
+            },
+            {
+              "name": "ZZ",
+              "count": 42
+            },
+            {
+              "name": "SE",
+              "count": 18
+            },
+            {
+              "name": "DK",
+              "count": 12
+            }
+          ]
+        }
+      ]
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

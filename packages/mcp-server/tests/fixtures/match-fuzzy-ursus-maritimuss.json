@@ -1,0 +1,63 @@
+{
+  "name": "match-fuzzy-ursus-maritimuss",
+  "why": "FUZZY match from a typo — accepted only at confidence >= 90 (FR-004)",
+  "request": {
+    "path": "/species/match?name=Ursus%20maritimuss&verbose=true"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "usageKey": 2433451,
+      "scientificName": "Ursus maritimus Phipps, 1774",
+      "canonicalName": "Ursus maritimus",
+      "rank": "SPECIES",
+      "status": "ACCEPTED",
+      "confidence": 92,
+      "note": "Similarity: name=90; authorship=0; classification=-2; rank=6; status=1; score=95; nextMatch=3",
+      "matchType": "FUZZY",
+      "alternatives": [
+        {
+          "usageKey": 7778867,
+          "scientificName": "Ursus maritimus Linnaeus, 1758",
+          "canonicalName": "Ursus maritimus",
+          "rank": "SPECIES",
+          "status": "DOUBTFUL",
+          "confidence": 88,
+          "note": "Similarity: name=90; authorship=0; classification=-2; rank=6; status=-5; score=89",
+          "matchType": "FUZZY",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "kingdomKey": 1,
+          "phylumKey": 44,
+          "classKey": 359,
+          "orderKey": 732,
+          "familyKey": 9681,
+          "genusKey": 2433406,
+          "speciesKey": 7778867,
+          "class": "Mammalia"
+        }
+      ],
+      "kingdom": "Animalia",
+      "phylum": "Chordata",
+      "order": "Carnivora",
+      "family": "Ursidae",
+      "genus": "Ursus",
+      "species": "Ursus maritimus",
+      "kingdomKey": 1,
+      "phylumKey": 44,
+      "classKey": 359,
+      "orderKey": 732,
+      "familyKey": 9681,
+      "genusKey": 2433406,
+      "speciesKey": 2433451,
+      "class": "Mammalia"
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

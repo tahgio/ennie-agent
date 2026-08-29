@@ -1,0 +1,21 @@
+{
+  "name": "search-vernacular-nonsense",
+  "why": "The fallback finding nothing — NOT_FOUND rather than a guess",
+  "request": {
+    "path": "/species/search?q=zzzzqqq%20xxxxyy&qField=VERNACULAR&rank=SPECIES&limit=20"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "offset": 0,
+      "limit": 20,
+      "endOfRecords": true,
+      "count": 0,
+      "results": [],
+      "facets": []
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

@@ -1,0 +1,119 @@
+{
+  "capturedAt": "2026-08-29",
+  "fixtures": [
+    {
+      "name": "match-exact-ursus-maritimus",
+      "path": "/species/match?name=Ursus%20maritimus&verbose=true",
+      "status": 200,
+      "why": "EXACT match, the happy path: key 2433451 with a full classification"
+    },
+    {
+      "name": "match-fuzzy-ursus-maritimuss",
+      "path": "/species/match?name=Ursus%20maritimuss&verbose=true",
+      "status": 200,
+      "why": "FUZZY match from a typo — accepted only at confidence >= 90 (FR-004)"
+    },
+    {
+      "name": "match-none-nonsense",
+      "path": "/species/match?name=Zzzzqqq%20xxxxyy&verbose=true",
+      "status": 200,
+      "why": "F1: matchType NONE arriving at confidence 100. A confidence-first check accepts this."
+    },
+    {
+      "name": "match-homonym-prunella",
+      "path": "/species/match?name=Prunella&verbose=true",
+      "status": 200,
+      "why": "F2: a homonym reported as NONE/100, with candidates only in alternatives[]"
+    },
+    {
+      "name": "match-homonym-prunella-plantae",
+      "path": "/species/match?name=Prunella&kingdom=Plantae&verbose=true",
+      "status": 200,
+      "why": "F2: the same name resolving cleanly once a kingdom hint breaks the tie"
+    },
+    {
+      "name": "match-higherrank-puma",
+      "path": "/species/match?name=Puma%20notarealspecies&verbose=true",
+      "status": 200,
+      "why": "F1/FR-004a: HIGHERRANK — reached the genus, not the species. Not an answer."
+    },
+    {
+      "name": "match-synonym-felis-concolor",
+      "path": "/species/match?name=Felis%20concolor&verbose=true",
+      "status": 200,
+      "why": "F5: SYNONYM carrying acceptedUsageKey. Using usageKey here under-counts downstream."
+    },
+    {
+      "name": "match-thalarctos-maritimus",
+      "path": "/species/match?name=Thalarctos%20maritimus&verbose=true",
+      "status": 200,
+      "why": "F4: re-resolving the vernacular survivor, which is itself a synonym"
+    },
+    {
+      "name": "match-none-polar-bear",
+      "path": "/species/match?name=polar%20bear&verbose=true",
+      "status": 200,
+      "why": "F3: species/match does not resolve common names at all"
+    },
+    {
+      "name": "search-vernacular-polar-bear",
+      "path": "/species/search?q=polar%20bear&qField=VERNACULAR&rank=SPECIES&limit=20",
+      "status": 200,
+      "why": "F4: ranks a sponge first, so rank order cannot be trusted"
+    },
+    {
+      "name": "search-vernacular-nonsense",
+      "path": "/species/search?q=zzzzqqq%20xxxxyy&qField=VERNACULAR&rank=SPECIES&limit=20",
+      "status": 200,
+      "why": "The fallback finding nothing — NOT_FOUND rather than a guess"
+    },
+    {
+      "name": "occurrence-facets-ursus",
+      "path": "/occurrence/search?taxonKey=2433451&limit=0&facet=country&facet=year&facet=basisOfRecord&country.facetLimit=10&year.facetLimit=10&basisOfRecord.facetLimit=10",
+      "status": 200,
+      "why": "F6: the mechanism behind Principle II — counts with an empty results[]"
+    },
+    {
+      "name": "occurrence-facets-country-only",
+      "path": "/occurrence/search?taxonKey=2433451&limit=0&facet=country&country.facetLimit=10",
+      "status": 200,
+      "why": "A single-dimension summary, to show one call still answers it"
+    },
+    {
+      "name": "occurrence-facets-zero-match",
+      "path": "/occurrence/search?taxonKey=2433451&country=AQ&limit=0&facet=country&country.facetLimit=10",
+      "status": 200,
+      "why": "Zero matches is a success, not an error (FR-013 edge case)"
+    },
+    {
+      "name": "occurrence-page-ursus",
+      "path": "/occurrence/search?taxonKey=2433451&limit=5&offset=0",
+      "status": 200,
+      "why": "F10: real records, 95 fields each, to be trimmed to 8"
+    },
+    {
+      "name": "occurrence-page-ursus-filtered",
+      "path": "/occurrence/search?taxonKey=2433451&country=CA&year=2000,2020&hasCoordinate=true&limit=5&offset=0",
+      "status": 200,
+      "why": "The four hand-picked filters applied together (Principle III)"
+    },
+    {
+      "name": "error-offset-exceeded",
+      "path": "/occurrence/search?taxonKey=2433451&limit=1&offset=100001",
+      "status": 400,
+      "why": "F8: a 400 whose body is plain text. Proves the error path reads text first."
+    },
+    {
+      "name": "error-bad-country",
+      "path": "/occurrence/search?taxonKey=2433451&country=XX&limit=1",
+      "status": 400,
+      "why": "F9: rejected upstream — which is why we reject it locally, before the call"
+    },
+    {
+      "name": "error-backwards-year",
+      "path": "/occurrence/search?taxonKey=2433451&year=2010,2000&limit=1",
+      "status": 400,
+      "why": "F9: a backwards year range is an upstream 400"
+    }
+  ]
+}

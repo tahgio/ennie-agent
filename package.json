@@ -19,7 +19,7 @@
     "test:watch": "vitest --project unit --project protocol",
     "test:live": "vitest run --project live",
     "eval": "pnpm --filter @ennie/agent eval",
-    "capture-fixtures": "node --experimental-strip-types scripts/capture-fixtures.ts"
+    "capture-fixtures": "node scripts/capture-fixtures.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.11",

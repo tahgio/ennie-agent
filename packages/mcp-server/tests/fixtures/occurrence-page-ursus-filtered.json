@@ -1,0 +1,1774 @@
+{
+  "name": "occurrence-page-ursus-filtered",
+  "why": "The four hand-picked filters applied together (Principle III)",
+  "request": {
+    "path": "/occurrence/search?taxonKey=2433451&country=CA&year=2000,2020&hasCoordinate=true&limit=5&offset=0"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "offset": 0,
+      "limit": 5,
+      "endOfRecords": false,
+      "count": 1023,
+      "results": [
+        {
+          "key": 6500259806,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "publishingOrgKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "datasetCategory": [
+            "CitizenScience"
+          ],
+          "installationKey": "997448a8-f762-11e1-a439-00145eb45e9a",
+          "hostingOrganizationKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "publishingCountry": "US",
+          "protocol": "DWC_ARCHIVE",
+          "lastCrawled": "2026-08-28T18:34:26.589+00:00",
+          "lastParsed": "2026-08-29T05:12:50.615+00:00",
+          "crawlId": 605,
+          "extensions": {
+            "http://rs.gbif.org/terms/1.0/Multimedia": [
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Johnathan Campbell",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/716482848",
+                "http://purl.org/dc/terms/rightsHolder": "Johnathan Campbell",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716482848/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-08-15T17:18:54-07:00",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "716482848"
+              }
+            ]
+          },
+          "basisOfRecord": "HUMAN_OBSERVATION",
+          "occurrenceStatus": "PRESENT",
+          "classifications": {
+            "7ddf754f-d193-4cc9-b351-99906754a03b": {
+              "usage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "CS5HF",
+                  "name": "Eukaryota",
+                  "rank": "DOMAIN"
+                },
+                {
+                  "key": "N",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "CH2",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "8V4V3",
+                  "name": "Vertebrata",
+                  "rank": "SUBPHYLUM"
+                },
+                {
+                  "key": "8V4V5",
+                  "name": "Gnathostomata",
+                  "rank": "INFRAPHYLUM"
+                },
+                {
+                  "key": "8VVWB",
+                  "name": "Osteichthyes",
+                  "rank": "PARVPHYLUM"
+                },
+                {
+                  "key": "9CK8W",
+                  "name": "Tetrapoda",
+                  "rank": "MEGACLASS"
+                },
+                {
+                  "key": "6224G",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "6226C",
+                  "name": "Theria",
+                  "rank": "SUBCLASS"
+                },
+                {
+                  "key": "LG",
+                  "name": "Eutheria",
+                  "rank": "INFRACLASS"
+                },
+                {
+                  "key": "VS",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "4CT",
+                  "name": "Caniformia",
+                  "rank": "SUBORDER"
+                },
+                {
+                  "key": "HQQ",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "63VHR",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "7F2J9",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            },
+            "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c": {
+              "usage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "1",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "44",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "359",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "732",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "9681",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "2433406",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "2433451",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            }
+          },
+          "taxonKey": 2433451,
+          "kingdomKey": 1,
+          "phylumKey": 44,
+          "classKey": 359,
+          "orderKey": 732,
+          "familyKey": 9681,
+          "genusKey": 2433406,
+          "speciesKey": 2433451,
+          "acceptedTaxonKey": 2433451,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "scientificNameAuthorship": "Phipps, 1774",
+          "acceptedScientificName": "Ursus maritimus Phipps, 1774",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "genericName": "Ursus",
+          "specificEpithet": "maritimus",
+          "taxonRank": "SPECIES",
+          "taxonomicStatus": "ACCEPTED",
+          "iucnRedListCategory": "VU",
+          "dateIdentified": "2026-08-14T05:42:59",
+          "decimalLatitude": 60.714333,
+          "decimalLongitude": -95.242582,
+          "coordinateUncertaintyInMeters": 46767,
+          "continent": "NORTH_AMERICA",
+          "stateProvince": "Nunavut",
+          "gadm": {
+            "level0": {
+              "gid": "CAN",
+              "name": "Canada"
+            },
+            "level1": {
+              "gid": "CAN.8_1",
+              "name": "Nunavut"
+            },
+            "level2": {
+              "gid": "CAN.8.2_1",
+              "name": "Keewatin"
+            },
+            "level3": {
+              "gid": "CAN.8.2.1_1",
+              "name": "Baker Lake"
+            }
+          },
+          "year": 2020,
+          "month": 8,
+          "day": 15,
+          "eventDate": "2020-08-15T17:18",
+          "startDayOfYear": 228,
+          "endDayOfYear": 228,
+          "issues": [
+            "COORDINATE_ROUNDED",
+            "CONTINENT_DERIVED_FROM_COORDINATES",
+            "TAXON_ID_NOT_FOUND"
+          ],
+          "modified": "2026-08-19T00:25:41.000+00:00",
+          "lastInterpreted": "2026-08-29T05:12:50.615+00:00",
+          "references": "https://www.inaturalist.org/observations/391047008",
+          "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+          "isSequenced": false,
+          "identifiers": [
+            {
+              "identifier": "391047008"
+            }
+          ],
+          "media": [
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/716482848",
+              "created": "2020-08-16T00:18:54.000+00:00",
+              "creator": "Johnathan Campbell",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by/4.0/",
+              "rightsHolder": "Johnathan Campbell",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716482848/original.jpg"
+            }
+          ],
+          "facts": [],
+          "relations": [],
+          "isInCluster": false,
+          "datasetName": "iNaturalist research-grade observations",
+          "recordedBy": "Johnathan Campbell",
+          "identifiedBy": "Johnathan Campbell",
+          "dnaSequenceID": [],
+          "nucleotideSequence": [],
+          "geodeticDatum": "WGS84",
+          "class": "Mammalia",
+          "countryCode": "CA",
+          "recordedByIDs": [],
+          "identifiedByIDs": [],
+          "gbifRegion": "NORTH_AMERICA",
+          "country": "Canada",
+          "publishedByGbifRegion": "NORTH_AMERICA",
+          "rightsHolder": "Johnathan Campbell",
+          "identifier": "391047008",
+          "http://unknown.org/nick": "jcamp2311",
+          "informationWithheld": "Coordinate uncertainty increased to 46767m to protect threatened taxon",
+          "verbatimEventDate": "2020/08/15 5:18 PM",
+          "http://unknown.org/crawl_attempt": "605",
+          "http://unknown.org/status": "not_reviewed",
+          "verbatimLocality": "Keewatin, CA-NU, CA",
+          "gbifID": "6500259806",
+          "collectionCode": "Observations",
+          "occurrenceID": "https://www.inaturalist.org/observations/391047008",
+          "taxonID": "41644",
+          "http://unknown.org/captive_cultivated": "wild",
+          "catalogNumber": "391047008",
+          "institutionCode": "iNaturalist",
+          "eventTime": "17:18:00-05:00",
+          "identificationID": "870639073"
+        },
+        {
+          "key": 6498116950,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "publishingOrgKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "datasetCategory": [
+            "CitizenScience"
+          ],
+          "installationKey": "997448a8-f762-11e1-a439-00145eb45e9a",
+          "hostingOrganizationKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "publishingCountry": "US",
+          "protocol": "DWC_ARCHIVE",
+          "lastCrawled": "2026-08-28T18:34:26.589+00:00",
+          "lastParsed": "2026-08-29T05:37:33.938+00:00",
+          "crawlId": 605,
+          "extensions": {
+            "http://rs.gbif.org/terms/1.0/Multimedia": [
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Johnathan Campbell",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/716483560",
+                "http://purl.org/dc/terms/rightsHolder": "Johnathan Campbell",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716483560/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-09-13T10:53:22-07:00",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "716483560"
+              },
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Johnathan Campbell",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/716483586",
+                "http://purl.org/dc/terms/rightsHolder": "Johnathan Campbell",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716483586/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-09-13T10:53:34-07:00",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "716483586"
+              },
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Johnathan Campbell",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/716483620",
+                "http://purl.org/dc/terms/rightsHolder": "Johnathan Campbell",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716483620/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-09-13T10:53:44-07:00",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "716483620"
+              },
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Johnathan Campbell",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/716483633",
+                "http://purl.org/dc/terms/rightsHolder": "Johnathan Campbell",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716483633/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-09-13T10:57:11-07:00",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "716483633"
+              },
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Johnathan Campbell",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/716484836",
+                "http://purl.org/dc/terms/rightsHolder": "Johnathan Campbell",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716484836/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-09-13T15:14:01-07:00",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "716484836"
+              }
+            ]
+          },
+          "basisOfRecord": "HUMAN_OBSERVATION",
+          "occurrenceStatus": "PRESENT",
+          "classifications": {
+            "7ddf754f-d193-4cc9-b351-99906754a03b": {
+              "usage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "CS5HF",
+                  "name": "Eukaryota",
+                  "rank": "DOMAIN"
+                },
+                {
+                  "key": "N",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "CH2",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "8V4V3",
+                  "name": "Vertebrata",
+                  "rank": "SUBPHYLUM"
+                },
+                {
+                  "key": "8V4V5",
+                  "name": "Gnathostomata",
+                  "rank": "INFRAPHYLUM"
+                },
+                {
+                  "key": "8VVWB",
+                  "name": "Osteichthyes",
+                  "rank": "PARVPHYLUM"
+                },
+                {
+                  "key": "9CK8W",
+                  "name": "Tetrapoda",
+                  "rank": "MEGACLASS"
+                },
+                {
+                  "key": "6224G",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "6226C",
+                  "name": "Theria",
+                  "rank": "SUBCLASS"
+                },
+                {
+                  "key": "LG",
+                  "name": "Eutheria",
+                  "rank": "INFRACLASS"
+                },
+                {
+                  "key": "VS",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "4CT",
+                  "name": "Caniformia",
+                  "rank": "SUBORDER"
+                },
+                {
+                  "key": "HQQ",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "63VHR",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "7F2J9",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            },
+            "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c": {
+              "usage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "1",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "44",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "359",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "732",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "9681",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "2433406",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "2433451",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            }
+          },
+          "taxonKey": 2433451,
+          "kingdomKey": 1,
+          "phylumKey": 44,
+          "classKey": 359,
+          "orderKey": 732,
+          "familyKey": 9681,
+          "genusKey": 2433406,
+          "speciesKey": 2433451,
+          "acceptedTaxonKey": 2433451,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "scientificNameAuthorship": "Phipps, 1774",
+          "acceptedScientificName": "Ursus maritimus Phipps, 1774",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "genericName": "Ursus",
+          "specificEpithet": "maritimus",
+          "taxonRank": "SPECIES",
+          "taxonomicStatus": "ACCEPTED",
+          "iucnRedListCategory": "VU",
+          "dateIdentified": "2026-08-14T05:42:59",
+          "decimalLatitude": 61.068019,
+          "decimalLongitude": -94.169702,
+          "coordinateUncertaintyInMeters": 24700,
+          "continent": "NORTH_AMERICA",
+          "stateProvince": "Nunavut",
+          "gadm": {},
+          "year": 2020,
+          "month": 9,
+          "day": 13,
+          "eventDate": "2020-09-13T10:53",
+          "startDayOfYear": 257,
+          "endDayOfYear": 257,
+          "issues": [
+            "COORDINATE_ROUNDED",
+            "CONTINENT_DERIVED_FROM_COORDINATES",
+            "TAXON_ID_NOT_FOUND"
+          ],
+          "modified": "2026-08-19T00:25:39.000+00:00",
+          "lastInterpreted": "2026-08-29T05:37:33.938+00:00",
+          "references": "https://www.inaturalist.org/observations/391047010",
+          "license": "http://creativecommons.org/licenses/by/4.0/legalcode",
+          "isSequenced": false,
+          "identifiers": [
+            {
+              "identifier": "391047010"
+            }
+          ],
+          "media": [
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/716483560",
+              "created": "2020-09-13T17:53:22.000+00:00",
+              "creator": "Johnathan Campbell",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by/4.0/",
+              "rightsHolder": "Johnathan Campbell",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716483560/original.jpg"
+            },
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/716483586",
+              "created": "2020-09-13T17:53:34.000+00:00",
+              "creator": "Johnathan Campbell",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by/4.0/",
+              "rightsHolder": "Johnathan Campbell",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716483586/original.jpg"
+            },
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/716483620",
+              "created": "2020-09-13T17:53:44.000+00:00",
+              "creator": "Johnathan Campbell",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by/4.0/",
+              "rightsHolder": "Johnathan Campbell",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716483620/original.jpg"
+            },
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/716483633",
+              "created": "2020-09-13T17:57:11.000+00:00",
+              "creator": "Johnathan Campbell",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by/4.0/",
+              "rightsHolder": "Johnathan Campbell",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716483633/original.jpg"
+            },
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/716484836",
+              "created": "2020-09-13T22:14:01.000+00:00",
+              "creator": "Johnathan Campbell",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by/4.0/",
+              "rightsHolder": "Johnathan Campbell",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/716484836/original.jpg"
+            }
+          ],
+          "facts": [],
+          "relations": [],
+          "isInCluster": false,
+          "datasetName": "iNaturalist research-grade observations",
+          "recordedBy": "Johnathan Campbell",
+          "identifiedBy": "Johnathan Campbell",
+          "dnaSequenceID": [],
+          "nucleotideSequence": [],
+          "geodeticDatum": "WGS84",
+          "class": "Mammalia",
+          "countryCode": "CA",
+          "recordedByIDs": [],
+          "identifiedByIDs": [],
+          "gbifRegion": "NORTH_AMERICA",
+          "country": "Canada",
+          "publishedByGbifRegion": "NORTH_AMERICA",
+          "rightsHolder": "Johnathan Campbell",
+          "identifier": "391047010",
+          "http://unknown.org/nick": "jcamp2311",
+          "informationWithheld": "Coordinate uncertainty increased to 24700m to protect threatened taxon",
+          "verbatimEventDate": "2020/09/13 10:53 AM",
+          "http://unknown.org/crawl_attempt": "605",
+          "http://unknown.org/status": "not_reviewed",
+          "verbatimLocality": "Keewatin, CA-NU, CA",
+          "gbifID": "6498116950",
+          "collectionCode": "Observations",
+          "occurrenceID": "https://www.inaturalist.org/observations/391047010",
+          "taxonID": "41644",
+          "http://unknown.org/captive_cultivated": "wild",
+          "catalogNumber": "391047010",
+          "institutionCode": "iNaturalist",
+          "eventTime": "10:53:00-05:00",
+          "identificationID": "870639076"
+        },
+        {
+          "key": 2963774939,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "publishingOrgKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "datasetCategory": [
+            "CitizenScience"
+          ],
+          "installationKey": "997448a8-f762-11e1-a439-00145eb45e9a",
+          "hostingOrganizationKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "publishingCountry": "CA",
+          "protocol": "DWC_ARCHIVE",
+          "lastCrawled": "2026-08-28T18:34:26.589+00:00",
+          "lastParsed": "2026-08-29T05:39:04.792+00:00",
+          "crawlId": 605,
+          "extensions": {
+            "http://rs.gbif.org/terms/1.0/Multimedia": [
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Stephen Petersen",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/102001255",
+                "http://purl.org/dc/terms/rightsHolder": "Stephen Petersen",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102001255/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-10-25T21:50:57Z",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by-nc/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "102001255"
+              },
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Stephen Petersen",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/102001298",
+                "http://purl.org/dc/terms/rightsHolder": "Stephen Petersen",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102001298/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-10-25T21:50:57Z",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by-nc/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "102001298"
+              }
+            ]
+          },
+          "basisOfRecord": "HUMAN_OBSERVATION",
+          "occurrenceStatus": "PRESENT",
+          "classifications": {
+            "7ddf754f-d193-4cc9-b351-99906754a03b": {
+              "usage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "CS5HF",
+                  "name": "Eukaryota",
+                  "rank": "DOMAIN"
+                },
+                {
+                  "key": "N",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "CH2",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "8V4V3",
+                  "name": "Vertebrata",
+                  "rank": "SUBPHYLUM"
+                },
+                {
+                  "key": "8V4V5",
+                  "name": "Gnathostomata",
+                  "rank": "INFRAPHYLUM"
+                },
+                {
+                  "key": "8VVWB",
+                  "name": "Osteichthyes",
+                  "rank": "PARVPHYLUM"
+                },
+                {
+                  "key": "9CK8W",
+                  "name": "Tetrapoda",
+                  "rank": "MEGACLASS"
+                },
+                {
+                  "key": "6224G",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "6226C",
+                  "name": "Theria",
+                  "rank": "SUBCLASS"
+                },
+                {
+                  "key": "LG",
+                  "name": "Eutheria",
+                  "rank": "INFRACLASS"
+                },
+                {
+                  "key": "VS",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "4CT",
+                  "name": "Caniformia",
+                  "rank": "SUBORDER"
+                },
+                {
+                  "key": "HQQ",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "63VHR",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "7F2J9",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            },
+            "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c": {
+              "usage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "1",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "44",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "359",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "732",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "9681",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "2433406",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "2433451",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            }
+          },
+          "taxonKey": 2433451,
+          "kingdomKey": 1,
+          "phylumKey": 44,
+          "classKey": 359,
+          "orderKey": 732,
+          "familyKey": 9681,
+          "genusKey": 2433406,
+          "speciesKey": 2433451,
+          "acceptedTaxonKey": 2433451,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "scientificNameAuthorship": "Phipps, 1774",
+          "acceptedScientificName": "Ursus maritimus Phipps, 1774",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "genericName": "Ursus",
+          "specificEpithet": "maritimus",
+          "taxonRank": "SPECIES",
+          "taxonomicStatus": "ACCEPTED",
+          "iucnRedListCategory": "VU",
+          "dateIdentified": "2020-10-26T03:31:56",
+          "decimalLatitude": 58.786913,
+          "decimalLongitude": -93.690313,
+          "coordinateUncertaintyInMeters": 12,
+          "continent": "NORTH_AMERICA",
+          "stateProvince": "Manitoba",
+          "gadm": {
+            "level0": {
+              "gid": "CAN",
+              "name": "Canada"
+            },
+            "level1": {
+              "gid": "CAN.3_1",
+              "name": "Manitoba"
+            },
+            "level2": {
+              "gid": "CAN.3.15_1",
+              "name": "Division No. 23"
+            },
+            "level3": {
+              "gid": "CAN.3.15.4_1",
+              "name": "Division No. 23, Unorganized"
+            }
+          },
+          "year": 2020,
+          "month": 10,
+          "day": 25,
+          "eventDate": "2020-10-25T11:50:57",
+          "startDayOfYear": 299,
+          "endDayOfYear": 299,
+          "issues": [
+            "COORDINATE_ROUNDED",
+            "CONTINENT_DERIVED_FROM_COORDINATES",
+            "TAXON_ID_NOT_FOUND"
+          ],
+          "modified": "2026-06-08T12:11:16.000+00:00",
+          "lastInterpreted": "2026-08-29T05:39:04.792+00:00",
+          "references": "https://www.inaturalist.org/observations/63546409",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode",
+          "isSequenced": false,
+          "identifiers": [
+            {
+              "identifier": "63546409"
+            }
+          ],
+          "media": [
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/102001255",
+              "created": "2020-10-25T21:50:57.000+00:00",
+              "creator": "Stephen Petersen",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+              "rightsHolder": "Stephen Petersen",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102001255/original.jpg"
+            },
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/102001298",
+              "created": "2020-10-25T21:50:57.000+00:00",
+              "creator": "Stephen Petersen",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+              "rightsHolder": "Stephen Petersen",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102001298/original.jpg"
+            }
+          ],
+          "facts": [],
+          "relations": [],
+          "isInCluster": false,
+          "datasetName": "iNaturalist research-grade observations",
+          "recordedBy": "Stephen Petersen",
+          "identifiedBy": "Stephen Petersen",
+          "dnaSequenceID": [],
+          "nucleotideSequence": [],
+          "geodeticDatum": "WGS84",
+          "class": "Mammalia",
+          "countryCode": "CA",
+          "recordedByIDs": [],
+          "identifiedByIDs": [],
+          "gbifRegion": "NORTH_AMERICA",
+          "country": "Canada",
+          "publishedByGbifRegion": "NORTH_AMERICA",
+          "rightsHolder": "Stephen Petersen",
+          "identifier": "63546409",
+          "http://unknown.org/nick": "stephenresearch",
+          "verbatimEventDate": "Sun Oct 25 2020 11:50:57 GMT-0500 (CDT)",
+          "http://unknown.org/crawl_attempt": "605",
+          "http://unknown.org/status": "not_reviewed",
+          "verbatimLocality": "Division No. 23, Unorganized, MB, CA",
+          "gbifID": "2963774939",
+          "collectionCode": "Observations",
+          "occurrenceID": "https://www.inaturalist.org/observations/63546409",
+          "taxonID": "41644",
+          "http://unknown.org/captive_cultivated": "wild",
+          "catalogNumber": "63546409",
+          "institutionCode": "iNaturalist",
+          "eventTime": "11:50:57-10:00",
+          "identificationID": "138543895"
+        },
+        {
+          "key": 2963858857,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "publishingOrgKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "datasetCategory": [
+            "CitizenScience"
+          ],
+          "installationKey": "997448a8-f762-11e1-a439-00145eb45e9a",
+          "hostingOrganizationKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "publishingCountry": "CA",
+          "protocol": "DWC_ARCHIVE",
+          "lastCrawled": "2026-08-28T18:34:26.589+00:00",
+          "lastParsed": "2026-08-29T05:28:31.216+00:00",
+          "crawlId": 605,
+          "extensions": {
+            "http://rs.gbif.org/terms/1.0/Multimedia": [
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Stephen Petersen",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/102001505",
+                "http://purl.org/dc/terms/rightsHolder": "Stephen Petersen",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102001505/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-10-25T23:00:15Z",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by-nc/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "102001505"
+              },
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Stephen Petersen",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/102001550",
+                "http://purl.org/dc/terms/rightsHolder": "Stephen Petersen",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102001550/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-10-25T23:00:15Z",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by-nc/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "102001550"
+              },
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Stephen Petersen",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/102025509",
+                "http://purl.org/dc/terms/rightsHolder": "Stephen Petersen",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102025509/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-10-25T23:00:15Z",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by-nc/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "102025509"
+              },
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Stephen Petersen",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/102025520",
+                "http://purl.org/dc/terms/rightsHolder": "Stephen Petersen",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102025520/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-10-25T23:00:15Z",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by-nc/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "102025520"
+              }
+            ]
+          },
+          "basisOfRecord": "HUMAN_OBSERVATION",
+          "occurrenceStatus": "PRESENT",
+          "classifications": {
+            "7ddf754f-d193-4cc9-b351-99906754a03b": {
+              "usage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "CS5HF",
+                  "name": "Eukaryota",
+                  "rank": "DOMAIN"
+                },
+                {
+                  "key": "N",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "CH2",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "8V4V3",
+                  "name": "Vertebrata",
+                  "rank": "SUBPHYLUM"
+                },
+                {
+                  "key": "8V4V5",
+                  "name": "Gnathostomata",
+                  "rank": "INFRAPHYLUM"
+                },
+                {
+                  "key": "8VVWB",
+                  "name": "Osteichthyes",
+                  "rank": "PARVPHYLUM"
+                },
+                {
+                  "key": "9CK8W",
+                  "name": "Tetrapoda",
+                  "rank": "MEGACLASS"
+                },
+                {
+                  "key": "6224G",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "6226C",
+                  "name": "Theria",
+                  "rank": "SUBCLASS"
+                },
+                {
+                  "key": "LG",
+                  "name": "Eutheria",
+                  "rank": "INFRACLASS"
+                },
+                {
+                  "key": "VS",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "4CT",
+                  "name": "Caniformia",
+                  "rank": "SUBORDER"
+                },
+                {
+                  "key": "HQQ",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "63VHR",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "7F2J9",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            },
+            "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c": {
+              "usage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "1",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "44",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "359",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "732",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "9681",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "2433406",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "2433451",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            }
+          },
+          "taxonKey": 2433451,
+          "kingdomKey": 1,
+          "phylumKey": 44,
+          "classKey": 359,
+          "orderKey": 732,
+          "familyKey": 9681,
+          "genusKey": 2433406,
+          "speciesKey": 2433451,
+          "acceptedTaxonKey": 2433451,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "scientificNameAuthorship": "Phipps, 1774",
+          "acceptedScientificName": "Ursus maritimus Phipps, 1774",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "genericName": "Ursus",
+          "specificEpithet": "maritimus",
+          "taxonRank": "SPECIES",
+          "taxonomicStatus": "ACCEPTED",
+          "iucnRedListCategory": "VU",
+          "dateIdentified": "2020-10-26T03:34:11",
+          "decimalLatitude": 58.794497,
+          "decimalLongitude": -93.754295,
+          "coordinateUncertaintyInMeters": 12,
+          "continent": "NORTH_AMERICA",
+          "stateProvince": "Manitoba",
+          "gadm": {
+            "level0": {
+              "gid": "CAN",
+              "name": "Canada"
+            },
+            "level1": {
+              "gid": "CAN.3_1",
+              "name": "Manitoba"
+            },
+            "level2": {
+              "gid": "CAN.3.15_1",
+              "name": "Division No. 23"
+            },
+            "level3": {
+              "gid": "CAN.3.15.4_1",
+              "name": "Division No. 23, Unorganized"
+            }
+          },
+          "year": 2020,
+          "month": 10,
+          "day": 25,
+          "eventDate": "2020-10-25T13:00:15",
+          "startDayOfYear": 299,
+          "endDayOfYear": 299,
+          "issues": [
+            "COORDINATE_ROUNDED",
+            "CONTINENT_DERIVED_FROM_COORDINATES",
+            "TAXON_ID_NOT_FOUND"
+          ],
+          "modified": "2026-06-08T12:11:15.000+00:00",
+          "lastInterpreted": "2026-08-29T05:28:31.216+00:00",
+          "references": "https://www.inaturalist.org/observations/63546506",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode",
+          "isSequenced": false,
+          "identifiers": [
+            {
+              "identifier": "63546506"
+            }
+          ],
+          "media": [
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/102001505",
+              "created": "2020-10-25T23:00:15.000+00:00",
+              "creator": "Stephen Petersen",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+              "rightsHolder": "Stephen Petersen",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102001505/original.jpg"
+            },
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/102001550",
+              "created": "2020-10-25T23:00:15.000+00:00",
+              "creator": "Stephen Petersen",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+              "rightsHolder": "Stephen Petersen",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102001550/original.jpg"
+            },
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/102025509",
+              "created": "2020-10-25T23:00:15.000+00:00",
+              "creator": "Stephen Petersen",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+              "rightsHolder": "Stephen Petersen",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102025509/original.jpg"
+            },
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/102025520",
+              "created": "2020-10-25T23:00:15.000+00:00",
+              "creator": "Stephen Petersen",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+              "rightsHolder": "Stephen Petersen",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102025520/original.jpg"
+            }
+          ],
+          "facts": [],
+          "relations": [],
+          "isInCluster": false,
+          "datasetName": "iNaturalist research-grade observations",
+          "recordedBy": "Stephen Petersen",
+          "identifiedBy": "Stephen Petersen",
+          "dnaSequenceID": [],
+          "nucleotideSequence": [],
+          "geodeticDatum": "WGS84",
+          "class": "Mammalia",
+          "countryCode": "CA",
+          "recordedByIDs": [],
+          "identifiedByIDs": [],
+          "gbifRegion": "NORTH_AMERICA",
+          "country": "Canada",
+          "publishedByGbifRegion": "NORTH_AMERICA",
+          "rightsHolder": "Stephen Petersen",
+          "identifier": "63546506",
+          "http://unknown.org/nick": "stephenresearch",
+          "verbatimEventDate": "Sun Oct 25 2020 13:00:15 GMT-0500 (CDT)",
+          "http://unknown.org/crawl_attempt": "605",
+          "http://unknown.org/status": "not_reviewed",
+          "verbatimLocality": "Hudson Bay, Keewatin, Unorganized, MB, CA",
+          "gbifID": "2963858857",
+          "collectionCode": "Observations",
+          "occurrenceID": "https://www.inaturalist.org/observations/63546506",
+          "taxonID": "41644",
+          "http://unknown.org/captive_cultivated": "wild",
+          "catalogNumber": "63546506",
+          "institutionCode": "iNaturalist",
+          "eventTime": "13:00:15-10:00",
+          "identificationID": "138544133"
+        },
+        {
+          "key": 2981008699,
+          "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+          "publishingOrgKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "datasetCategory": [
+            "CitizenScience"
+          ],
+          "installationKey": "997448a8-f762-11e1-a439-00145eb45e9a",
+          "hostingOrganizationKey": "28eb1a3f-1c15-4a95-931a-4af90ecb574d",
+          "publishingCountry": "CA",
+          "protocol": "DWC_ARCHIVE",
+          "lastCrawled": "2026-08-28T18:34:26.589+00:00",
+          "lastParsed": "2026-08-29T05:42:31.791+00:00",
+          "crawlId": 605,
+          "projectId": "https://www.inaturalist.org/projects/multiple-life-stages|https://www.inaturalist.org/projects/parental-care|https://www.inaturalist.org/projects/mammals-of-north-america",
+          "extensions": {
+            "http://rs.gbif.org/terms/1.0/Multimedia": [
+              {
+                "http://purl.org/dc/terms/format": "image/jpeg",
+                "http://purl.org/dc/terms/creator": "Stephen Petersen",
+                "http://purl.org/dc/terms/references": "https://www.inaturalist.org/photos/102595387",
+                "http://purl.org/dc/terms/rightsHolder": "Stephen Petersen",
+                "http://purl.org/dc/terms/publisher": "iNaturalist",
+                "http://purl.org/dc/terms/identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102595387/original.jpg",
+                "http://purl.org/dc/terms/created": "2020-10-29T13:48:48Z",
+                "http://purl.org/dc/terms/type": "StillImage",
+                "http://purl.org/dc/terms/license": "https://creativecommons.org/licenses/by-nc/4.0/",
+                "http://rs.tdwg.org/dwc/terms/catalogNumber": "102595387"
+              }
+            ]
+          },
+          "basisOfRecord": "HUMAN_OBSERVATION",
+          "occurrenceStatus": "PRESENT",
+          "classifications": {
+            "7ddf754f-d193-4cc9-b351-99906754a03b": {
+              "usage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "7F2J9",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "CS5HF",
+                  "name": "Eukaryota",
+                  "rank": "DOMAIN"
+                },
+                {
+                  "key": "N",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "CH2",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "8V4V3",
+                  "name": "Vertebrata",
+                  "rank": "SUBPHYLUM"
+                },
+                {
+                  "key": "8V4V5",
+                  "name": "Gnathostomata",
+                  "rank": "INFRAPHYLUM"
+                },
+                {
+                  "key": "8VVWB",
+                  "name": "Osteichthyes",
+                  "rank": "PARVPHYLUM"
+                },
+                {
+                  "key": "9CK8W",
+                  "name": "Tetrapoda",
+                  "rank": "MEGACLASS"
+                },
+                {
+                  "key": "6224G",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "6226C",
+                  "name": "Theria",
+                  "rank": "SUBCLASS"
+                },
+                {
+                  "key": "LG",
+                  "name": "Eutheria",
+                  "rank": "INFRACLASS"
+                },
+                {
+                  "key": "VS",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "4CT",
+                  "name": "Caniformia",
+                  "rank": "SUBORDER"
+                },
+                {
+                  "key": "HQQ",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "63VHR",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "7F2J9",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            },
+            "d7dddbf4-2cf0-4f39-9b2a-bb099caae36c": {
+              "usage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "acceptedUsage": {
+                "key": "2433451",
+                "name": "Ursus maritimus Phipps, 1774",
+                "rank": "SPECIES",
+                "code": "ZOOLOGICAL",
+                "authorship": "Phipps, 1774",
+                "genericName": "Ursus",
+                "specificEpithet": "maritimus",
+                "formattedName": "<i>Ursus</i> <i>maritimus</i> Phipps, 1774"
+              },
+              "taxonomicStatus": "ACCEPTED",
+              "classification": [
+                {
+                  "key": "1",
+                  "name": "Animalia",
+                  "rank": "KINGDOM"
+                },
+                {
+                  "key": "44",
+                  "name": "Chordata",
+                  "rank": "PHYLUM"
+                },
+                {
+                  "key": "359",
+                  "name": "Mammalia",
+                  "rank": "CLASS"
+                },
+                {
+                  "key": "732",
+                  "name": "Carnivora",
+                  "rank": "ORDER"
+                },
+                {
+                  "key": "9681",
+                  "name": "Ursidae",
+                  "rank": "FAMILY"
+                },
+                {
+                  "key": "2433406",
+                  "name": "Ursus",
+                  "rank": "GENUS"
+                },
+                {
+                  "key": "2433451",
+                  "name": "Ursus maritimus",
+                  "rank": "SPECIES"
+                }
+              ],
+              "iucnRedListCategoryCode": "VU",
+              "issues": [
+                "TAXON_ID_NOT_FOUND"
+              ]
+            }
+          },
+          "taxonKey": 2433451,
+          "kingdomKey": 1,
+          "phylumKey": 44,
+          "classKey": 359,
+          "orderKey": 732,
+          "familyKey": 9681,
+          "genusKey": 2433406,
+          "speciesKey": 2433451,
+          "acceptedTaxonKey": 2433451,
+          "scientificName": "Ursus maritimus Phipps, 1774",
+          "scientificNameAuthorship": "Phipps, 1774",
+          "acceptedScientificName": "Ursus maritimus Phipps, 1774",
+          "kingdom": "Animalia",
+          "phylum": "Chordata",
+          "order": "Carnivora",
+          "family": "Ursidae",
+          "genus": "Ursus",
+          "species": "Ursus maritimus",
+          "genericName": "Ursus",
+          "specificEpithet": "maritimus",
+          "taxonRank": "SPECIES",
+          "taxonomicStatus": "ACCEPTED",
+          "iucnRedListCategory": "VU",
+          "dateIdentified": "2020-10-31T11:58:08",
+          "decimalLatitude": 58.781587,
+          "decimalLongitude": -93.69045,
+          "coordinateUncertaintyInMeters": 229,
+          "continent": "NORTH_AMERICA",
+          "stateProvince": "Manitoba",
+          "gadm": {
+            "level0": {
+              "gid": "CAN",
+              "name": "Canada"
+            },
+            "level1": {
+              "gid": "CAN.3_1",
+              "name": "Manitoba"
+            },
+            "level2": {
+              "gid": "CAN.3.15_1",
+              "name": "Division No. 23"
+            },
+            "level3": {
+              "gid": "CAN.3.15.4_1",
+              "name": "Division No. 23, Unorganized"
+            }
+          },
+          "year": 2020,
+          "month": 10,
+          "day": 29,
+          "eventDate": "2020-10-29T03:48:48",
+          "startDayOfYear": 303,
+          "endDayOfYear": 303,
+          "issues": [
+            "COORDINATE_ROUNDED",
+            "CONTINENT_DERIVED_FROM_COORDINATES",
+            "TAXON_ID_NOT_FOUND"
+          ],
+          "modified": "2026-06-08T12:11:10.000+00:00",
+          "lastInterpreted": "2026-08-29T05:42:31.791+00:00",
+          "references": "https://www.inaturalist.org/observations/63877187",
+          "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode",
+          "isSequenced": false,
+          "identifiers": [
+            {
+              "identifier": "63877187"
+            }
+          ],
+          "media": [
+            {
+              "type": "StillImage",
+              "format": "image/jpeg",
+              "references": "https://www.inaturalist.org/photos/102595387",
+              "created": "2020-10-29T13:48:48.000+00:00",
+              "creator": "Stephen Petersen",
+              "publisher": "iNaturalist",
+              "license": "http://creativecommons.org/licenses/by-nc/4.0/",
+              "rightsHolder": "Stephen Petersen",
+              "identifier": "https://inaturalist-open-data.s3.amazonaws.com/photos/102595387/original.jpg"
+            }
+          ],
+          "facts": [],
+          "relations": [],
+          "isInCluster": false,
+          "datasetName": "iNaturalist research-grade observations",
+          "recordedBy": "Stephen Petersen",
+          "identifiedBy": "Stephen Petersen",
+          "dnaSequenceID": [],
+          "nucleotideSequence": [],
+          "geodeticDatum": "WGS84",
+          "class": "Mammalia",
+          "countryCode": "CA",
+          "recordedByIDs": [],
+          "identifiedByIDs": [],
+          "gbifRegion": "NORTH_AMERICA",
+          "country": "Canada",
+          "publishedByGbifRegion": "NORTH_AMERICA",
+          "rightsHolder": "Stephen Petersen",
+          "identifier": "63877187",
+          "http://unknown.org/nick": "stephenresearch",
+          "verbatimEventDate": "Thu Oct 29 2020 03:48:48 GMT-0500 (CDT)",
+          "http://unknown.org/crawl_attempt": "605",
+          "http://unknown.org/status": "not_reviewed",
+          "verbatimLocality": "Division No. 23, Unorganized, MB, CA",
+          "gbifID": "2981008699",
+          "collectionCode": "Observations",
+          "occurrenceID": "https://www.inaturalist.org/observations/63877187",
+          "taxonID": "41644",
+          "http://unknown.org/captive_cultivated": "wild",
+          "catalogNumber": "63877187",
+          "institutionCode": "iNaturalist",
+          "vitality": "alive",
+          "eventTime": "03:48:48-10:00",
+          "occurrenceRemarks": "3 cubs!",
+          "identificationID": "139379354"
+        }
+      ],
+      "facets": []
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

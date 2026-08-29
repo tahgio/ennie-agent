@@ -1,0 +1,14 @@
+{
+  "name": "error-bad-country",
+  "why": "F9: rejected upstream — which is why we reject it locally, before the call",
+  "request": {
+    "path": "/occurrence/search?taxonKey=2433451&country=XX&limit=1"
+  },
+  "response": {
+    "status": 400,
+    "contentType": "text/plain",
+    "json": null,
+    "text": "Cannot parse XX into a known Country"
+  },
+  "capturedAt": "2026-08-29"
+}

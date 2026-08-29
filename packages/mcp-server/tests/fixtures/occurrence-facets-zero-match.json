@@ -1,0 +1,26 @@
+{
+  "name": "occurrence-facets-zero-match",
+  "why": "Zero matches is a success, not an error (FR-013 edge case)",
+  "request": {
+    "path": "/occurrence/search?taxonKey=2433451&country=AQ&limit=0&facet=country&country.facetLimit=10"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "offset": 0,
+      "limit": 0,
+      "endOfRecords": true,
+      "count": 0,
+      "results": [],
+      "facets": [
+        {
+          "field": "COUNTRY",
+          "counts": []
+        }
+      ]
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

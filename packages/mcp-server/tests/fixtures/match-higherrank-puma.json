@@ -1,0 +1,35 @@
+{
+  "name": "match-higherrank-puma",
+  "why": "F1/FR-004a: HIGHERRANK — reached the genus, not the species. Not an answer.",
+  "request": {
+    "path": "/species/match?name=Puma%20notarealspecies&verbose=true"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "usageKey": 2435098,
+      "scientificName": "Puma Jardine, 1834",
+      "canonicalName": "Puma",
+      "rank": "GENUS",
+      "status": "ACCEPTED",
+      "confidence": 94,
+      "note": "Similarity: name=100; classification=-2; rank=0; status=1; score=99; nextMatch=5",
+      "matchType": "HIGHERRANK",
+      "kingdom": "Animalia",
+      "phylum": "Chordata",
+      "order": "Carnivora",
+      "family": "Felidae",
+      "genus": "Puma",
+      "kingdomKey": 1,
+      "phylumKey": 44,
+      "classKey": 359,
+      "orderKey": 732,
+      "familyKey": 9703,
+      "genusKey": 2435098,
+      "class": "Mammalia"
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}
