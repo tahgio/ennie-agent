@@ -177,27 +177,27 @@ pnpm workspace monorepo per [plan.md](./plan.md):
 
 ### Tests for User Story 4 ⚠️
 
-- [ ] T058 [P] [US4] Unit-test `MODEL` resolution in `packages/agent/tests/model.test.ts`: `provider:model` routes direct, `provider/model` falls through to the gateway, an unknown provider before a colon **errors naming the three supported providers** rather than silently falling through (FR-032, [contracts/agent-cli.md](./contracts/agent-cli.md))
-- [ ] T059 [P] [US4] Unit-test credential failure in `packages/agent/tests/model.test.ts`: exit code 2, message naming the exact env var, and **no server spawned** (FR-034)
-- [ ] T060 [P] [US4] Integration-test teardown in `packages/agent/tests/teardown.test.ts` across all four exit paths — `/exit`, EOF, thrown error, SIGINT — asserting no orphaned server process (FR-035)
+- [X] T058 [P] [US4] Unit-test `MODEL` resolution in `packages/agent/tests/model.test.ts`: `provider:model` routes direct, `provider/model` falls through to the gateway, an unknown provider before a colon **errors naming the three supported providers** rather than silently falling through (FR-032, [contracts/agent-cli.md](./contracts/agent-cli.md))
+- [X] T059 [P] [US4] Unit-test credential failure in `packages/agent/tests/model.test.ts`: exit code 2, message naming the exact env var, and **no server spawned** (FR-034)
+- [X] T060 [P] [US4] Integration-test teardown in `packages/agent/tests/teardown.test.ts` across all four exit paths — `/exit`, EOF, thrown error, SIGINT — asserting no orphaned server process (FR-035)
 
 ### Implementation for User Story 4
 
-- [ ] T061 [P] [US4] Implement `MODEL` parsing and provider routing in `packages/agent/src/model.ts` per [contracts/agent-cli.md](./contracts/agent-cli.md), checking the colon form first
-- [ ] T062 [US4] Implement the credential preflight in `packages/agent/src/model.ts`: verify the provider key before contacting the server or the model, exiting 2 with the variable named (FR-034)
-- [ ] T063 [US4] Wire `MCPConfiguration` (stdio) in `packages/agent/src/index.ts` to launch the built server **by path as a child process**, with no workspace dependency on `mcp-server` (FR-037, Constitution VII)
-- [ ] T064 [US4] Print the resolved model identity before the first prompt in `packages/agent/src/index.ts`, so any answer is attributable (FR-033)
-- [ ] T065 [US4] Implement the interactive loop in `packages/agent/src/session.ts` retaining conversation context across turns, in memory only, never written to disk (FR-031, FR-031a)
-- [ ] T066 [US4] Handle session exit in `packages/agent/src/session.ts` on `/exit`, EOF, and SIGINT, stating that it is exiting (FR-031b)
-- [ ] T067 [US4] Put `disconnect()` in a `finally` in `packages/agent/src/index.ts` covering every path, with SIGINT/SIGTERM handlers routing into the same teardown (FR-035)
-- [ ] T068 [US4] Write agent instructions in `packages/agent/src/instructions.ts` covering **presentation and clarification only** — formatting counts, stating zero totals, noting truncation. Tool semantics must come from the server so third-party clients get identical guidance (FR-036)
-- [ ] T069 [US4] Implement clarification handling in `packages/agent/src/session.ts`: a server `AMBIGUOUS` error becomes a plain-language question to the person, and their reply drives the retry — never a guess, never raw error text (FR-036a)
-- [ ] T070 [US4] Handle non-interactive input in `packages/agent/src/session.ts`: piped or closed stdin processes what it receives and exits cleanly rather than blocking on a prompt nobody will answer (spec edge case)
+- [X] T061 [P] [US4] Implement `MODEL` parsing and provider routing in `packages/agent/src/model.ts` per [contracts/agent-cli.md](./contracts/agent-cli.md), checking the colon form first
+- [X] T062 [US4] Implement the credential preflight in `packages/agent/src/model.ts`: verify the provider key before contacting the server or the model, exiting 2 with the variable named (FR-034)
+- [X] T063 [US4] Wire `MCPConfiguration` (stdio) in `packages/agent/src/index.ts` to launch the built server **by path as a child process**, with no workspace dependency on `mcp-server` (FR-037, Constitution VII)
+- [X] T064 [US4] Print the resolved model identity before the first prompt in `packages/agent/src/index.ts`, so any answer is attributable (FR-033)
+- [X] T065 [US4] Implement the interactive loop in `packages/agent/src/session.ts` retaining conversation context across turns, in memory only, never written to disk (FR-031, FR-031a)
+- [X] T066 [US4] Handle session exit in `packages/agent/src/session.ts` on `/exit`, EOF, and SIGINT, stating that it is exiting (FR-031b)
+- [X] T067 [US4] Put `disconnect()` in a `finally` in `packages/agent/src/index.ts` covering every path, with SIGINT/SIGTERM handlers routing into the same teardown (FR-035)
+- [X] T068 [US4] Write agent instructions in `packages/agent/src/instructions.ts` covering **presentation and clarification only** — formatting counts, stating zero totals, noting truncation. Tool semantics must come from the server so third-party clients get identical guidance (FR-036)
+- [X] T069 [US4] Implement clarification handling in `packages/agent/src/session.ts`: a server `AMBIGUOUS` error becomes a plain-language question to the person, and their reply drives the retry — never a guess, never raw error text (FR-036a)
+- [X] T070 [US4] Handle non-interactive input in `packages/agent/src/session.ts`: piped or closed stdin processes what it receives and exits cleanly rather than blocking on a prompt nobody will answer (spec edge case)
 
 ### Evals for User Story 4
 
-- [ ] T071 [P] [US4] Define the `RunRecord` type and structural scorers as **plain functions** in `packages/agent/evals/scorers/`, scoring capability selection and chain correctness from the recorded call sequence — pure and runner-independent so Viteval can be swapped (FR-041, plan D12)
-- [ ] T072 [US4] Build the Viteval suite in `packages/agent/evals/` with **at least 8 scenarios** driven programmatically with scripted replies (including a clarification exchange), reporting the structural score and a separate judge-model rating, stamped with agent model, judge model, and date. A judge failure must not fail the run (FR-041a, FR-041b, FR-041c, SC-011)
+- [X] T071 [P] [US4] Define the `RunRecord` type and structural scorers as **plain functions** in `packages/agent/evals/scorers/`, scoring capability selection and chain correctness from the recorded call sequence — pure and runner-independent so Viteval can be swapped (FR-041, plan D12)
+- [X] T072 [US4] Build the Viteval suite in `packages/agent/evals/` with **at least 8 scenarios** driven programmatically with scripted replies (including a clarification exchange), reporting the structural score and a separate judge-model rating, stamped with agent model, judge model, and date. A judge failure must not fail the run (FR-041a, FR-041b, FR-041c, SC-011)
 
 **Checkpoint**: The agent proves the server works for its primary user, over a real protocol boundary
 
@@ -220,7 +220,7 @@ pnpm workspace monorepo per [plan.md](./plan.md):
 - [ ] T076 [US5] Write the server `instructions` in `packages/mcp-server/src/instructions.ts` using the exact text from [contracts/server-instructions.md](./contracts/server-instructions.md), and pass it into `createServer()` (FR-021)
 - [ ] T077 [US5] Register `species_distribution_report` in `packages/mcp-server/src/prompts/species-distribution-report.ts` with `species` and optional `country` arguments, returning the exact workflow text from [contracts/species-distribution-report.md](./contracts/species-distribution-report.md) (FR-000b, FR-022)
 - [ ] T078 [P] [US5] Add the MCP client configuration snippet to `README.md` (the `mcpServers` JSON block from [quickstart.md](./quickstart.md) Scenario 8)
-- [ ] T079 [P] [US5] Add `.env.example` documenting `MODEL`, the three provider keys, `AI_GATEWAY_API_KEY`, the VoltOps keys, and `GBIF_USER_AGENT_CONTACT`
+- [X] T079 [P] [US5] Add `.env.example` documenting `MODEL`, the three provider keys, `AI_GATEWAY_API_KEY`, the VoltOps keys, and `GBIF_USER_AGENT_CONTACT`
 - [ ] T080 [US5] Verify the quickstart in `specs/001-gbif-mcp-server/quickstart.md` (Scenario 2) brings the server up in the MCP Inspector from a clean clone with **no GBIF account**, correcting `README.md` where the documented steps drift (SC-001)
 
 **Checkpoint**: All five user stories independently functional
