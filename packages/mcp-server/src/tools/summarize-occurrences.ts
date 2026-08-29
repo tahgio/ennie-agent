@@ -25,7 +25,7 @@ import {
   mapFacetsToDimensions,
 } from '../gbif/occurrence.js'
 import type { ToolContext } from '../server.js'
-import { runTool, type ToolResult } from './run-tool.js'
+import { runTool } from './run-tool.js'
 
 /** Exact text from contracts/summarize-occurrences.md. */
 const DESCRIPTION = `**Preferred tool for "where", "when", and "how many" questions.** Answers distribution questions about a species using GBIF's own aggregation: it returns a total count plus ranked counts by country, year, and/or basis of record, and transports no individual records at all. One call replaces paging through thousands of records, and the response is the same size whether the species has a hundred occurrences or ten million. Accepts a taxonKey from resolve_taxon, or a name it will resolve for you. Reach for this before search_occurrences.`

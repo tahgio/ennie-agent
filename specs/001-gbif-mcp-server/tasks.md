@@ -151,19 +151,19 @@ pnpm workspace monorepo per [plan.md](./plan.md):
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T048 [P] [US3] Unit-test record trimming in `packages/mcp-server/tests/unit/trim.test.ts` against the captured 95-field fixture: exactly 8 data fields survive, and `countryCode` (the ISO code) is emitted rather than `country` (the display name) so values round-trip as filter inputs (research F10, Principle III)
-- [ ] T049 [P] [US3] Unit-test absence handling in `packages/mcp-server/tests/unit/trim.test.ts`: records lacking dates, coordinates, or publisher yield explicit `null`, never a default or an omitted key (FR-009)
-- [ ] T050 [P] [US3] Protocol-test cap enforcement in `packages/mcp-server/tests/protocol/search-occurrences.test.ts`: `limit: 51` is **rejected**, because GBIF itself accepts `limit=500` and silently returns 300 with HTTP 200 (research F7, FR-008)
-- [ ] T051 [P] [US3] Protocol-test input rejection in `packages/mcp-server/tests/protocol/search-occurrences.test.ts` for backwards year ranges, invalid country codes, and `offset > 100000` — all rejected **before** any network call (FR-011, FR-012)
+- [X] T048 [P] [US3] Unit-test record trimming in `packages/mcp-server/tests/unit/trim.test.ts` against the captured 95-field fixture: exactly 8 data fields survive, and `countryCode` (the ISO code) is emitted rather than `country` (the display name) so values round-trip as filter inputs (research F10, Principle III)
+- [X] T049 [P] [US3] Unit-test absence handling in `packages/mcp-server/tests/unit/trim.test.ts`: records lacking dates, coordinates, or publisher yield explicit `null`, never a default or an omitted key (FR-009)
+- [X] T050 [P] [US3] Protocol-test cap enforcement in `packages/mcp-server/tests/protocol/search-occurrences.test.ts`: `limit: 51` is **rejected**, because GBIF itself accepts `limit=500` and silently returns 300 with HTTP 200 (research F7, FR-008)
+- [X] T051 [P] [US3] Protocol-test input rejection in `packages/mcp-server/tests/protocol/search-occurrences.test.ts` for backwards year ranges, invalid country codes, and `offset > 100000` — all rejected **before** any network call (FR-011, FR-012)
 
 ### Implementation for User Story 3
 
-- [ ] T052 [US3] Extend `packages/mcp-server/src/gbif/occurrence.ts` with a paged record search passing `taxonKey`, filters, `limit`, and `offset`
-- [ ] T053 [P] [US3] Implement `trimRecord()` in `packages/mcp-server/src/domain/trim.ts` mapping 95 upstream fields to the 8-field `OccurrenceRecord` of data-model §2
-- [ ] T054 [US3] Register `search_occurrences` in `packages/mcp-server/src/tools/search-occurrences.ts` with the exact description from [contracts/search-occurrences.md](./contracts/search-occurrences.md), including the explicit steer toward `summarize_occurrences` for distribution questions
-- [ ] T055 [US3] Enforce `limit` (1–50, default 20) and the offset ceiling in the Zod input schema in `packages/mcp-server/src/tools/search-occurrences.ts` — locally, never delegated upstream (FR-008, research F7)
-- [ ] T056 [US3] Always include `totalCount`, `offset`, `limit`, and `returnedCount` in the response from `packages/mcp-server/src/tools/search-occurrences.ts` (FR-010)
-- [ ] T057 [US3] Accept either `taxonKey` or `name` in `packages/mcp-server/src/tools/search-occurrences.ts`, reusing US1's resolution (FR-006)
+- [X] T052 [US3] Extend `packages/mcp-server/src/gbif/occurrence.ts` with a paged record search passing `taxonKey`, filters, `limit`, and `offset`
+- [X] T053 [P] [US3] Implement `trimRecord()` in `packages/mcp-server/src/domain/trim.ts` mapping 95 upstream fields to the 8-field `OccurrenceRecord` of data-model §2
+- [X] T054 [US3] Register `search_occurrences` in `packages/mcp-server/src/tools/search-occurrences.ts` with the exact description from [contracts/search-occurrences.md](./contracts/search-occurrences.md), including the explicit steer toward `summarize_occurrences` for distribution questions
+- [X] T055 [US3] Enforce `limit` (1–50, default 20) and the offset ceiling in the Zod input schema in `packages/mcp-server/src/tools/search-occurrences.ts` — locally, never delegated upstream (FR-008, research F7)
+- [X] T056 [US3] Always include `totalCount`, `offset`, `limit`, and `returnedCount` in the response from `packages/mcp-server/src/tools/search-occurrences.ts` (FR-010)
+- [X] T057 [US3] Accept either `taxonKey` or `name` in `packages/mcp-server/src/tools/search-occurrences.ts`, reusing US1's resolution (FR-006)
 
 **Checkpoint**: All three tools functional and independently tested. The server is complete and usable by any MCP client.
 
