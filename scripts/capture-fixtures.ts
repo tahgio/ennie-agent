@@ -102,18 +102,28 @@ const CASES: readonly FixtureCase[] = [
   // --- occurrence/search: faceting and records (F6, F7, F10) ---
   {
     name: 'occurrence-facets-ursus',
-    path: '/occurrence/search?taxonKey=2433451&limit=0&facet=country&facet=year&facet=basisOfRecord&country.facetLimit=10&year.facetLimit=10&basisOfRecord.facetLimit=10',
+    path: '/occurrence/search?taxonKey=2433451&limit=0&facet=country&facet=year&facet=basisOfRecord&country.facetLimit=11&year.facetLimit=11&basisOfRecord.facetLimit=11',
     why: 'F6: the mechanism behind Principle II — counts with an empty results[]',
   },
   {
     name: 'occurrence-facets-country-only',
-    path: '/occurrence/search?taxonKey=2433451&limit=0&facet=country&country.facetLimit=10',
+    path: '/occurrence/search?taxonKey=2433451&limit=0&facet=country&country.facetLimit=11',
     why: 'A single-dimension summary, to show one call still answers it',
   },
   {
     name: 'occurrence-facets-zero-match',
-    path: '/occurrence/search?taxonKey=2433451&country=AQ&limit=0&facet=country&country.facetLimit=10',
+    path: '/occurrence/search?taxonKey=2433451&country=AQ&limit=0&facet=country&country.facetLimit=11',
     why: 'Zero matches is a success, not an error (FR-013 edge case)',
+  },
+  {
+    name: 'occurrence-facets-common-species',
+    path: '/occurrence/search?taxonKey=5231190&limit=0&facet=country&facet=year&facet=basisOfRecord&country.facetLimit=11&year.facetLimit=11&basisOfRecord.facetLimit=11',
+    why: "SC-003: millions of records, and a response no larger than the polar bear's",
+  },
+  {
+    name: 'occurrence-facets-topn-3',
+    path: '/occurrence/search?taxonKey=2433451&limit=0&facet=country&country.facetLimit=4',
+    why: 'FR-018: a topN of 3 requests 4, so a hidden tail can be reported as truncated',
   },
   {
     name: 'occurrence-page-ursus',

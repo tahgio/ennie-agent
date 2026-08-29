@@ -17,6 +17,7 @@ import { TtlCache } from './gbif/cache.js'
 import { GbifClient } from './gbif/client.js'
 import { SERVER_INSTRUCTIONS } from './instructions.js'
 import { registerResolveTaxon } from './tools/resolve-taxon.js'
+import { registerSummarizeOccurrences } from './tools/summarize-occurrences.js'
 
 export const SERVER_NAME = 'gbif-mcp-server'
 export const SERVER_VERSION = '0.1.0'
@@ -45,8 +46,9 @@ export interface ToolContext {
  */
 function registerTools(context: ToolContext): void {
   registerResolveTaxon(context)
-  // Remaining tools are registered here as each story lands (US2, US3), and
-  // the species_distribution_report prompt with US5.
+  registerSummarizeOccurrences(context)
+  // search_occurrences lands with US3, and the species_distribution_report
+  // prompt with US5.
 }
 
 export function createServer(options: CreateServerOptions = {}): McpServer {

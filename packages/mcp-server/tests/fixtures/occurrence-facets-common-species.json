@@ -1,0 +1,161 @@
+{
+  "name": "occurrence-facets-common-species",
+  "why": "SC-003: millions of records, and a response no larger than the polar bear's",
+  "request": {
+    "path": "/occurrence/search?taxonKey=5231190&limit=0&facet=country&facet=year&facet=basisOfRecord&country.facetLimit=11&year.facetLimit=11&basisOfRecord.facetLimit=11"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "offset": 0,
+      "limit": 0,
+      "endOfRecords": false,
+      "count": 25836492,
+      "results": [],
+      "facets": [
+        {
+          "field": "BASIS_OF_RECORD",
+          "counts": [
+            {
+              "name": "HUMAN_OBSERVATION",
+              "count": 25507867
+            },
+            {
+              "name": "OBSERVATION",
+              "count": 248469
+            },
+            {
+              "name": "PRESERVED_SPECIMEN",
+              "count": 58997
+            },
+            {
+              "name": "OCCURRENCE",
+              "count": 12412
+            },
+            {
+              "name": "MACHINE_OBSERVATION",
+              "count": 3819
+            },
+            {
+              "name": "LIVING_SPECIMEN",
+              "count": 2892
+            },
+            {
+              "name": "MATERIAL_SAMPLE",
+              "count": 1589
+            },
+            {
+              "name": "MATERIAL_CITATION",
+              "count": 445
+            },
+            {
+              "name": "FOSSIL_SPECIMEN",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "field": "YEAR",
+          "counts": [
+            {
+              "name": "2024",
+              "count": 3118159
+            },
+            {
+              "name": "2023",
+              "count": 2912544
+            },
+            {
+              "name": "2022",
+              "count": 2731033
+            },
+            {
+              "name": "2021",
+              "count": 2620166
+            },
+            {
+              "name": "2020",
+              "count": 2326307
+            },
+            {
+              "name": "2019",
+              "count": 1736367
+            },
+            {
+              "name": "2018",
+              "count": 1483476
+            },
+            {
+              "name": "2017",
+              "count": 1193828
+            },
+            {
+              "name": "2016",
+              "count": 979682
+            },
+            {
+              "name": "2015",
+              "count": 850454
+            },
+            {
+              "name": "2014",
+              "count": 731678
+            }
+          ]
+        },
+        {
+          "field": "COUNTRY",
+          "counts": [
+            {
+              "name": "US",
+              "count": 13339931
+            },
+            {
+              "name": "CA",
+              "count": 2078747
+            },
+            {
+              "name": "ES",
+              "count": 1279793
+            },
+            {
+              "name": "FR",
+              "count": 1258721
+            },
+            {
+              "name": "GB",
+              "count": 827471
+            },
+            {
+              "name": "NL",
+              "count": 708578
+            },
+            {
+              "name": "AU",
+              "count": 661407
+            },
+            {
+              "name": "DE",
+              "count": 562771
+            },
+            {
+              "name": "IN",
+              "count": 507261
+            },
+            {
+              "name": "PT",
+              "count": 449362
+            },
+            {
+              "name": "SE",
+              "count": 414678
+            }
+          ]
+        }
+      ]
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

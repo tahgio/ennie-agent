@@ -1,0 +1,43 @@
+{
+  "name": "occurrence-facets-topn-3",
+  "why": "FR-018: a topN of 3 requests 4, so a hidden tail can be reported as truncated",
+  "request": {
+    "path": "/occurrence/search?taxonKey=2433451&limit=0&facet=country&country.facetLimit=4"
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "json": {
+      "offset": 0,
+      "limit": 0,
+      "endOfRecords": false,
+      "count": 11141,
+      "results": [],
+      "facets": [
+        {
+          "field": "COUNTRY",
+          "counts": [
+            {
+              "name": "CA",
+              "count": 3554
+            },
+            {
+              "name": "US",
+              "count": 2788
+            },
+            {
+              "name": "GL",
+              "count": 1251
+            },
+            {
+              "name": "SJ",
+              "count": 1125
+            }
+          ]
+        }
+      ]
+    },
+    "text": null
+  },
+  "capturedAt": "2026-08-29"
+}

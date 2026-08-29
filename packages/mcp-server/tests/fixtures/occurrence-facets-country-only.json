@@ -2,7 +2,7 @@
   "name": "occurrence-facets-country-only",
   "why": "A single-dimension summary, to show one call still answers it",
   "request": {
-    "path": "/occurrence/search?taxonKey=2433451&limit=0&facet=country&country.facetLimit=10"
+    "path": "/occurrence/search?taxonKey=2433451&limit=0&facet=country&country.facetLimit=11"
   },
   "response": {
     "status": 200,
@@ -56,6 +56,10 @@
             {
               "name": "DK",
               "count": 12
+            },
+            {
+              "name": "CN",
+              "count": 3
             }
           ]
         }

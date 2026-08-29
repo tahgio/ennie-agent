@@ -126,18 +126,18 @@ pnpm workspace monorepo per [plan.md](./plan.md):
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T039 [P] [US2] Unit-test facet mapping in `packages/mcp-server/tests/unit/facets.test.ts`: upper-snake GBIF fields (`COUNTRY`, `BASIS_OF_RECORD`) mapped back to contract dimension names, unrecognised facet fields dropped rather than throwing (research F6)
-- [ ] T040 [P] [US2] Protocol-test `summarize_occurrences` in `packages/mcp-server/tests/protocol/summarize-occurrences.test.ts`, asserting **exactly one** upstream request per call, zero records in the response, and identical response bounds across a common and a rare species (SC-002, SC-003)
-- [ ] T041 [P] [US2] Protocol-test the zero-match case in `packages/mcp-server/tests/protocol/summarize-occurrences.test.ts`: `totalCount: 0` is a **success**, not an error (spec edge case)
+- [X] T039 [P] [US2] Unit-test facet mapping in `packages/mcp-server/tests/unit/facets.test.ts`: upper-snake GBIF fields (`COUNTRY`, `BASIS_OF_RECORD`) mapped back to contract dimension names, unrecognised facet fields dropped rather than throwing (research F6)
+- [X] T040 [P] [US2] Protocol-test `summarize_occurrences` in `packages/mcp-server/tests/protocol/summarize-occurrences.test.ts`, asserting **exactly one** upstream request per call, zero records in the response, and identical response bounds across a common and a rare species (SC-002, SC-003)
+- [X] T041 [P] [US2] Protocol-test the zero-match case in `packages/mcp-server/tests/protocol/summarize-occurrences.test.ts`: `totalCount: 0` is a **success**, not an error (spec edge case)
 
 ### Implementation for User Story 2
 
-- [ ] T042 [US2] Implement `searchOccurrences()` in `packages/mcp-server/src/gbif/occurrence.ts` supporting `limit=0` plus multiple `facet` params and the per-facet `{facet}.facetLimit` form on a single request (research F6)
-- [ ] T043 [US2] Implement dimension mapping in `packages/mcp-server/src/gbif/occurrence.ts` between contract names (`country`, `year`, `basisOfRecord`) and GBIF's facet keys
-- [ ] T044 [US2] Register `summarize_occurrences` in `packages/mcp-server/src/tools/summarize-occurrences.ts` with the exact description from [contracts/summarize-occurrences.md](./contracts/summarize-occurrences.md), which **must** state it is preferred for where/when/how-many questions so the model reaches for it before paginating (FR-017)
-- [ ] T045 [US2] Define the output schema in `packages/mcp-server/src/tools/summarize-occurrences.ts` with **no `records` field at all**, making "transports no records" structural rather than conventional (FR-013)
-- [ ] T046 [US2] Implement `topN` truncation (1–20, default 10) in `packages/mcp-server/src/tools/summarize-occurrences.ts`, setting `truncated` and `distinctValuesReturned` so a hidden tail is stated plainly (FR-018)
-- [ ] T047 [US2] Accept either `taxonKey` or `name` in `packages/mcp-server/src/tools/summarize-occurrences.ts`, resolving names through US1's policy and returning the resolved taxon in the response (FR-015, FR-016)
+- [X] T042 [US2] Implement `searchOccurrences()` in `packages/mcp-server/src/gbif/occurrence.ts` supporting `limit=0` plus multiple `facet` params and the per-facet `{facet}.facetLimit` form on a single request (research F6)
+- [X] T043 [US2] Implement dimension mapping in `packages/mcp-server/src/gbif/occurrence.ts` between contract names (`country`, `year`, `basisOfRecord`) and GBIF's facet keys
+- [X] T044 [US2] Register `summarize_occurrences` in `packages/mcp-server/src/tools/summarize-occurrences.ts` with the exact description from [contracts/summarize-occurrences.md](./contracts/summarize-occurrences.md), which **must** state it is preferred for where/when/how-many questions so the model reaches for it before paginating (FR-017)
+- [X] T045 [US2] Define the output schema in `packages/mcp-server/src/tools/summarize-occurrences.ts` with **no `records` field at all**, making "transports no records" structural rather than conventional (FR-013)
+- [X] T046 [US2] Implement `topN` truncation (1–20, default 10) in `packages/mcp-server/src/tools/summarize-occurrences.ts`, setting `truncated` and `distinctValuesReturned` so a hidden tail is stated plainly (FR-018)
+- [X] T047 [US2] Accept either `taxonKey` or `name` in `packages/mcp-server/src/tools/summarize-occurrences.ts`, resolving names through US1's policy and returning the resolved taxon in the response (FR-015, FR-016)
 
 **Checkpoint**: The server answers distribution questions without transporting records — the capability the whole design exists for
 
