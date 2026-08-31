@@ -211,17 +211,17 @@ pnpm workspace monorepo per [plan.md](./plan.md):
 
 ### Tests for User Story 5 ⚠️
 
-- [ ] T073 [P] [US5] Protocol-test discovery in `packages/mcp-server/tests/protocol/discovery.test.ts`: `tools/list` returns exactly three tools each with complete input **and** output schemas and constraint-stating descriptions (FR-019, SC-006)
-- [ ] T074 [P] [US5] Protocol-test the initialize result in `packages/mcp-server/tests/protocol/discovery.test.ts`, asserting the `instructions` field is present and non-empty (FR-021)
-- [ ] T075 [P] [US5] Protocol-test the prompt in `packages/mcp-server/tests/protocol/prompt.test.ts`: `prompts/list` includes `species_distribution_report` and `prompts/get` returns the workflow for a given species (FR-022)
+- [X] T073 [P] [US5] Protocol-test discovery in `packages/mcp-server/tests/protocol/discovery.test.ts`: `tools/list` returns exactly three tools each with complete input **and** output schemas and constraint-stating descriptions (FR-019, SC-006)
+- [X] T074 [P] [US5] Protocol-test the initialize result in `packages/mcp-server/tests/protocol/discovery.test.ts`, asserting the `instructions` field is present and non-empty (FR-021)
+- [X] T075 [P] [US5] Protocol-test the prompt in `packages/mcp-server/tests/protocol/prompt.test.ts`: `prompts/list` includes `species_distribution_report` and `prompts/get` returns the workflow for a given species (FR-022)
 
 ### Implementation for User Story 5
 
-- [ ] T076 [US5] Write the server `instructions` in `packages/mcp-server/src/instructions.ts` using the exact text from [contracts/server-instructions.md](./contracts/server-instructions.md), and pass it into `createServer()` (FR-021)
-- [ ] T077 [US5] Register `species_distribution_report` in `packages/mcp-server/src/prompts/species-distribution-report.ts` with `species` and optional `country` arguments, returning the exact workflow text from [contracts/species-distribution-report.md](./contracts/species-distribution-report.md) (FR-000b, FR-022)
-- [ ] T078 [P] [US5] Add the MCP client configuration snippet to `README.md` (the `mcpServers` JSON block from [quickstart.md](./quickstart.md) Scenario 8)
+- [X] T076 [US5] Write the server `instructions` in `packages/mcp-server/src/instructions.ts` using the exact text from [contracts/server-instructions.md](./contracts/server-instructions.md), and pass it into `createServer()` (FR-021)
+- [X] T077 [US5] Register `species_distribution_report` in `packages/mcp-server/src/prompts/species-distribution-report.ts` with `species` and optional `country` arguments, returning the exact workflow text from [contracts/species-distribution-report.md](./contracts/species-distribution-report.md) (FR-000b, FR-022)
+- [X] T078 [P] [US5] Add the MCP client configuration snippet to `README.md` (the `mcpServers` JSON block from [quickstart.md](./quickstart.md) Scenario 8)
 - [X] T079 [P] [US5] Add `.env.example` documenting `MODEL`, the three provider keys, `AI_GATEWAY_API_KEY`, the VoltOps keys, and `GBIF_USER_AGENT_CONTACT`
-- [ ] T080 [US5] Verify the quickstart in `specs/001-gbif-mcp-server/quickstart.md` (Scenario 2) brings the server up in the MCP Inspector from a clean clone with **no GBIF account**, correcting `README.md` where the documented steps drift (SC-001)
+- [X] T080 [US5] Verify the quickstart in `specs/001-gbif-mcp-server/quickstart.md` (Scenario 2) brings the server up in the MCP Inspector from a clean clone with **no GBIF account**, correcting `README.md` where the documented steps drift (SC-001)
 
 **Checkpoint**: All five user stories independently functional
 
@@ -229,18 +229,20 @@ pnpm workspace monorepo per [plan.md](./plan.md):
 
 ## Phase 8: Polish & Cross-Cutting Concerns
 
-- [ ] T081 [P] Add optional VoltOps trace export in `packages/agent/src/index.ts` behind `VOLTOPS_PUBLIC_KEY`/`VOLTOPS_SECRET_KEY`, flushed before exit
-- [ ] T082 [P] Emit a structured log entry per tool call in `packages/mcp-server/src/logging.ts` carrying tool name, duration, retry count, and cache outcome — stderr only (FR-029)
-- [ ] T083 [P] Build the opt-in live suite in `packages/mcp-server/tests/live/` behind `pnpm test:live`, confirming the T012 fixtures still match reality; documented as opt-in and excluded from CI (FR-040)
-- [ ] T084 [P] Add an `MIT` `LICENSE` file at the repo root
-- [ ] T085 [P] Add the CI badge to `README.md`
-- [ ] T086 Write the decision record in `README.md` as **Context / Decision / Trade-off** entries, drawn from [research.md](./research.md) — including the four GBIF findings that changed the design and the `ai@6`/provider-v3 pin (FR-042, Constitution IX)
-- [ ] T087 Write the "deliberately not built" section in `README.md` covering every item in the spec's Out of Scope, with reasons — recording what was excluded carries as much weight as what was built (Constitution IX)
-- [ ] T088 Document in `README.md` how LLM assistance was used and validated on this project (FR-042, SC-013)
-- [ ] T089 Document the opt-in commands in `README.md`, stating plainly that `test:live` hits GBIF, that `eval` costs money, and that neither runs in CI (FR-040)
-- [ ] T090 Verify Constitution VIII by auditing the final dependency tree: confirm `packages/mcp-server` ships exactly three production dependencies and record the VoltAgent transitive-provider trade-off from [plan.md](./plan.md) Complexity Tracking
+- [X] T081 [P] Add optional VoltOps trace export in `packages/agent/src/index.ts` behind `VOLTOPS_PUBLIC_KEY`/`VOLTOPS_SECRET_KEY`, flushed before exit
+- [X] T082 [P] Emit a structured log entry per tool call in `packages/mcp-server/src/logging.ts` carrying tool name, duration, retry count, and cache outcome — stderr only (FR-029)
+- [X] T083 [P] Build the opt-in live suite in `packages/mcp-server/tests/live/` behind `pnpm test:live`, confirming the T012 fixtures still match reality; documented as opt-in and excluded from CI (FR-040)
+- [X] T084 [P] Add an `MIT` `LICENSE` file at the repo root
+- [X] T085 [P] Add the CI badge to `README.md`
+- [X] T086 Write the decision record in `README.md` as **Context / Decision / Trade-off** entries, drawn from [research.md](./research.md) — including the four GBIF findings that changed the design and the `ai@6`/provider-v3 pin (FR-042, Constitution IX)
+- [X] T087 Write the "deliberately not built" section in `README.md` covering every item in the spec's Out of Scope, with reasons — recording what was excluded carries as much weight as what was built (Constitution IX)
+- [X] T088 Document in `README.md` how LLM assistance was used and validated on this project (FR-042, SC-013)
+- [X] T089 Document the opt-in commands in `README.md`, stating plainly that `test:live` hits GBIF, that `eval` costs money, and that neither runs in CI (FR-040)
+- [X] T090 Verify Constitution VIII by auditing the final dependency tree: confirm `packages/mcp-server` ships exactly three production dependencies and record the VoltAgent transitive-provider trade-off from [plan.md](./plan.md) Complexity Tracking
 - [ ] T091 Run all 8 scenarios in `specs/001-gbif-mcp-server/quickstart.md` and confirm every row of its acceptance summary table
-- [ ] T092 Confirm the offline guarantee by running `unshare -rn pnpm test` (or an equivalent airgap) against `vitest.config.ts`'s default projects, verifying a clean pass with no network (FR-038, SC-007)
+  - **Verified 2026-08-30**: Scenarios 1, 2, 3, 4, 5, 6 and 8 pass in full — 1 and 6 from the offline suite (159 tests, also under `unshare -rn`), 2, 3, 4 and 8 driven over real stdio against live GBIF, 5 run interactively with `google:gemini-2.5-flash-lite`. Scenario 5 uncovered and fixed a real defect in T070: piped stdin dropped every line after the first (regression test in `packages/agent/tests/session.test.ts`).
+  - **Outstanding**: Scenario 7's `pnpm eval` row only. Deferred by the operator because it spends model credits; `pnpm test:live` (the other half of Scenario 7) passes 13/13. Run `pnpm eval` twice against the same models to close SC-011, then check this task off.
+- [X] T092 Confirm the offline guarantee by running `unshare -rn pnpm test` (or an equivalent airgap) against `vitest.config.ts`'s default projects, verifying a clean pass with no network (FR-038, SC-007)
 
 ---
 

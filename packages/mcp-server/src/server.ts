@@ -16,6 +16,7 @@ import type { ResolvedTaxon } from './domain/resolution.js'
 import { TtlCache } from './gbif/cache.js'
 import { GbifClient } from './gbif/client.js'
 import { SERVER_INSTRUCTIONS } from './instructions.js'
+import { registerSpeciesDistributionReport } from './prompts/species-distribution-report.js'
 import { registerResolveTaxon } from './tools/resolve-taxon.js'
 import { registerSearchOccurrences } from './tools/search-occurrences.js'
 import { registerSummarizeOccurrences } from './tools/summarize-occurrences.js'
@@ -49,7 +50,7 @@ function registerTools(context: ToolContext): void {
   registerResolveTaxon(context)
   registerSummarizeOccurrences(context)
   registerSearchOccurrences(context)
-  // The species_distribution_report prompt lands with US5.
+  registerSpeciesDistributionReport(context)
 }
 
 export function createServer(options: CreateServerOptions = {}): McpServer {

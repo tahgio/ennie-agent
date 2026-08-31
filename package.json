@@ -19,7 +19,7 @@
     "test": "vitest run --project unit --project protocol",
     "test:watch": "vitest --project unit --project protocol",
     "test:live": "vitest run --project live",
-    "eval": "pnpm --filter @ennie/agent eval",
+    "eval": "pnpm --filter agent eval",
     "capture-fixtures": "node scripts/capture-fixtures.ts"
   },
   "devDependencies": {

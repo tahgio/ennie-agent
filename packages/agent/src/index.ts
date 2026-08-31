@@ -28,6 +28,7 @@ import { fileURLToPath } from 'node:url'
 import { Agent, MCPConfiguration } from '@voltagent/core'
 import { AGENT_INSTRUCTIONS } from './instructions.js'
 import { ConfigError, createModel, describeModel, parseModel, requireCredential } from './model.js'
+import { createTracing } from './observability.js'
 import { Session } from './session.js'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
@@ -55,6 +56,10 @@ async function main(): Promise<number> {
       `The GBIF MCP server is not built: ${entrypoint} does not exist.\nRun \`pnpm build\` first, or set GBIF_MCP_SERVER_PATH to a built server.`,
     )
   }
+
+  // Optional, and off unless both VoltOps keys are set. Built last among the
+  // startup steps, so nothing that can exit 2 leaves a pipeline open behind it.
+  const tracing = createTracing()
 
   const mcp = new MCPConfiguration({
     servers: {
@@ -94,6 +99,7 @@ async function main(): Promise<number> {
       // persisted anywhere (FR-031a).
       memory: false,
       maxSteps: 8,
+      ...(tracing === null ? {} : { observability: tracing.observability }),
     })
 
     const firstQuestion = process.argv.slice(2).join(' ').trim()
@@ -108,8 +114,11 @@ async function main(): Promise<number> {
     await session.run()
     return 0
   } finally {
-    // Covers every path: clean exit, throw, and both signals.
+    // Covers every path: clean exit, throw, and both signals. Traces are
+    // flushed before the process is allowed to go away — this is a short-lived
+    // CLI, and an unflushed batch is a silently lost trace.
     await mcp.disconnect().catch(() => undefined)
+    await tracing?.close()
     process.off('SIGINT', onSignal)
     process.off('SIGTERM', onSignal)
   }

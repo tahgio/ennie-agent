@@ -59,37 +59,43 @@ export class Session {
       terminal: this.options.input.isTTY === true,
     })
 
-    // `rl.question()` does not settle when the input stream closes underneath
-    // it, so waiting on it alone hangs forever on EOF — which is every piped
-    // invocation. Racing it against the interface's own close event is what
-    // makes a closed stdin an ordinary end of session (FR-031b, spec edge case).
-    const closed = new Promise<null>((resolve) => {
-      rl.once('close', () => {
-        // Deferred a tick so an already-queued line still wins the race.
-        setImmediate(() => resolve(null))
-      })
-    })
+    // Read through readline's async iterator rather than awaiting
+    // `rl.question()` per turn. Two reasons, and the second one is a bug that
+    // is easy to reintroduce:
+    //
+    //   - `rl.question()` never settles when the input stream closes underneath
+    //     it, so a piped invocation would hang on EOF waiting for a prompt
+    //     nobody will answer (FR-031b, spec edge case).
+    //   - Racing it against the interface's `close` event fixes the hang but
+    //     drops input: with piped stdin every line is buffered and `close`
+    //     fires while the *first* answer is still being generated, so from the
+    //     second turn onward the already-settled race resolves immediately and
+    //     the queued lines are silently discarded. The iterator drains what was
+    //     buffered and only then ends, which is what "processes what it
+    //     receives" has to mean for a follow-up question to survive.
+    //
+    // Aborting closes the interface, which ends the iterator — so a signal
+    // during teardown breaks the loop deterministically rather than incidentally.
+    const onAbort = (): void => {
+      rl.close()
+    }
+    this.options.signal?.addEventListener('abort', onAbort, { once: true })
 
     try {
       if (this.options.firstQuestion !== undefined && this.options.firstQuestion.trim() !== '') {
         await this.ask(this.options.firstQuestion)
       }
 
-      for (;;) {
+      this.write(PROMPT)
+
+      for await (const line of rl) {
         if (this.options.signal?.aborted === true) break
 
-        let line: string | null
-        try {
-          line = await Promise.race([rl.question(PROMPT), closed])
-        } catch {
-          break
-        }
-
-        // Null means the input stream ended: nobody is left to answer a prompt.
-        if (line === null) break
-
         const question = line.trim()
-        if (question === '') continue
+        if (question === '') {
+          this.write(PROMPT)
+          continue
+        }
 
         if (question === EXIT_COMMAND) {
           this.write('\nExiting.\n')
@@ -97,8 +103,10 @@ export class Session {
         }
 
         await this.ask(question)
+        this.write(PROMPT)
       }
     } finally {
+      this.options.signal?.removeEventListener('abort', onAbort)
       rl.close()
     }
   }
