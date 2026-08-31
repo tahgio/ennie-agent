@@ -137,6 +137,51 @@ describe('Session over piped input', () => {
     expect(agent.prompts).toHaveLength(1)
   })
 
+  it('says so when the model returns no text, instead of printing nothing', async () => {
+    // The bug this covers: a turn that produces no text is not an error and
+    // does not throw. Gemini alone reaches this through four different finish
+    // reasons — a malformed function call, a content filter, a token limit hit
+    // while thinking, and a plain stop with an empty candidate — and the CLI
+    // used to answer every one of them with a blank line, which reads as the
+    // program ignoring the question.
+    const prompts: Array<Array<{ role: string; content: string }>> = []
+    let call = 0
+    const agent = {
+      prompts,
+      async generateText(messages: Array<{ role: string; content: string }>) {
+        prompts.push(messages.map((message) => ({ ...message })))
+        call += 1
+        if (call === 1) return { text: '', finishReason: 'error', steps: [{}] }
+        return { text: 'recovered' }
+      },
+    }
+
+    const { output } = await runSession(['A silent question', 'A second question'], agent as never)
+
+    expect(output).toContain('No answer came back')
+    expect(output).toContain('recovered')
+    // Nothing empty is carried forward: the retry starts from a clean turn,
+    // which is what makes asking again work rather than compounding the state.
+    expect(prompts[1]).toHaveLength(1)
+    expect(prompts[1]?.[0]?.content).toBe('A second question')
+  })
+
+  it('names the step budget when a turn ends still calling tools', async () => {
+    const agent = {
+      prompts: [] as Array<Array<{ role: string; content: string }>>,
+      async generateText(messages: Array<{ role: string; content: string }>) {
+        this.prompts.push(messages.map((message) => ({ ...message })))
+        return { text: '', finishReason: 'tool-calls', steps: new Array(8).fill({}) }
+      },
+    }
+
+    const { output } = await runSession(['A question that loops'], agent as never)
+
+    // The step limit is the one cause the person can act on — by simplifying
+    // the question — so it must be named rather than lumped in with the rest.
+    expect(output).toMatch(/8 steps/)
+  })
+
   it('keeps the session open when a turn fails, and drops it from the transcript', async () => {
     const prompts: Array<Array<{ role: string; content: string }>> = []
     let call = 0
