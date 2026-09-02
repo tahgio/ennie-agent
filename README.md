@@ -89,9 +89,14 @@ Claude Code takes the same thing on the command line:
 claude mcp add gbif -- node /absolute/path/to/packages/mcp-server/dist/index.js
 ```
 
-The one optional setting is `GBIF_USER_AGENT_CONTACT` — an email address appended to the
-`User-Agent` this server sends. GBIF asks for a way to reach high-volume callers, and being
-reachable is how you get contacted rather than blocked.
+Two optional settings tune the server's behaviour:
+
+- `GBIF_USER_AGENT_CONTACT` — an email address appended to the `User-Agent` this server sends.
+  GBIF asks for a way to reach high-volume callers, and being reachable is how you get contacted
+  rather than blocked.
+- `GBIF_CALL_BUDGET_MS` — the total time (milliseconds) one tool call gets against GBIF, covering
+  every attempt, retry and backoff wait. Defaults to 60000 (60s); raise it if broad, unfiltered
+  queries are hitting `UPSTREAM_TIMEOUT` before a full retry sequence can clear a slow response.
 
 ## Layout
 

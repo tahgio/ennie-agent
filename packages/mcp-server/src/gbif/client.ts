@@ -11,9 +11,10 @@
  *
  *   - a **10s per-attempt timeout**, after which that attempt is abandoned and
  *     counted against the retry budget; and
- *   - a **30s per-call budget** spanning every attempt, every backoff sleep,
- *     and every upstream request the tool makes — including the resolution call
- *     that precedes an occurrence query. When it expires the call is over.
+ *   - a **60s per-call budget** (default; `GBIF_CALL_BUDGET_MS` overrides it)
+ *     spanning every attempt, every backoff sleep, and every upstream request
+ *     the tool makes — including the resolution call that precedes an
+ *     occurrence query. When it expires the call is over.
  *
  * The third signal in the mix is the client's own cancellation, threaded from
  * the MCP request through to the socket, so an abandoned request stops costing
@@ -25,7 +26,7 @@ import { logger } from '../logging.js'
 
 const DEFAULT_BASE_URL = 'https://api.gbif.org/v1'
 const DEFAULT_ATTEMPT_TIMEOUT_MS = 10_000
-const DEFAULT_CALL_BUDGET_MS = 30_000
+const DEFAULT_CALL_BUDGET_MS = 60_000
 const DEFAULT_MAX_RETRIES = 3
 const BACKOFF_BASE_MS = 500
 const BACKOFF_CAP_MS = 8_000
@@ -45,7 +46,22 @@ export function userAgent(env: NodeJS.ProcessEnv = process.env): string {
 }
 
 /**
- * The 30s ceiling on one tool call, shared across every request that call makes.
+ * The per-call budget in milliseconds: `GBIF_CALL_BUDGET_MS` when it parses as
+ * a positive number, otherwise `DEFAULT_CALL_BUDGET_MS`. Broad, unfiltered
+ * queries can legitimately need longer than the default to clear a full retry
+ * sequence against a slow upstream, so this is left operator-tunable rather
+ * than fixed — an invalid or unset value falls back silently rather than
+ * failing a tool call over a malformed env var.
+ */
+export function callBudgetMs(env: NodeJS.ProcessEnv = process.env): number {
+  const raw = env.GBIF_CALL_BUDGET_MS?.trim()
+  if (raw === undefined || raw === '') return DEFAULT_CALL_BUDGET_MS
+  const parsed = Number(raw)
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : DEFAULT_CALL_BUDGET_MS
+}
+
+/**
+ * The 60s (default) ceiling on one tool call, shared across every request that call makes.
  *
  * Held as an object rather than a bare signal because the retry logic needs to
  * ask how much time is *left* — that is what makes the fail-fast rule below

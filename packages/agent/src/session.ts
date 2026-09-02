@@ -145,9 +145,20 @@ export class Session {
     this.#turns.push({ role: 'user', content: question })
 
     try {
+      // VoltAgent folds its instructions into a system-role entry inside
+      // `messages` rather than the AI SDK's separate `system` field, which is
+      // exactly the shape the SDK's own injection warning fires on. The
+      // instructions are ours, not user input, so there is nothing to warn
+      // about; `allowSystemInMessages` isn't in VoltAgent's option type but is
+      // forwarded straight through to the AI SDK call, so it's passed via a
+      // loosened type rather than declared as unsupported.
+      const generateOptions: Record<string, unknown> = {
+        allowSystemInMessages: true,
+        ...(this.options.signal !== undefined ? { abortSignal: this.options.signal } : {}),
+      }
       const result = (await this.#agent.generateText(
         this.#turns.map((turn) => ({ role: turn.role, content: turn.content })),
-        this.options.signal !== undefined ? { abortSignal: this.options.signal } : {},
+        generateOptions as Parameters<Agent['generateText']>[1],
       )) as Generation
 
       const answer = result.text.trim()

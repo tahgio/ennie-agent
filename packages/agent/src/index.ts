@@ -43,7 +43,7 @@ const SIGINT_EXIT_CODE = 130
  * launched by this CLI never received it (FR-026).
  */
 function forwardedEnv(): Record<string, string> {
-  const allowlist = ['GBIF_USER_AGENT_CONTACT', 'LOG_LEVEL'] as const
+  const allowlist = ['GBIF_USER_AGENT_CONTACT', 'LOG_LEVEL', 'GBIF_CALL_BUDGET_MS'] as const
   const env: Record<string, string> = {}
 
   for (const name of allowlist) {

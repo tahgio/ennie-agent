@@ -20,6 +20,7 @@ way (FR-031).
 | `AI_GATEWAY_API_KEY` | gateway form only | Credential for the Vercel AI Gateway. |
 | `VOLTOPS_PUBLIC_KEY` / `VOLTOPS_SECRET_KEY` | no | Enable trace export; flushed before exit. |
 | `GBIF_USER_AGENT_CONTACT` | no | Contact appended to the server's User-Agent. |
+| `GBIF_CALL_BUDGET_MS` | no | Per-call budget against GBIF, milliseconds. Default 60000. |
 
 **`MODEL` resolution (FR-032)**
 

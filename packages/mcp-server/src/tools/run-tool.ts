@@ -4,8 +4,9 @@
  * Three things have to happen identically for all three tools, and doing them
  * in one place is what keeps them from drifting apart:
  *
- *   1. **Every call gets a budget.** 30s covering every upstream request the
- *      call makes, not 30s per request (FR-026a).
+ *   1. **Every call gets a budget.** 60s (default; `GBIF_CALL_BUDGET_MS`
+ *      overrides it) covering every upstream request the call makes, not that
+ *      long per request (FR-026a).
  *   2. **A recoverable failure becomes a result, never an exception.** A thrown
  *      error reaches the client as a JSON-RPC error, which the model cannot see
  *      and therefore cannot act on. `isError: true` puts the failure in the
@@ -15,7 +16,7 @@
  */
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { isToolError, toToolResult } from '../errors.js'
-import { CallBudget } from '../gbif/client.js'
+import { CallBudget, callBudgetMs } from '../gbif/client.js'
 import { type CacheOutcome, logToolCall } from '../logging.js'
 
 /** What a handler reports back about the work it did, for the log line. */
@@ -54,7 +55,7 @@ export async function runTool(
   handler: (context: ToolRunContext) => Promise<ToolResult>,
 ): Promise<ToolResult> {
   const startedAt = Date.now()
-  const budget = new CallBudget()
+  const budget = new CallBudget({ totalMs: callBudgetMs() })
   const context: ToolRunContext = {
     budget,
     signal: extra?.signal,

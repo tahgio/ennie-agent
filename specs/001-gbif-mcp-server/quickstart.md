@@ -130,7 +130,7 @@ Driven by fixtures in the offline suite, so it is reproducible:
 | 429 with `Retry-After: 600` | **Fails immediately** naming the 600s wait — does not stall the turn (FR-026b). |
 | 503 × 4 | Retries 3×, then a recoverable error naming the status. |
 | Attempt exceeding 10s | Abandoned, counted against the retry budget. |
-| Whole call exceeding 30s | Recoverable error naming the timeout. **No call exceeds 30s** (SC-012). |
+| Whole call exceeding the budget (60s default, `GBIF_CALL_BUDGET_MS`-tunable) | Recoverable error naming the timeout. **No call exceeds the configured budget** (SC-012). |
 | 400 with a plain-text body | Parsed as text, not JSON (F8); surfaced as a recoverable error. |
 | Client cancels mid-flight | Upstream request aborted, no result emitted, no unhandled rejection (FR-028). |
 

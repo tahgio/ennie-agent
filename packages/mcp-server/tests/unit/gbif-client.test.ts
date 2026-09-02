@@ -13,6 +13,7 @@ import { ToolError } from '../../src/errors.js'
 import {
   backoffMs,
   CallBudget,
+  callBudgetMs,
   GbifClient,
   parseRetryAfter,
   userAgent,
@@ -140,6 +141,23 @@ describe('userAgent', () => {
     expect(userAgent({})).toContain('gbif-mcp-server')
     expect(userAgent({ GBIF_USER_AGENT_CONTACT: 'ops@example.org' })).toContain('ops@example.org')
   })
+})
+
+describe('callBudgetMs', () => {
+  it('defaults to 60s when unset', () => {
+    expect(callBudgetMs({})).toBe(60_000)
+  })
+
+  it('honours a positive override', () => {
+    expect(callBudgetMs({ GBIF_CALL_BUDGET_MS: '90000' })).toBe(90_000)
+  })
+
+  it.each(['0', '-1000', 'not-a-number', ''])(
+    'falls back to the default for an invalid value: %s',
+    (value) => {
+      expect(callBudgetMs({ GBIF_CALL_BUDGET_MS: value })).toBe(60_000)
+    },
+  )
 })
 
 describe('GbifClient retry policy', () => {

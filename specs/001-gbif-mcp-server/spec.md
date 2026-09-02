@@ -26,6 +26,10 @@ A command-line agent ships alongside the server to demonstrate — and prove —
 - Q: How should the opt-in eval suite decide whether the agent got a scenario right? → A: Both — a primary deterministic score asserted on the recorded sequence of server calls, plus a secondary answer-quality rating from a judge model, reported as separate numbers.
 - Q: How long may a single tool call spend on the upstream API before giving up? → A: 10 seconds per upstream attempt and 30 seconds for the whole tool call including retries and backoff; if an upstream `Retry-After` exceeds the remaining budget, stop immediately and report how long upstream asked to wait.
 
+### Session 2026-09-02
+
+- Q: The 30-second per-call budget was tripping on broad, unfiltered queries — legitimately slow upstream responses, not a stuck request. → A: Raise the default to 60 seconds and make it operator-tunable via `GBIF_CALL_BUDGET_MS`, so a deployment that needs more headroom for broad queries can set it without a code change. The 10-second per-attempt timeout and the fail-fast rule on an oversized `Retry-After` (FR-026b) are unchanged.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Resolve a species name to an authoritative taxon (Priority: P1)
@@ -209,9 +213,9 @@ model sees and selects on, so they are fixed here rather than left to planning.
   an upstream-supplied retry delay when present and using exponential backoff with jitter when
   absent.
 - **FR-026a**: Every upstream attempt MUST be bounded by a 10-second timeout, and every tool call
-  MUST be bounded by a 30-second total budget covering all attempts, backoff waits, and any
-  chained resolution. Exceeding either bound MUST produce a recoverable error, never an
-  indefinite wait.
+  MUST be bounded by a total budget covering all attempts, backoff waits, and any chained
+  resolution — 60 seconds by default, operator-configurable via `GBIF_CALL_BUDGET_MS`. Exceeding
+  either bound MUST produce a recoverable error, never an indefinite wait.
 - **FR-026b**: When an upstream-supplied retry delay exceeds the remaining budget for the call, the
   system MUST NOT wait it out. It MUST stop immediately and return a recoverable error stating how
   long upstream asked callers to wait, so the caller can decide whether to retry later.
@@ -299,9 +303,9 @@ model sees and selects on, so they are fixed here rather than left to planning.
   score for capability selection and chain correctness plus a separately reported answer-quality
   rating, with the agent model identity, judge model identity, and run date recorded in the output.
   Re-running the suite against the same models leaves the structural score unchanged.
-- **SC-012**: No tool call exceeds 30 seconds end to end under any simulated upstream condition —
-  slow responses, repeated rate limiting, or an oversized retry delay. Every such case returns a
-  recoverable error naming the condition.
+- **SC-012**: No tool call exceeds its configured budget (60 seconds by default) end to end under
+  any simulated upstream condition — slow responses, repeated rate limiting, or an oversized retry
+  delay. Every such case returns a recoverable error naming the condition.
 - **SC-013**: A reviewer reading the documentation alone can state what was built, the reasoning and trade-off behind each significant decision, what was deliberately excluded and why, and how model assistance was used and validated.
 
 ## Out of Scope
@@ -326,8 +330,9 @@ These are reasonable defaults chosen where the description did not specify a det
   no-persistence exclusion.
 - **Model selection**: a single environment variable names the model, and the provider is inferred from the model identity across the three supported families. The corresponding provider credential is read from that provider's conventional environment variable, which is named explicitly in the failure message when absent.
 - **Retry budget**: at most three retries for rate limiting and transient upstream failure, bounded
-  in wall-clock terms by the 10-second per-attempt and 30-second per-call timeouts, so a failing
-  request surfaces quickly rather than stalling a conversational turn.
+  in wall-clock terms by the 10-second per-attempt timeout and the per-call budget (60 seconds by
+  default, `GBIF_CALL_BUDGET_MS`-tunable), so a failing request surfaces quickly rather than
+  stalling a conversational turn.
 - **Evaluation scenarios**: "a small set of scenarios" is taken to mean at least eight, covering
   resolution, summarisation, record retrieval, and the recoverable-error paths. Each scenario
   costs two model calls — one to run the agent, one to judge its answer — which is why the suite
