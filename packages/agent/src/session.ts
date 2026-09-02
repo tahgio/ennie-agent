@@ -14,6 +14,7 @@
  */
 import { createInterface } from 'node:readline/promises'
 import type { Agent } from '@voltagent/core'
+import { emptyAnswerAdvice, emptyAnswerReason, type Generation } from './empty-answer.js'
 
 /** One turn of the transcript. Kept in memory, for the lifetime of the process. */
 export interface Turn {
@@ -116,12 +117,26 @@ export class Session {
     this.#turns.push({ role: 'user', content: question })
 
     try {
-      const result = await this.#agent.generateText(
+      const result = (await this.#agent.generateText(
         this.#turns.map((turn) => ({ role: turn.role, content: turn.content })),
         this.options.signal !== undefined ? { abortSignal: this.options.signal } : {},
-      )
+      )) as Generation
 
       const answer = result.text.trim()
+
+      // An empty answer is treated exactly like a failed turn: reported, and
+      // dropped from the transcript. Keeping it would send an empty assistant
+      // message back on the next turn — a message some providers reject and
+      // none can learn anything from — which is why asking again has to start
+      // from the question alone.
+      if (answer === '') {
+        this.write(
+          `\nNo answer came back: ${emptyAnswerReason(result)}. ${emptyAnswerAdvice(result)}\n`,
+        )
+        this.#turns.pop()
+        return ''
+      }
+
       this.#turns.push({ role: 'assistant', content: answer })
       this.write(`\n${answer}\n`)
       return answer

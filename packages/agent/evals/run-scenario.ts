@@ -14,6 +14,7 @@ import { existsSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { Agent, createHooks, MCPConfiguration } from '@voltagent/core'
+import { emptyAnswerReason, type Generation } from '../src/empty-answer.js'
 import { AGENT_INSTRUCTIONS } from '../src/instructions.js'
 import { createModel, describeModel, parseModel, requireCredential } from '../src/model.js'
 import type { Scenario } from './scenarios/index.js'
@@ -109,8 +110,24 @@ export async function runScenario(scenario: Scenario): Promise<RunRecord> {
 
     for (const question of scenario.questions) {
       transcript.push({ role: 'user', content: question })
-      const result = await agent.generateText(transcript)
+      const result = (await agent.generateText(transcript)) as Generation
       const answer = result.text.trim()
+
+      // A turn that produced no text is a failed run, not a bad answer, and the
+      // report has to say which. Recorded as a blank answer it scores like
+      // prose that simply forgot to mention Canada — a zero indistinguishable
+      // from a genuinely wrong answer, on a run where the model never spoke.
+      // The tool calls made before the silence are kept, so the record still
+      // shows how far the chain got.
+      if (answer === '') {
+        return {
+          ...base,
+          answers,
+          toolCalls,
+          error: `The model produced no answer for '${question}': ${emptyAnswerReason(result)}.`,
+        }
+      }
+
       transcript.push({ role: 'assistant', content: answer })
       answers.push(answer)
     }
