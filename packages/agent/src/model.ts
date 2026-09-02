@@ -141,6 +141,24 @@ export function createModel(route: ModelRoute): LanguageModel | string {
   }
 }
 
+/**
+ * The one place the model value escapes the type system (FR-034).
+ *
+ * `createModel` returns `LanguageModel | string` — the AI SDK's own union,
+ * where the string form is a gateway reference VoltAgent's model router
+ * resolves. Neither VoltAgent's `model` parameter nor the AI SDK's
+ * `generateObject` accepts that union as written: their parameter types and
+ * this union do not line up, though every value this produces is one both
+ * accept at runtime.
+ *
+ * So the escape is real, and it is stated here once rather than repeated as an
+ * unexplained `as never` at each call site — which is what it was, three times,
+ * with nothing saying why.
+ */
+export function asModelValue<T>(model: ReturnType<typeof createModel>): T {
+  return model as T
+}
+
 /** One line naming the model and how it is reached, printed before the first prompt (FR-033). */
 export function describeModel(route: ModelRoute): string {
   return route.kind === 'direct'

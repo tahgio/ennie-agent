@@ -14,7 +14,7 @@
  *      cache outcome, to stderr (FR-029).
  */
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import { toToolResult } from '../errors.js'
+import { isToolError, toToolResult } from '../errors.js'
 import { CallBudget } from '../gbif/client.js'
 import { type CacheOutcome, logToolCall } from '../logging.js'
 
@@ -81,7 +81,14 @@ export async function runTool(
       cache: context.stats.cache,
       upstreamRequests: context.stats.upstreamRequests,
       outcome: 'error',
-      errorCode: error instanceof Error ? error.name : 'unknown',
+      // The thrown error's *code*, not its class name. `ToolError` sets
+      // `this.name` in its constructor, so reading `error.name` recorded the
+      // constant "ToolError" for every failure the server can produce —
+      // leaving an operator unable to tell a rate limit from an unknown name
+      // without reading prose (FR-001). Anything that is not a `ToolError` is
+      // a defect on our side and is recorded as unattributed rather than
+      // borrowing a domain category (FR-004).
+      errorCode: isToolError(error) ? error.code : 'INTERNAL_ERROR',
     })
     return result
   } finally {

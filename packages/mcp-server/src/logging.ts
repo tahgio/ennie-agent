@@ -14,6 +14,7 @@
 
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { destination, pino } from 'pino'
+import type { ToolErrorCode } from './errors.js'
 
 /** FD 2. Never 1. This single argument is the whole stdout guarantee for pino. */
 const STDERR_FD = 2
@@ -50,8 +51,14 @@ export interface ToolCallLog {
   /** How many requests actually left the process — 1 for a summary, by design. */
   readonly upstreamRequests: number
   readonly outcome: 'ok' | 'error'
-  /** Present only on failure; the `ToolErrorCode`, never the user's data. */
-  readonly errorCode?: string
+  /**
+   * Present only on failure.
+   *
+   * The type is the closed `ToolErrorCode` union rather than `string`, and that
+   * is what discharges FR-003 — no caller-supplied value is *expressible*
+   * here, so no sanitising step is needed to keep one out.
+   */
+  readonly errorCode?: ToolErrorCode
 }
 
 /**

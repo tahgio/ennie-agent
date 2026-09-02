@@ -33,19 +33,33 @@ export interface SessionOptions {
   readonly firstQuestion?: string | undefined
   /** Aborts the in-flight model call when the process is shutting down. */
   readonly signal?: AbortSignal | undefined
+  /**
+   * The transcript ceiling, in entries — two per exchange (FR-023, FR-025).
+   *
+   * Defaults to 40, i.e. 20 exchanges: comfortably beyond the multi-turn
+   * clarification flows the eval scenarios exercise, so no ordinary
+   * conversation loses the turn in which a person answered a clarifying
+   * question, and far below any provider's limit.
+   */
+  readonly maxTurns?: number | undefined
 }
 
 const PROMPT = '\n> '
 const EXIT_COMMAND = '/exit'
 
+/** 20 exchanges. See `SessionOptions.maxTurns`. */
+const DEFAULT_MAX_TURNS = 40
+
 export class Session {
   readonly #agent: Agent
   readonly #turns: Turn[] = []
   readonly #output: NodeJS.WritableStream
+  readonly #maxTurns: number
 
   constructor(private readonly options: SessionOptions) {
     this.#agent = options.agent
     this.#output = options.output
+    this.#maxTurns = options.maxTurns ?? DEFAULT_MAX_TURNS
   }
 
   /** The transcript so far. Exposed for the evals, which score the exchange. */
@@ -82,6 +96,20 @@ export class Session {
     }
     this.options.signal?.addEventListener('abort', onAbort, { once: true })
 
+    // Attach the iterator **now**, before anything is awaited.
+    //
+    // This is the third form of the same bug, and the sharpest. An opening
+    // question from argv is answered before the loop starts, and with piped
+    // stdin the stream reaches EOF during that answer — so readline emits
+    // `close` while `ask()` is still awaiting. An async iterator created after
+    // `close` has already fired waits for an event that has been and gone, and
+    // never ends: `pnpm agent "a question" < /dev/null` hung forever, with no
+    // output and no exit status.
+    //
+    // Creating it here subscribes before the first `await`, so the buffered
+    // lines and the close both land in the iterator rather than being missed.
+    const lines = rl[Symbol.asyncIterator]()
+
     try {
       if (this.options.firstQuestion !== undefined && this.options.firstQuestion.trim() !== '') {
         await this.ask(this.options.firstQuestion)
@@ -89,7 +117,7 @@ export class Session {
 
       this.write(PROMPT)
 
-      for await (const line of rl) {
+      for await (const line of lines) {
         if (this.options.signal?.aborted === true) break
 
         const question = line.trim()
@@ -139,6 +167,7 @@ export class Session {
 
       this.#turns.push({ role: 'assistant', content: answer })
       this.write(`\n${answer}\n`)
+      this.#trimHistory()
       return answer
     } catch (error) {
       if (this.options.signal?.aborted === true) throw error
@@ -150,6 +179,34 @@ export class Session {
       this.#turns.pop()
       return ''
     }
+  }
+
+  /**
+   * Drop the oldest exchanges once the transcript passes its ceiling (FR-023).
+   *
+   * Without this the transcript grew until the provider refused it, and the
+   * refusal was reported as though the last question were at fault — the person
+   * sees "that question could not be answered" about a question that was fine.
+   *
+   * Dropping happens in **user/assistant pairs**, from the front. A transcript
+   * that began with an assistant entry would be an answer to a question no
+   * longer present, which some providers reject outright and none can use.
+   * Trimming after a completed exchange means the pairing always holds.
+   */
+  #trimHistory(): void {
+    if (this.#turns.length <= this.#maxTurns) return
+
+    const excess = this.#turns.length - this.#maxTurns
+    // Round up to a whole exchange, so the first surviving entry is a question.
+    const dropped = Math.ceil(excess / 2) * 2
+    this.#turns.splice(0, dropped)
+
+    const exchanges = dropped / 2
+    // FR-024: silent truncation is how a person loses context without knowing
+    // it happened, so the drop is always said out loud.
+    this.write(
+      `\n[Dropped the ${exchanges} oldest exchange${exchanges === 1 ? '' : 's'} to stay within the context limit.]\n`,
+    )
   }
 
   private write(text: string): void {

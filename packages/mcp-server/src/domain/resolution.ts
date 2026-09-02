@@ -384,7 +384,21 @@ export async function resolveTaxon(
     deps.cache.setValue(key, outcome.taxon)
     return outcome
   } catch (error) {
-    if (error instanceof ToolError && error.code !== 'CANCELLED') {
+    // Remember a failure only when retrying it cannot help (FR-007, D2).
+    //
+    // `retryable` already means exactly "repeating the identical call could
+    // plausibly succeed", so it is the right predicate: a failure worth
+    // retrying and a failure worth remembering are complementary by
+    // definition. The previous guard stated an exception without stating the
+    // rule, and so remembered a thirty-second outage for a full hour.
+    //
+    // Both clauses are load-bearing. `CANCELLED` is currently built with
+    // `retryable: true` (see `cancelled()` in gbif/client.ts), so the first
+    // clause happens to exclude it today — but a cancellation is a fact about
+    // the caller rather than about the name, so it is excluded on its own
+    // terms and stays excluded whichever way its retry semantics are set
+    // later (FR-009).
+    if (error instanceof ToolError && error.retryable === false && error.code !== 'CANCELLED') {
       deps.cache.setNegative(key, error)
     }
     throw error

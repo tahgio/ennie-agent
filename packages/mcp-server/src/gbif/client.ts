@@ -21,6 +21,7 @@
  */
 import type { ZodType } from 'zod'
 import { ToolError } from '../errors.js'
+import { logger } from '../logging.js'
 
 const DEFAULT_BASE_URL = 'https://api.gbif.org/v1'
 const DEFAULT_ATTEMPT_TIMEOUT_MS = 10_000
@@ -247,7 +248,7 @@ export class GbifClient {
 
       if (response.ok) {
         return {
-          data: await this.#parseBody(response, request.schema),
+          data: await this.#parseBody(response, request.schema, request.path),
           retries: attempt,
           upstreamRequests,
         }
@@ -355,12 +356,20 @@ export class GbifClient {
     }
   }
 
-  async #parseBody<T>(response: Response, schema: ZodType<T>): Promise<T> {
+  async #parseBody<T>(response: Response, schema: ZodType<T>, path: string): Promise<T> {
     const text = await response.text()
     let json: unknown
     try {
       json = JSON.parse(text)
     } catch {
+      // The other way a response "cannot be interpreted" (FR-005). A truncated
+      // excerpt is the diagnostic here — it is usually a proxy's HTML error
+      // page — and it stays on the developer channel at `debug`, which is off
+      // unless LOG_LEVEL asks for it.
+      logger.debug(
+        { path, bodyStart: text.slice(0, 200) },
+        'GBIF returned a success status with a body that is not JSON',
+      )
       throw new ToolError({
         code: 'UPSTREAM_UNAVAILABLE',
         what: 'GBIF returned a success status with a body that is not JSON.',
@@ -371,6 +380,17 @@ export class GbifClient {
 
     const parsed = schema.safeParse(json)
     if (!parsed.success) {
+      // FR-005. The upstream schemas are deliberately lenient (Constitution IV,
+      // and named load-bearing in the review's §7), so reaching here means GBIF
+      // moved in a way even a lenient schema will not accept — the single most
+      // useful thing to know when this server suddenly stops working, and
+      // previously discarded entirely.
+      //
+      // Developer channel only, at `debug`. The caller's message is unchanged
+      // below, and no upstream payload crosses the tool boundary: only Zod's
+      // own issue list, which names the failing paths rather than quoting the
+      // values at them.
+      logger.debug({ path, issues: parsed.error.issues }, 'GBIF response failed its lenient schema')
       throw new ToolError({
         code: 'UPSTREAM_UNAVAILABLE',
         what: 'GBIF returned a response in a shape this server does not recognise.',

@@ -35,6 +35,17 @@ export const MAX_TOP_N = 20
 export const DEFAULT_TOP_N = 10
 
 export const MIN_YEAR = 1000
+
+/**
+ * The upper bound on an acceptable year, derived from *now* (FR-016).
+ *
+ * Next calendar year, so a record dated slightly ahead of today is still
+ * accepted. This must be called at parse time rather than at module load: a
+ * server started in December and still running in January had a bound frozen a
+ * year behind, and rejected the new year while its own message named that year
+ * as acceptable — a rejection naming a range containing the value it rejected
+ * (FR-017).
+ */
 export const maxYear = (now: Date = new Date()): number => now.getFullYear() + 1
 
 /**
@@ -53,6 +64,17 @@ export const countrySchema = z
     "ISO 3166-1 alpha-2 country code — two letters, e.g. 'CA' for Canada or 'US' for the United States. Case-insensitive.",
   )
 
+/**
+ * `MIN_YEAR` stays a declared schema constraint — it is a constant, so it
+ * belongs in the JSON Schema the model reads. The upper bound cannot: a
+ * declared `.max()` is fixed when this module is first evaluated, which is
+ * exactly the frozen bound FR-016 removes. It is a per-parse `.refine()`
+ * instead, so `maxYear()` runs against the clock at the moment of the request.
+ *
+ * The trade is a slightly later rejection point for a bound that is always
+ * current, and it is worth it: the alternative produced a message that
+ * contradicted itself.
+ */
 const yearSchema = (label: 'yearFrom' | 'yearTo') =>
   z
     .number()
@@ -61,9 +83,11 @@ const yearSchema = (label: 'yearFrom' | 'yearTo') =>
       error: (issue) =>
         `${label} of ${String(issue.input)} is earlier than ${MIN_YEAR}, before which GBIF holds no dated records. Use a year between ${MIN_YEAR} and ${maxYear()}.`,
     })
-    .max(maxYear(), {
+    .refine((value) => value <= maxYear(), {
+      // Both bounds are read at rejection time, so the range named here is
+      // always the range actually applied (FR-017).
       error: (issue) =>
-        `${label} of ${String(issue.input)} is in the future. Use a year no later than ${maxYear()}.`,
+        `${label} of ${String(issue.input)} is in the future. Use a year between ${MIN_YEAR} and ${maxYear()}.`,
     })
 
 /**
@@ -72,12 +96,20 @@ const yearSchema = (label: 'yearFrom' | 'yearTo') =>
  */
 export const filterShape = {
   country: countrySchema.optional(),
+  // The upper bound is described in words rather than as a literal year. It is
+  // derived per request, so any number written here would be wrong the moment
+  // the calendar turned — and it is no longer carried in the JSON Schema as a
+  // `maximum`, so the description is where a model learns it (FR-017).
   yearFrom: yearSchema('yearFrom')
     .optional()
-    .describe(`Earliest year of the event date, inclusive. ${MIN_YEAR} or later.`),
+    .describe(
+      `Earliest year of the event date, inclusive. ${MIN_YEAR} or later, and no later than next calendar year.`,
+    ),
   yearTo: yearSchema('yearTo')
     .optional()
-    .describe('Latest year of the event date, inclusive. Must not be earlier than yearFrom.'),
+    .describe(
+      'Latest year of the event date, inclusive. Must not be earlier than yearFrom, and no later than next calendar year.',
+    ),
   hasCoordinate: z
     .boolean()
     .optional()

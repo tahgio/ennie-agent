@@ -25,7 +25,7 @@
 import { generateObject } from 'ai'
 import { evaluate, type Score } from 'viteval'
 import * as z from 'zod'
-import { createModel, parseModel, requireCredential } from '../src/model.js'
+import { asModelValue, createModel, parseModel, requireCredential } from '../src/model.js'
 import { agentModelLabel, judgeModelLabel, runScenario } from './run-scenario.js'
 import { SCENARIOS, type Scenario } from './scenarios/index.js'
 import type { RunRecord, StructuralExpectation } from './scorers/run-record.js'
@@ -61,7 +61,7 @@ async function judge(
   requireCredential(route)
 
   const result = await generateObject({
-    model: createModel(route) as never,
+    model: asModelValue<Parameters<typeof generateObject>[0]['model']>(createModel(route)),
     schema: JUDGE_SCHEMA,
     prompt: [
       'You are rating an assistant answer about biodiversity data.',

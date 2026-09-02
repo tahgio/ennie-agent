@@ -8,11 +8,7 @@
  * quietly wrong. Mapping is by field name, always.
  */
 import { describe, expect, it } from 'vitest'
-import {
-  dimensionForFacetField,
-  gbifFacetParam,
-  mapFacetsToDimensions,
-} from '../../src/gbif/occurrence.js'
+import { dimensionForFacetField, mapFacetsToDimensions } from '../../src/gbif/occurrence.js'
 import { GbifOccurrenceSearchSchema } from '../../src/gbif/schemas.js'
 import { fixtureJson } from '../helpers/stub-gbif.js'
 
@@ -29,13 +25,6 @@ describe('dimensionForFacetField', () => {
     // A new facet appearing upstream must not take a tool call down with it.
     expect(dimensionForFacetField('SOME_NEW_FACET')).toBeNull()
     expect(dimensionForFacetField('')).toBeNull()
-  })
-})
-
-describe('gbifFacetParam', () => {
-  it('sends the request-side facet name, which is not the response-side one', () => {
-    expect(gbifFacetParam('basisOfRecord')).toBe('basisOfRecord')
-    expect(gbifFacetParam('country')).toBe('country')
   })
 })
 

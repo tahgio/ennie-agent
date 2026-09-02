@@ -23,6 +23,10 @@ pnpm-debug.log*
 # Editors and OS
 .vscode/
 .idea/
+# Locally-generated tool configuration. The repository's own rule, deliberately:
+# a fresh clone by someone with no personal global ignore is the case that
+# matters, and biome.json sets vcs.useIgnoreFile so lint honours this too.
+.claude/settings.local.json
 .DS_Store
 Thumbs.db
 *.swp
