@@ -231,3 +231,24 @@ describe('summarize_occurrences — inputs', () => {
     }
   })
 })
+
+describe('summarize_occurrences — contradictory taxon inputs (FR-028)', () => {
+  it('refuses when both taxonKey and name are supplied, naming both values', async () => {
+    const harness = await createHarness()
+    try {
+      const result = (await harness.client.callTool({
+        name: 'summarize_occurrences',
+        arguments: { taxonKey: 2433451, name: 'Puma concolor', dimensions: ['country'] },
+      })) as { isError?: boolean; content?: unknown }
+
+      expect(result.isError).toBe(true)
+
+      const text = resultText(result)
+      expect(text).toContain('2433451')
+      expect(text).toContain('Puma concolor')
+      expect(harness.upstream.count).toBe(0)
+    } finally {
+      await harness.close()
+    }
+  })
+})

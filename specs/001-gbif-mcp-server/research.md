@@ -172,9 +172,10 @@ stays at 6.
 
 ### D5. GBIF access layer
 
-**Decision**: one `gbif/client.ts` owning native `fetch`, a 10s per-attempt timeout, a 30s
-per-call budget, retries limited to 429/502/503/504 and network errors, exponential backoff with
-jitter honouring `Retry-After`, and a descriptive `User-Agent`.
+**Decision**: one `gbif/client.ts` owning native `fetch`, a 10s per-attempt timeout, a 60s
+per-call budget by default (operator-tunable via `GBIF_CALL_BUDGET_MS`), retries limited to
+429/502/503/504 and network errors, exponential backoff with jitter honouring `Retry-After`, and a
+descriptive `User-Agent`.
 
 **Rationale**: Implements FR-026/026a/026b in one auditable place. Timeout and cancellation compose
 from platform primitives: `AbortSignal.any([AbortSignal.timeout(10_000), callBudgetSignal,

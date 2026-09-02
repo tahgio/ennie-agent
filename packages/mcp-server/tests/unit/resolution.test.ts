@@ -14,9 +14,12 @@
  * the real captured responses rather than against invented ones.
  */
 import { describe, expect, it } from 'vitest'
-import { applyMatchPolicy } from '../../src/domain/resolution.js'
+import { applyMatchPolicy, type ResolvedTaxon, resolveTaxon } from '../../src/domain/resolution.js'
+import { ToolError } from '../../src/errors.js'
+import { TtlCache } from '../../src/gbif/cache.js'
+import { CallBudget, GbifClient } from '../../src/gbif/client.js'
 import { GbifNameMatchSchema } from '../../src/gbif/schemas.js'
-import { fixtureJson } from '../helpers/stub-gbif.js'
+import { createFixtureFetch, fixtureJson } from '../helpers/stub-gbif.js'
 
 const match = (name: string) => GbifNameMatchSchema.parse(fixtureJson(name))
 
@@ -151,5 +154,151 @@ describe('applyMatchPolicy — ordering is load-bearing', () => {
 
     expect(() => applyMatchPolicy(odd)).not.toThrow()
     expect(applyMatchPolicy(odd).kind).not.toBe('resolved')
+  })
+})
+
+/**
+ * What may be remembered about a failure (FR-007 – FR-010, research D2).
+ *
+ * The finding this fixes: a thirty-second upstream blip was recorded as though
+ * it were a settled fact about the name, and replayed for the full hour — so
+ * every retry the failure message itself advises returned the identical
+ * failure instantly, without one upstream attempt. Following the system's own
+ * instructions could not work.
+ *
+ * The rule is now stated positively: a failure is remembered only when
+ * retrying it cannot help. The economy that negative caching exists for — not
+ * asking GBIF twice about a name it does not have — is untouched.
+ */
+describe('negative caching remembers only what retrying cannot fix', () => {
+  /** A fixture-backed upstream with a switchable outage in front of it. */
+  function upstream() {
+    const fixtures = createFixtureFetch()
+    const state = { outage: false, calls: 0, aborted: false }
+
+    const fetchImpl = (async (input: unknown, init?: { signal?: AbortSignal }) => {
+      state.calls += 1
+
+      // A cancellation is a fact about the caller, not about the name.
+      if (state.aborted || init?.signal?.aborted === true) {
+        throw Object.assign(new Error('The operation was aborted.'), { name: 'AbortError' })
+      }
+      if (state.outage) return new Response('', { status: 503 })
+
+      return (fixtures.fetch as (i: unknown) => Promise<Response>)(input)
+    }) as typeof fetch
+
+    const client = new GbifClient({
+      fetchImpl,
+      maxRetries: 0,
+      sleep: async () => undefined,
+    })
+
+    return { client, state, cache: new TtlCache<ResolvedTaxon>() }
+  }
+
+  const ask = (
+    deps: { client: GbifClient; cache: TtlCache<ResolvedTaxon> },
+    name: string,
+    signal?: AbortSignal,
+  ) =>
+    resolveTaxon(deps, {
+      name,
+      budget: new CallBudget(),
+      ...(signal === undefined ? {} : { signal }),
+    })
+
+  it('does not replay a transient outage — the retry the message advises works', async () => {
+    const { client, state, cache } = upstream()
+    const deps = { client, cache }
+
+    state.outage = true
+    await expect(ask(deps, 'Ursus maritimus')).rejects.toMatchObject({ retryable: true })
+
+    const afterFailure = state.calls
+    expect(afterFailure).toBeGreaterThan(0)
+
+    // Upstream recovers. The identical request must reach it, not be answered
+    // from a memory of the blip.
+    state.outage = false
+    const outcome = await ask(deps, 'Ursus maritimus')
+
+    expect(state.calls).toBeGreaterThan(afterFailure)
+    expect(outcome.taxon.taxonKey).toBe(2433451)
+    expect(outcome.cache).toBe('miss')
+  })
+
+  it('still replays a not-found, with its text intact and no upstream call', async () => {
+    const { client, state, cache } = upstream()
+    const deps = { client, cache }
+
+    const first = await ask(deps, 'Zzzzqqq xxxxyy').catch((error: unknown) => error)
+    expect(first).toBeInstanceOf(ToolError)
+    expect((first as ToolError).code).toBe('NOT_FOUND')
+
+    const afterFirst = state.calls
+    expect(afterFirst).toBeGreaterThan(0)
+
+    const second = await ask(deps, 'Zzzzqqq xxxxyy').catch((error: unknown) => error)
+
+    // Answered from memory: the economy negative caching exists for.
+    expect(state.calls).toBe(afterFirst)
+    expect((second as ToolError).code).toBe('NOT_FOUND')
+    expect((second as ToolError).what).toBe((first as ToolError).what)
+    expect((second as ToolError).next).toBe((first as ToolError).next)
+  })
+
+  it('still replays an ambiguity, with the candidate list intact', async () => {
+    const { client, state, cache } = upstream()
+    const deps = { client, cache }
+
+    const first = (await ask(deps, 'Prunella').catch((e: unknown) => e)) as ToolError
+    expect(first.code).toBe('AMBIGUOUS')
+
+    const afterFirst = state.calls
+    const second = (await ask(deps, 'Prunella').catch((e: unknown) => e)) as ToolError
+
+    expect(state.calls).toBe(afterFirst)
+    // The candidates are what make the failure recoverable without a round trip.
+    expect(second.what).toBe(first.what)
+    expect(second.next).toBe(first.next)
+    expect(second.what).toContain('Plantae')
+    expect(second.what).toContain('Animalia')
+  })
+
+  it('does not remember a cancelled lookup — the repeat reaches upstream', async () => {
+    const { client, state, cache } = upstream()
+    const deps = { client, cache }
+
+    const controller = new AbortController()
+    controller.abort()
+    state.aborted = true
+
+    const cancelledError = (await ask(deps, 'Ursus maritimus', controller.signal).catch(
+      (e: unknown) => e,
+    )) as ToolError
+    expect(cancelledError.code).toBe('CANCELLED')
+
+    const afterCancel = state.calls
+    state.aborted = false
+
+    const outcome = await ask(deps, 'Ursus maritimus')
+
+    expect(state.calls).toBeGreaterThan(afterCancel)
+    expect(outcome.taxon.taxonKey).toBe(2433451)
+  })
+
+  it('keeps answering a stream of unknown names from memory (FR-008)', async () => {
+    const { client, state, cache } = upstream()
+    const deps = { client, cache }
+
+    await ask(deps, 'Zzzzqqq xxxxyy').catch(() => undefined)
+    const afterFirst = state.calls
+
+    for (let i = 0; i < 5; i += 1) {
+      await ask(deps, 'Zzzzqqq xxxxyy').catch(() => undefined)
+    }
+
+    expect(state.calls).toBe(afterFirst)
   })
 })

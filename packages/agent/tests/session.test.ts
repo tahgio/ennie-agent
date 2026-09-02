@@ -204,3 +204,250 @@ describe('Session over piped input', () => {
     expect(prompts[1]?.[0]?.content).toBe('A second question')
   })
 })
+
+/**
+ * Interruption during an in-flight answer (FR-021, FR-027).
+ *
+ * The stub rejects the way a real provider does when its `abortSignal` fires,
+ * so the whole path is exercised with **no model provider contacted** — which
+ * is what lets this run in the default suite (Constitution VI).
+ *
+ * What is asserted is an absence: the session must not print the failure line
+ * it prints for an ordinary failed turn. A deliberate Ctrl-C reported as
+ * "that question could not be answered" is the defect.
+ */
+describe('Session under interruption', () => {
+  /** An agent whose generation rejects once the shutdown signal aborts. */
+  function abortingAgent(controller: AbortController): StubAgent {
+    const prompts: Array<Array<{ role: string; content: string }>> = []
+    return {
+      prompts,
+      async generateText(messages) {
+        prompts.push(messages.map((message) => ({ ...message })))
+
+        return await new Promise((_resolve, reject) => {
+          const fail = (): void => {
+            reject(Object.assign(new Error('The operation was aborted.'), { name: 'AbortError' }))
+          }
+          if (controller.signal.aborted) fail()
+          else controller.signal.addEventListener('abort', fail, { once: true })
+
+          // The interrupt lands while the answer is still being generated.
+          setTimeout(() => controller.abort(), 5)
+        })
+      },
+    }
+  }
+
+  it('prints no failure text and propagates, so the entrypoint can exit 130', async () => {
+    const controller = new AbortController()
+    const output = collector()
+    const session = new Session({
+      agent: abortingAgent(controller) as never,
+      input: pipedInput([]),
+      output: output.stream,
+      firstQuestion: 'Where has the polar bear been recorded?',
+      signal: controller.signal,
+    })
+
+    // The rethrow is the contract: `main()` recognises it by the aborted
+    // signal and returns 130 rather than falling through to the exit-1 handler.
+    await expect(session.run()).rejects.toThrow()
+
+    expect(output.text()).not.toContain('That question could not be answered')
+    expect(controller.signal.aborted).toBe(true)
+  })
+
+  it('still reports an ordinary failure, which is a different path entirely', async () => {
+    const controller = new AbortController()
+    const output = collector()
+    const failing: StubAgent = {
+      prompts: [],
+      async generateText() {
+        throw new Error('upstream exploded')
+      },
+    }
+
+    const session = new Session({
+      agent: failing as never,
+      input: pipedInput(['/exit']),
+      output: output.stream,
+      firstQuestion: 'A question',
+      signal: controller.signal,
+    })
+
+    await session.run()
+
+    // Not aborted, so the session survives the turn and says what went wrong.
+    expect(output.text()).toContain('That question could not be answered')
+    expect(output.text()).toContain('upstream exploded')
+  })
+})
+
+/**
+ * The transcript ceiling (FR-023 – FR-025).
+ *
+ * A long conversation used to grow until the provider refused it, and the
+ * refusal was attributed to the person's last question. The ceiling is checked
+ * on three properties: the transcript stays within it, what survives always
+ * begins with a question, and the person is told what was dropped.
+ */
+describe('Session history ceiling', () => {
+  it('stays within the ceiling, drops in pairs, and says what it dropped', async () => {
+    const agent = stubAgent()
+    const output = collector()
+
+    // Six exchanges against a ceiling of four entries (two exchanges).
+    const session = new Session({
+      agent: agent as never,
+      input: pipedInput(['q1', 'q2', 'q3', 'q4', 'q5', 'q6', '/exit']),
+      output: output.stream,
+      maxTurns: 4,
+    })
+
+    await session.run()
+
+    expect(session.turns.length).toBeLessThanOrEqual(4)
+
+    // Never begins with an assistant entry: that would be an answer to a
+    // question no longer present.
+    expect(session.turns[0]?.role).toBe('user')
+    expect(session.turns.map((turn) => turn.role)).toEqual([
+      'user',
+      'assistant',
+      'user',
+      'assistant',
+    ])
+
+    // The most recent exchange survives; the earliest is gone.
+    expect(session.turns.at(-2)?.content).toBe('q6')
+    expect(session.turns.some((turn) => turn.content === 'q1')).toBe(false)
+
+    expect(output.text()).toContain(
+      'Dropped the 1 oldest exchange to stay within the context limit.',
+    )
+  })
+
+  it('keeps a full transcript when the conversation stays within the ceiling', async () => {
+    const agent = stubAgent()
+    const output = collector()
+
+    const session = new Session({
+      agent: agent as never,
+      input: pipedInput(['q1', 'q2', '/exit']),
+      output: output.stream,
+      maxTurns: 40,
+    })
+
+    await session.run()
+
+    expect(session.turns.length).toBe(4)
+    expect(session.turns[0]?.content).toBe('q1')
+    // Nothing was dropped, so nothing is claimed to have been.
+    expect(output.text()).not.toContain('Dropped')
+  })
+
+  it('keeps answering past the ceiling — the session does not end (SC-006)', async () => {
+    const agent = stubAgent()
+    const output = collector()
+
+    const questions = Array.from({ length: 30 }, (_, i) => `q${i + 1}`)
+    const session = new Session({
+      agent: agent as never,
+      input: pipedInput([...questions, '/exit']),
+      output: output.stream,
+      maxTurns: 6,
+    })
+
+    await session.run()
+
+    // Every question was answered, and the transcript never grew past the bound.
+    expect(agent.prompts.length).toBe(30)
+    expect(session.turns.length).toBeLessThanOrEqual(6)
+
+    for (const prompt of agent.prompts) {
+      // Trimming happens after a completed exchange, so what is *sent* is the
+      // trimmed transcript plus the question being asked: bounded at ceiling+1
+      // rather than at the ceiling. Trimming before the call instead would
+      // have to drop an exchange that is still within the ceiling.
+      expect(prompt.length).toBeLessThanOrEqual(7)
+      // Never starts with an answer to a question that is no longer present.
+      expect(prompt[0]?.role).toBe('user')
+    }
+  })
+})
+
+/**
+ * An opening question from argv, with piped stdin (FR-031b).
+ *
+ * `pnpm agent "a question"` answers that question and then keeps the session
+ * open. When stdin is a pipe rather than a terminal, the stream reaches EOF
+ * while that first answer is still being generated — so readline emits `close`
+ * before the loop has started reading.
+ *
+ * An async iterator created *after* `close` has already fired never ends: the
+ * event it is waiting for has been and gone. The session then hangs forever
+ * instead of exiting, which is a stall with no output and no exit status —
+ * the worst shape a bug can take at a command line.
+ *
+ * These tests pin both halves: the loop terminates, and the lines buffered
+ * during the first answer are still processed rather than dropped.
+ */
+describe('Session with an opening question and piped input', () => {
+  it('terminates instead of hanging once the piped input has ended', async () => {
+    const agent = stubAgent()
+    const output = collector()
+    const session = new Session({
+      agent: agent as never,
+      input: pipedInput([]),
+      output: output.stream,
+      firstQuestion: 'Where has the polar bear been recorded?',
+    })
+
+    // The whole assertion is that this settles at all.
+    await session.run()
+
+    expect(agent.prompts).toHaveLength(1)
+    expect(agent.prompts[0]?.[0]?.content).toBe('Where has the polar bear been recorded?')
+  })
+
+  it('still processes lines buffered while the first answer was in flight', async () => {
+    const agent = stubAgent()
+    const output = collector()
+    const session = new Session({
+      agent: agent as never,
+      input: pipedInput(['a follow-up', 'another follow-up']),
+      output: output.stream,
+      firstQuestion: 'the opening question',
+    })
+
+    await session.run()
+
+    // Terminating must not be achieved by throwing the buffered input away.
+    expect(agent.prompts).toHaveLength(3)
+    expect(session.turns.map((turn) => turn.content)).toEqual([
+      'the opening question',
+      'answer 1',
+      'a follow-up',
+      'answer 2',
+      'another follow-up',
+      'answer 3',
+    ])
+  })
+
+  it('honours /exit arriving after an opening question', async () => {
+    const agent = stubAgent()
+    const output = collector()
+    const session = new Session({
+      agent: agent as never,
+      input: pipedInput(['/exit']),
+      output: output.stream,
+      firstQuestion: 'the opening question',
+    })
+
+    await session.run()
+
+    expect(agent.prompts).toHaveLength(1)
+    expect(output.text()).toContain('Exiting.')
+  })
+})

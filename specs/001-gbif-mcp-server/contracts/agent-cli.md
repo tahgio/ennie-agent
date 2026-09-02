@@ -20,6 +20,7 @@ way (FR-031).
 | `AI_GATEWAY_API_KEY` | gateway form only | Credential for the Vercel AI Gateway. |
 | `VOLTOPS_PUBLIC_KEY` / `VOLTOPS_SECRET_KEY` | no | Enable trace export; flushed before exit. |
 | `GBIF_USER_AGENT_CONTACT` | no | Contact appended to the server's User-Agent. |
+| `GBIF_CALL_BUDGET_MS` | no | Per-call budget against GBIF, milliseconds. Default 60000. |
 
 **`MODEL` resolution (FR-032)**
 
@@ -46,6 +47,11 @@ supported providers, not a silent fall-through to the gateway.
 | 0 | Clean exit |
 | 1 | Runtime failure |
 | 2 | Configuration error (missing/invalid `MODEL` or credential) |
+| 130 | Interrupted (SIGINT) while an answer was being generated |
+
+`130` is 128 + SIGINT(2), the shell convention for "terminated by an interrupt". It was added by
+feature 002; see [specs/002-code-review-hardening/contracts/agent-cli.md](../../002-code-review-hardening/contracts/agent-cli.md).
+An interruption at an idle prompt still exits `0` — nothing was in flight to abandon.
 
 **Teardown (FR-035)**: `disconnect()` runs in a `finally` covering every path — clean exit, throw,
 and signal — with SIGINT/SIGTERM handlers routing into the same teardown. VoltOps traces flush

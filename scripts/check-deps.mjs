@@ -11,7 +11,7 @@
  *    Two majors side by side means Zod instances stop recognising each other
  *    across the MCP SDK / VoltAgent boundary.
  */
-import { execFileSync } from 'node:child_process'
+import { readFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -32,7 +32,10 @@ if (aiMajor !== 6) {
   console.log(`ok  ai@${aiVersion} (major 6)`)
 }
 
-const lock = execFileSync('cat', [join(root, 'pnpm-lock.yaml')], { encoding: 'utf8' })
+// Read directly rather than shelling out to `cat`: this script asserts the
+// pins on every supported development platform, and `cat` is not one of the
+// things Windows guarantees (FR-038).
+const lock = readFileSync(join(root, 'pnpm-lock.yaml'), 'utf8')
 const zodVersions = [...new Set([...lock.matchAll(/^ {2}zod@([\d.]+):/gm)].map((m) => m[1]))]
 if (zodVersions.length !== 1) {
   failures.push(

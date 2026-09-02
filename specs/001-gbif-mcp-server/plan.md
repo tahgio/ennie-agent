@@ -62,9 +62,10 @@ MCP client; the agent runs as an interactive terminal process.
 
 **Project Type**: pnpm workspace monorepo — an MCP server package and a CLI agent package.
 
-**Performance Goals**: 10s per upstream attempt, 30s per tool call including all retries and
-backoff (FR-026a). A distribution answer costs exactly one upstream request regardless of match
-size (FR-013). Response size is bounded and independent of match count: ≤ 50 records × 8 fields,
+**Performance Goals**: 10s per upstream attempt, 60s per tool call by default (operator-tunable via
+`GBIF_CALL_BUDGET_MS`) including all retries and backoff (FR-026a). A distribution answer costs
+exactly one upstream request regardless of match size (FR-013). Response size is bounded and
+independent of match count: ≤ 50 records × 8 fields,
 ≤ 20 ranked values per facet dimension.
 
 **Constraints**: Nothing but JSON-RPC on stdout, ever (FR-025, Constitution I). Recoverable

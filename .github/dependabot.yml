@@ -1,0 +1,28 @@
+# Weekly update proposals for everything not deliberately pinned (FR-042).
+#
+# No new machinery is needed to protect the pins (FR-043): a Dependabot
+# proposal is an ordinary pull request, so it runs `scripts/check-deps.mjs`
+# like any other. An update that moves `ai` off major 6, or introduces a second
+# Zod version, fails there with the existing message explaining why the pin
+# exists. The gate is not bypassable by this mechanism because this mechanism
+# has no special path around it.
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+    open-pull-requests-limit: 5
+    # Non-major updates arrive as one reviewable pull request rather than a
+    # dozen. Majors stay separate: those are the ones that need a human to read
+    # a changelog, and the two deliberate pins live behind exactly that door.
+    groups:
+      non-major:
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: 'chore(deps)'

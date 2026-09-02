@@ -7,6 +7,7 @@
  * score cost money, and those live behind `pnpm eval`.
  */
 import { describe, expect, it } from 'vitest'
+import { callIdOf, createToolCallRecorder } from '../evals/run-scenario.js'
 import {
   asksForClarification,
   type RunRecord,
@@ -220,5 +221,114 @@ describe('structuralScore — failures and reproducibility', () => {
 
   it('scores an expectation-free run as 1 rather than dividing by zero', () => {
     expect(structuralScore(record(), {}).score).toBe(1)
+  })
+})
+
+/**
+ * Attribution under concurrency (FR-033, SC-008).
+ *
+ * The suite records which capability calls failed. It used to match each
+ * completion back to "the most recent call of the same name", which is exactly
+ * wrong when a model issues two calls to one capability at once: whichever
+ * finished first claimed the later record. That record then feeds the check
+ * asking whether the agent repeated a call it had already been told had failed
+ * — so a wrong attribution produces a confidently wrong score.
+ */
+describe('tool-call attribution', () => {
+  it('lands each outcome on its own invocation when two calls overlap', () => {
+    const recorder = createToolCallRecorder()
+
+    // Two calls to the same capability, in flight together.
+    recorder.started('gbif_resolve_taxon', { name: 'Prunella' }, 'call-a')
+    recorder.started('gbif_resolve_taxon', { name: 'Ursus maritimus' }, 'call-b')
+
+    // The second one finishes first, and succeeds. The first fails.
+    recorder.finished('gbif_resolve_taxon', false, 'call-b')
+    recorder.finished('gbif_resolve_taxon', true, 'call-a')
+
+    expect(recorder.toolCalls).toEqual([
+      { name: 'gbif_resolve_taxon', input: { name: 'Prunella' }, isError: true },
+      { name: 'gbif_resolve_taxon', input: { name: 'Ursus maritimus' }, isError: false },
+    ])
+  })
+
+  it('still separates two overlapping calls when no call id is supplied', () => {
+    const recorder = createToolCallRecorder()
+
+    recorder.started('gbif_search_occurrences', { taxonKey: 1 })
+    recorder.started('gbif_search_occurrences', { taxonKey: 2 })
+
+    // Without ids the rule is "most recent *unresolved*", so the first
+    // completion takes the later call and the second cannot overwrite it.
+    recorder.finished('gbif_search_occurrences', true)
+    recorder.finished('gbif_search_occurrences', false)
+
+    const failures = recorder.toolCalls.filter((call) => call.isError)
+    // One outcome each — never both landing on one record.
+    expect(failures).toHaveLength(1)
+    expect(recorder.toolCalls).toHaveLength(2)
+  })
+
+  it('does not let one completion overwrite an outcome already attributed', () => {
+    const recorder = createToolCallRecorder()
+
+    recorder.started('gbif_resolve_taxon', { name: 'a' }, 'call-a')
+    recorder.finished('gbif_resolve_taxon', true, 'call-a')
+
+    // A stray completion with no id must not reclaim the resolved record.
+    recorder.finished('gbif_resolve_taxon', false)
+
+    expect(recorder.toolCalls[0]?.isError).toBe(true)
+  })
+
+  it('ignores a completion for a call that was never recorded as started', () => {
+    const recorder = createToolCallRecorder()
+
+    recorder.finished('gbif_resolve_taxon', true, 'unknown')
+
+    expect(recorder.toolCalls).toEqual([])
+  })
+
+  it('feeds the repeat check the record that actually failed', () => {
+    const recorder = createToolCallRecorder()
+
+    // The same failing call, issued twice — what the check exists to catch.
+    recorder.started('gbif_resolve_taxon', { name: 'Prunella' }, 'call-a')
+    recorder.started('gbif_resolve_taxon', { name: 'Prunella' }, 'call-b')
+    recorder.finished('gbif_resolve_taxon', true, 'call-a')
+    recorder.finished('gbif_resolve_taxon', true, 'call-b')
+
+    const checks = scoreChainCorrectness(record({ toolCalls: recorder.toolCalls }))
+    const repeat = checks.find(
+      (check) => check.name === 'does not repeat a call that already failed',
+    )
+
+    expect(repeat?.passed).toBe(false)
+  })
+
+  it('does not accuse the agent of repeating when only one call failed', () => {
+    const recorder = createToolCallRecorder()
+
+    recorder.started('gbif_resolve_taxon', { name: 'Prunella' }, 'call-a')
+    recorder.started('gbif_resolve_taxon', { name: 'Prunella' }, 'call-b')
+    // The retry succeeded, which is the agent acting on the error correctly.
+    recorder.finished('gbif_resolve_taxon', true, 'call-a')
+    recorder.finished('gbif_resolve_taxon', false, 'call-b')
+
+    const checks = scoreChainCorrectness(record({ toolCalls: recorder.toolCalls }))
+    const repeat = checks.find(
+      (check) => check.name === 'does not repeat a call that already failed',
+    )
+
+    expect(repeat?.passed).toBe(true)
+  })
+
+  it('reads the call id the AI SDK supplies, and tolerates its absence', () => {
+    expect(callIdOf({ toolContext: { callId: 'abc' } })).toBe('abc')
+    expect(callIdOf({ toolContext: {} })).toBeUndefined()
+    expect(callIdOf({})).toBeUndefined()
+    expect(callIdOf(undefined)).toBeUndefined()
+    // An empty id is no id.
+    expect(callIdOf({ toolContext: { callId: '' } })).toBeUndefined()
   })
 })

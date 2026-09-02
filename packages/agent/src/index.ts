@@ -23,25 +23,18 @@
  * until a machine is full of them (FR-035).
  */
 import { existsSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { Agent, MCPConfiguration } from '@voltagent/core'
-import { AGENT_INSTRUCTIONS } from './instructions.js'
+import { MCPConfiguration } from '@voltagent/core'
+import { createAgent, serverEntrypoint } from './agent.js'
+import { forwardedEnv } from './forwarded-env.js'
 import { ConfigError, createModel, describeModel, parseModel, requireCredential } from './model.js'
 import { createTracing } from './observability.js'
 import { Session } from './session.js'
 
-const HERE = dirname(fileURLToPath(import.meta.url))
-
 /**
- * The built server, addressed by path. `GBIF_MCP_SERVER_PATH` overrides it so a
- * different build can be pointed at without touching this package.
+ * 128 + SIGINT(2), the shell convention for "terminated by an interrupt".
+ * Reported instead of 1, which means "this crashed" (contracts/agent-cli.md).
  */
-function serverEntrypoint(): string {
-  const override = process.env.GBIF_MCP_SERVER_PATH?.trim()
-  if (override !== undefined && override !== '') return resolve(override)
-  return resolve(join(HERE, '..', '..', 'mcp-server', 'dist', 'index.js'))
-}
+const SIGINT_EXIT_CODE = 130
 
 async function main(): Promise<number> {
   const route = parseModel(process.env.MODEL)
@@ -67,9 +60,11 @@ async function main(): Promise<number> {
         type: 'stdio',
         command: process.execPath,
         args: [entrypoint],
-        env: process.env.GBIF_USER_AGENT_CONTACT
-          ? { GBIF_USER_AGENT_CONTACT: process.env.GBIF_USER_AGENT_CONTACT }
-          : {},
+        // An explicit allowlist, never `{ ...process.env }`. The launched
+        // server gets exactly the variables it is documented to read and
+        // nothing else — a spread would hand a child process every credential
+        // in this one's environment (FR-026).
+        env: forwardedEnv(),
       },
     },
   })
@@ -90,15 +85,9 @@ async function main(): Promise<number> {
       `Connected to the GBIF MCP server. Tools: ${tools.map((tool) => tool.name).join(', ')}\n`,
     )
 
-    const agent = new Agent({
-      name: 'gbif-biodiversity-agent',
-      model: createModel(route) as never,
-      instructions: AGENT_INSTRUCTIONS,
+    const agent = createAgent({
+      model: createModel(route),
       tools,
-      // Context is the transcript the session holds in memory; nothing is
-      // persisted anywhere (FR-031a).
-      memory: false,
-      maxSteps: 8,
       ...(tracing === null ? {} : { observability: tracing.observability }),
     })
 
@@ -113,6 +102,17 @@ async function main(): Promise<number> {
 
     await session.run()
     return 0
+  } catch (error) {
+    // An interruption during an in-flight answer is a deliberate, clean stop —
+    // not a crash. `Session.ask` rethrows on the abort path precisely so it can
+    // be recognised here; every other failure keeps propagating to the handler
+    // below, which prints it and exits 1.
+    //
+    // Nothing is printed here. The `Received SIGINT. Exiting.` line was already
+    // written by the signal handler, and the second line of failure text is
+    // exactly the defect being fixed (FR-021).
+    if (shutdown.signal.aborted) return SIGINT_EXIT_CODE
+    throw error
   } finally {
     // Covers every path: clean exit, throw, and both signals. Traces are
     // flushed before the process is allowed to go away — this is a short-lived

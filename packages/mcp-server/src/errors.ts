@@ -33,12 +33,17 @@ export type ToolErrorCode =
   | 'OFFSET_EXCEEDED'
   | 'NO_DIMENSIONS'
   | 'MISSING_TAXON'
+  | 'CONTRADICTORY_TAXON'
   // Upstream (contracts/search-occurrences.md)
   | 'UPSTREAM_RATE_LIMITED'
   | 'UPSTREAM_TIMEOUT'
   | 'UPSTREAM_UNAVAILABLE'
   | 'UPSTREAM_BAD_REQUEST'
   | 'CANCELLED'
+  // Unattributed: a fault with no defined condition behind it. Never borrows a
+  // domain category, so a defect in this server cannot read as an upstream
+  // outage in the diagnostic record (FR-004).
+  | 'INTERNAL_ERROR'
 
 export interface ToolErrorFields {
   readonly code: ToolErrorCode
@@ -107,7 +112,11 @@ export function toToolResult(error: unknown): ToolErrorResult {
   if (isToolError(error)) return error.toToolResult()
 
   return new ToolError({
-    code: 'UPSTREAM_UNAVAILABLE',
+    // Unattributed: our own defect must not be filed under an upstream outage.
+    // Only the code changes here — `what`, `next` and `retryable` are
+    // byte-identical, because the sentence the caller reads is a contract
+    // (FR-004, FR-049).
+    code: 'INTERNAL_ERROR',
     what: 'The server hit an unexpected internal error while handling this call.',
     next: 'Retry once; if it persists, this is a defect in the server rather than a problem with your request.',
     retryable: true,

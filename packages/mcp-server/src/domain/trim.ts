@@ -1,5 +1,5 @@
 /**
- * 95 upstream fields down to 8 (research F10, data-model §2).
+ * 95 upstream fields down to nine (research F10, data-model §2).
  *
  * This function is Principle II at its most literal. A GBIF occurrence record
  * carries ninety-five fields — licences, publishing regions, institution codes,

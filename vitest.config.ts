@@ -12,6 +12,24 @@ import { defineConfig } from 'vitest/config'
  */
 export default defineConfig({
   test: {
+    /**
+     * Coverage is **produced, never enforced** (FR-041, clarification Q2).
+     *
+     * There is deliberately no `thresholds` key here, and adding one would
+     * change what the project promises: a threshold gives an unrelated change a
+     * new way to fail, and the decision on record is that the number stays
+     * visible for judgement rather than becoming a gate. CI uploads the report
+     * as an artefact.
+     */
+    coverage: {
+      provider: 'v8',
+      reporter: ['text-summary', 'html', 'lcov'],
+      reportsDirectory: 'coverage',
+      include: ['packages/*/src/**/*.ts'],
+      // The entrypoints are process-level wiring, exercised by the teardown
+      // tests through a real child process rather than by an importing test.
+      exclude: ['packages/*/dist/**', 'packages/*/src/index.ts'],
+    },
     projects: [
       {
         test: {

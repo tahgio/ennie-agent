@@ -1,7 +1,7 @@
 /**
  * Eval scenarios (FR-041, SC-011).
  *
- * Ten scenarios, each driven programmatically with scripted replies so a run is
+ * Twelve scenarios, each driven programmatically with scripted replies so a run is
  * repeatable and needs nobody at a keyboard. They are chosen to cover the
  * behaviours the design is actually betting on, not just the happy path:
  *

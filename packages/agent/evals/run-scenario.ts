@@ -11,22 +11,13 @@
  * independent of whichever runner invoked this.
  */
 import { existsSync } from 'node:fs'
-import { dirname, join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { Agent, createHooks, MCPConfiguration } from '@voltagent/core'
+import { createHooks, MCPConfiguration } from '@voltagent/core'
+import { createAgent, serverEntrypoint } from '../src/agent.js'
 import { emptyAnswerReason, type Generation } from '../src/empty-answer.js'
-import { AGENT_INSTRUCTIONS } from '../src/instructions.js'
+import { forwardedEnv } from '../src/forwarded-env.js'
 import { createModel, describeModel, parseModel, requireCredential } from '../src/model.js'
 import type { Scenario } from './scenarios/index.js'
 import type { RunRecord, ToolCallRecord } from './scorers/run-record.js'
-
-const HERE = dirname(fileURLToPath(import.meta.url))
-
-function serverEntrypoint(): string {
-  const override = process.env.GBIF_MCP_SERVER_PATH?.trim()
-  if (override !== undefined && override !== '') return resolve(override)
-  return resolve(join(HERE, '..', '..', 'mcp-server', 'dist', 'index.js'))
-}
 
 export function agentModelLabel(): string {
   return describeModel(parseModel(process.env.MODEL))
@@ -44,6 +35,88 @@ export function judgeModelLabel(): string | null {
  * breaks should appear as a zero in the report, next to the ones that passed,
  * instead of taking the whole run down with it.
  */
+/**
+ * The per-invocation id the AI SDK assigns, when the runtime supplies one.
+ *
+ * Read defensively rather than by type: it is optional in VoltAgent's own
+ * signature ("optional for external callers"), and an attribution scheme that
+ * throws when it is absent would be worse than the one being replaced.
+ */
+export function callIdOf(options: unknown): string | undefined {
+  const context = (options as { toolContext?: { callId?: unknown } } | undefined)?.toolContext
+  const callId = context?.callId
+  return typeof callId === 'string' && callId !== '' ? callId : undefined
+}
+
+export interface ToolCallRecorder {
+  /** The recorded sequence, in start order. Serialised into the `RunRecord`. */
+  readonly toolCalls: ToolCallRecord[]
+  started(name: string, input: Record<string, unknown>, callId?: string | undefined): void
+  finished(name: string, failed: boolean, callId?: string | undefined): void
+}
+
+/**
+ * Record the tool-call sequence, attributing each outcome to the invocation
+ * that produced it (FR-033).
+ *
+ * Pure and free of VoltAgent, so the attribution rule — the part that was
+ * wrong — is testable offline rather than only observable in a paid run.
+ *
+ * The previous rule matched an outcome to "the most recent call of the same
+ * name", which is wrong exactly when it matters: with two calls to one
+ * capability in flight, whichever finished first claimed the later record, and
+ * that record feeds the check asking whether the agent repeated a call it had
+ * already been told had failed.
+ *
+ * Two mechanisms, in order:
+ *
+ *   1. **The call id**, when the runtime supplies one. Exact.
+ *   2. **The most recent *unresolved* call of that name.** Still a heuristic,
+ *      but one that cannot overwrite an outcome already attributed, so two
+ *      overlapping calls land on two different records either way.
+ *
+ * Neither the id map nor the resolved set is part of the serialised record.
+ */
+export function createToolCallRecorder(): ToolCallRecorder {
+  const toolCalls: ToolCallRecord[] = []
+  const indexByCallId = new Map<string, number>()
+  const resolved = new Set<number>()
+
+  function attributionIndex(name: string, callId: string | undefined): number | undefined {
+    if (callId !== undefined) {
+      const exact = indexByCallId.get(callId)
+      if (exact !== undefined) return exact
+    }
+
+    for (let index = toolCalls.length - 1; index >= 0; index -= 1) {
+      if (toolCalls[index]?.name === name && !resolved.has(index)) return index
+    }
+
+    return undefined
+  }
+
+  return {
+    toolCalls,
+
+    started(name, input, callId) {
+      const index = toolCalls.length
+      toolCalls.push({ name, input, isError: false })
+      if (callId !== undefined) indexByCallId.set(callId, index)
+    },
+
+    finished(name, failed, callId) {
+      const index = attributionIndex(name, callId)
+      if (index === undefined) return
+
+      const started = toolCalls[index]
+      if (started === undefined) return
+
+      resolved.add(index)
+      toolCalls[index] = { ...started, isError: failed }
+    },
+  }
+}
+
 export async function runScenario(scenario: Scenario): Promise<RunRecord> {
   const route = parseModel(process.env.MODEL)
   requireCredential(route)
@@ -53,12 +126,17 @@ export async function runScenario(scenario: Scenario): Promise<RunRecord> {
     throw new Error(`The GBIF MCP server is not built: ${entrypoint}. Run \`pnpm build\` first.`)
   }
 
-  const toolCalls: ToolCallRecord[] = []
+  const recorder = createToolCallRecorder()
+  const toolCalls = recorder.toolCalls
   const answers: string[] = []
 
   const mcp = new MCPConfiguration({
     servers: {
-      gbif: { type: 'stdio', command: process.execPath, args: [entrypoint], env: {} },
+      // Forwarding the same allowlist the CLI uses (FR-026) so the server the
+      // eval spawns is configured identically — otherwise a raised
+      // GBIF_CALL_BUDGET_MS would fix the interactive session while every
+      // eval run kept the client-side default.
+      gbif: { type: 'stdio', command: process.execPath, args: [entrypoint], env: forwardedEnv() },
     },
   })
 
@@ -73,26 +151,15 @@ export async function runScenario(scenario: Scenario): Promise<RunRecord> {
   try {
     const tools = await mcp.getTools()
 
-    const agent = new Agent({
-      name: 'gbif-biodiversity-agent',
-      model: createModel(route) as never,
-      instructions: AGENT_INSTRUCTIONS,
+    const agent = createAgent({
+      model: createModel(route),
       tools,
-      memory: false,
-      maxSteps: 8,
       hooks: createHooks({
         // The recorded sequence is the entire basis of the structural score.
-        onToolStart: ({ tool, args }) => {
-          toolCalls.push({
-            name: tool.name,
-            input: (args ?? {}) as Record<string, unknown>,
-            isError: false,
-          })
+        onToolStart: ({ tool, args, options }) => {
+          recorder.started(tool.name, (args ?? {}) as Record<string, unknown>, callIdOf(options))
         },
-        onToolEnd: async ({ tool, output, error }) => {
-          const last = [...toolCalls].reverse().find((call) => call.name === tool.name)
-          if (last === undefined) return
-          const index = toolCalls.lastIndexOf(last)
+        onToolEnd: async ({ tool, output, error, options }) => {
           // A tool result carrying isError is a recoverable failure, and is the
           // thing the agent is supposed to act on rather than repeat.
           const failed =
@@ -100,7 +167,7 @@ export async function runScenario(scenario: Scenario): Promise<RunRecord> {
             (typeof output === 'object' && output !== null && 'isError' in output
               ? Boolean((output as { isError?: unknown }).isError)
               : false)
-          toolCalls[index] = { ...last, isError: failed }
+          recorder.finished(tool.name, failed, callIdOf(options))
         },
       }),
     })

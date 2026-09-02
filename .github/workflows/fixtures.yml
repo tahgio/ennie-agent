@@ -1,0 +1,36 @@
+name: Fixtures still match GBIF
+
+# Its own workflow file, and that separation is the requirement rather than a
+# tidiness preference (FR-040). A check that reaches api.gbif.org cannot be a
+# required check for a pull request: it reports that the *upstream index* moved,
+# which is information about GBIF, not a defect in this repository. Living here
+# means it can never gate an ordinary change, however CI is configured later.
+on:
+  schedule:
+    # Weekly, Monday 06:00 UTC.
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  fixtures:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      # The only place in this repository that is allowed to reach the network.
+      - name: Live fixture check
+        run: pnpm test:live

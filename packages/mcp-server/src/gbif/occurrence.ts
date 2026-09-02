@@ -31,15 +31,6 @@ export interface DimensionSummary {
 }
 
 /**
- * The request-side facet name. GBIF takes camelCase going out
- * (`facet=basisOfRecord`) and returns upper-snake coming back
- * (`BASIS_OF_RECORD`), so the two directions need separate mappings.
- */
-export function gbifFacetParam(dimension: Dimension): string {
-  return dimension
-}
-
-/**
  * Map a returned facet field back to a contract dimension.
  *
  * Comparison is on the name with separators removed, so `BASIS_OF_RECORD` and
@@ -115,14 +106,18 @@ export async function facetSearch(
   const params: Record<string, string | number | boolean | undefined | string[]> = {
     taxonKey: input.taxonKey,
     limit: 0,
-    facet: input.dimensions.map(gbifFacetParam),
+    // A `Dimension` is already the camelCase name GBIF takes on the way out
+    // (`facet=basisOfRecord`); only the *response* direction needs a mapping,
+    // because GBIF answers in upper-snake (`BASIS_OF_RECORD`). That asymmetry
+    // is real, and `dimensionForFacetField` below is where it lives.
+    facet: [...input.dimensions],
     ...toGbifFilterParams(input.filters),
   }
 
   // Per-facet caps use the `{facet}.facetLimit` form. Asking for one more than
   // we intend to return is what makes `truncated` knowable.
   for (const dimension of input.dimensions) {
-    params[`${gbifFacetParam(dimension)}.facetLimit`] = input.topN + 1
+    params[`${dimension}.facetLimit`] = input.topN + 1
   }
 
   return await client.get({

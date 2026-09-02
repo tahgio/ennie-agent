@@ -8,11 +8,18 @@
  *
  *   - a **structural score**, computed by pure functions over the recorded
  *     tool-call sequence. It is reproducible: the same model over the same
- *     scenarios yields the same number (SC-011).
+ *     scenarios yields the same number (SC-011). This is the one and only
+ *     score handed to viteval's `scorers`, so it is the one and only score
+ *     the pass/fail threshold gates on.
  *   - a **judge-model rating** of the final answer against the scenario's
  *     rubric. That is a different question — whether the prose was any good —
  *     and it is inherently not reproducible, so it is never blended into the
- *     structural score.
+ *     structural score. It travels as metadata on the structural result
+ *     instead of as its own scorer: viteval's mean/median/sum aggregation
+ *     coerces a `null` score to `0` before averaging, so a second scorer
+ *     that is allowed to abstain would silently drag the gating score down
+ *     to (structural + 0) / 2 — capping every run at 0.5 the moment
+ *     `JUDGE_MODEL` is unset, regardless of how the agent actually did.
  *
  * Every result is stamped with the agent model, the judge model, and the date,
  * because a score without those three cannot be interpreted a month later
@@ -25,7 +32,7 @@
 import { generateObject } from 'ai'
 import { evaluate, type Score } from 'viteval'
 import * as z from 'zod'
-import { createModel, parseModel, requireCredential } from '../src/model.js'
+import { asModelValue, createModel, parseModel, requireCredential } from '../src/model.js'
 import { agentModelLabel, judgeModelLabel, runScenario } from './run-scenario.js'
 import { SCENARIOS, type Scenario } from './scenarios/index.js'
 import type { RunRecord, StructuralExpectation } from './scorers/run-record.js'
@@ -61,7 +68,7 @@ async function judge(
   requireCredential(route)
 
   const result = await generateObject({
-    model: createModel(route) as never,
+    model: asModelValue<Parameters<typeof generateObject>[0]['model']>(createModel(route)),
     schema: JUDGE_SCHEMA,
     prompt: [
       'You are rating an assistant answer about biodiversity data.',
@@ -80,11 +87,51 @@ async function judge(
 }
 
 /**
- * Reproducible, and the one that should gate anything. Reads only the recorded
- * call sequence — no model is consulted, and nothing here is stochastic.
+ * Answer quality, rated by a different model. Reported beside the structural
+ * score, as metadata rather than a second `Score`, so it can never move the
+ * gating number (see the file header).
  */
-function structuralScorer({ output, expected }: EvalArgs): Score {
+async function judgeVerdict(
+  scenario: Scenario,
+  record: RunRecord,
+): Promise<Record<string, unknown>> {
+  const judgeModel = judgeModelLabel()
+
+  if (judgeModel === null) {
+    return {
+      status: 'skipped',
+      reason: 'JUDGE_MODEL is not set, so no answer rating was requested.',
+    }
+  }
+
+  try {
+    const verdict = await judge(scenario, record)
+    return {
+      status: 'rated',
+      rating: verdict.rating,
+      reasoning: verdict.reasoning,
+      judgeModel,
+    }
+  } catch (error) {
+    // FR-041c: the judge is a separate system, and its outage is not an agent
+    // regression.
+    return {
+      status: 'unavailable',
+      reason: error instanceof Error ? error.message : String(error),
+      judgeModel,
+    }
+  }
+}
+
+/**
+ * The only scorer handed to viteval, and so the only one the pass/fail
+ * threshold gates on. Reads the recorded call sequence — no model is
+ * consulted, and nothing here is stochastic — then attaches the separate
+ * judge-model rating as metadata for a human reading the report.
+ */
+async function structuralScorer({ output, input, expected }: EvalArgs): Promise<Score> {
   const result = structuralScore(output, expected)
+  const judgeRating = await judgeVerdict(input, output)
 
   return {
     name: 'structural',
@@ -96,56 +143,8 @@ function structuralScorer({ output, expected }: EvalArgs): Score {
       toolSequence: output.toolCalls.map((call) => call.name),
       failed: result.checks.filter((check) => !check.passed).map((check) => check.name),
       checks: result.checks,
+      judgeRating,
     },
-  }
-}
-
-/** Answer quality, rated by a different model. Reported beside the structural score. */
-async function judgeScorer({ output, input }: EvalArgs): Promise<Score> {
-  const judgeModel = judgeModelLabel()
-
-  if (judgeModel === null) {
-    return {
-      name: 'judge-rating',
-      score: null,
-      metadata: {
-        status: 'skipped',
-        reason: 'JUDGE_MODEL is not set, so no answer rating was requested.',
-        agentModel: output.agentModel,
-        date: output.date,
-      },
-    }
-  }
-
-  try {
-    const verdict = await judge(input, output)
-    return {
-      name: 'judge-rating',
-      // Normalised to 0-1 so it reads on the same scale as the structural score.
-      score: (verdict.rating - 1) / 4,
-      metadata: {
-        status: 'rated',
-        rating: verdict.rating,
-        reasoning: verdict.reasoning,
-        agentModel: output.agentModel,
-        judgeModel,
-        date: output.date,
-      },
-    }
-  } catch (error) {
-    // FR-041c: the judge is a separate system, and its outage is not an agent
-    // regression. Null, not zero.
-    return {
-      name: 'judge-rating',
-      score: null,
-      metadata: {
-        status: 'unavailable',
-        reason: error instanceof Error ? error.message : String(error),
-        agentModel: output.agentModel,
-        judgeModel,
-        date: output.date,
-      },
-    }
   }
 }
 
@@ -161,7 +160,7 @@ const config = {
 
   task: async ({ input }: { input: Scenario }): Promise<RunRecord> => await runScenario(input),
 
-  scorers: [structuralScorer, judgeScorer],
+  scorers: [structuralScorer],
 
   threshold: 0.8,
   timeout: 120_000,

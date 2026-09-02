@@ -13,6 +13,7 @@
  * actually serialises, not the Zod objects we wrote.
  */
 import { describe, expect, it } from 'vitest'
+import { TRIMMED_FIELDS } from '../../src/domain/trim.js'
 import { createHarness } from '../helpers/mcp-harness.js'
 
 /** The complete public surface. A fourth tool arriving unannounced fails here. */
@@ -178,6 +179,59 @@ describe('initialize — instructions reach every client', () => {
       // Declared so tool-call records can reach a client that renders them;
       // they go to stderr regardless (Constitution I).
       expect(capabilities?.logging).toBeDefined()
+    } finally {
+      await harness.close()
+    }
+  })
+})
+
+describe('tools/list — descriptions match the behaviour (FR-029, FR-048)', () => {
+  it('states what happens when both taxonKey and name are supplied', async () => {
+    const harness = await createHarness()
+    try {
+      const { tools } = (await harness.client.listTools()) as { tools: ListedTool[] }
+      const byName = new Map(tools.map((tool) => [tool.name, tool]))
+
+      // A model must be able to predict the refusal rather than discover it by
+      // being refused. Both occurrence tools carry the rule.
+      for (const name of ['search_occurrences', 'summarize_occurrences']) {
+        const description = byName.get(name)?.description ?? ''
+        expect(description).toMatch(/both a taxonKey and a name is refused/i)
+        expect(description).toMatch(/exactly one/i)
+      }
+    } finally {
+      await harness.close()
+    }
+  })
+
+  it('names every field search_occurrences returns, so the claim cannot drift', async () => {
+    const harness = await createHarness()
+    try {
+      const { tools } = (await harness.client.listTools()) as { tools: ListedTool[] }
+      const description =
+        tools.find((tool) => tool.name === 'search_occurrences')?.description ?? ''
+
+      // The description is where a model learns what it will get back. A field
+      // it does not know is returned is a field it will not offer — which is
+      // how the occurrence key came to be omitted (FR-048).
+      const advertised: Record<string, RegExp> = {
+        key: /occurrence key/i,
+        species: /species/i,
+        eventDate: /event date/i,
+        countryCode: /country code/i,
+        latitude: /latitude/i,
+        longitude: /longitude/i,
+        basisOfRecord: /basis of record/i,
+        dataset: /dataset/i,
+        publisher: /publisher/i,
+      }
+
+      // Every trimmed field is named, and the count in the prose matches.
+      expect(Object.keys(advertised)).toEqual([...TRIMMED_FIELDS])
+      for (const [field, pattern] of Object.entries(advertised)) {
+        expect(description, `${field} is returned but not described`).toMatch(pattern)
+      }
+      expect(description).toMatch(/nine fields/i)
     } finally {
       await harness.close()
     }

@@ -17,14 +17,14 @@ Three tools:
 |------|--------------|
 | `resolve_taxon` | A scientific or common name in; one accepted GBIF taxon out, or an error saying what to try next. Synonyms, misspellings, and names shared across kingdoms are absorbed here so the other tools never have to guess. |
 | `summarize_occurrences` | Distribution answers — by country, year, and basis of record — from GBIF's own faceting. One upstream request, no individual records, and the same response size whether the species has a hundred occurrences or ten million. |
-| `search_occurrences` | A bounded page of individual records (at most 50), trimmed from GBIF's 95 fields to 8, always with the total so the size of what you did not receive is visible. |
+| `search_occurrences` | A bounded page of individual records (at most 50), trimmed from GBIF's 95 fields to nine, always with the total so the size of what you did not receive is visible. |
 
 And one prompt, `species_distribution_report`, which sequences them.
 
 ## Requirements
 
 - Node 24+ (`node --version` → v24.x)
-- pnpm 9+
+- pnpm 11+
 - **No GBIF account.** Every endpoint used is anonymous.
 - One model API key — Anthropic, OpenAI, or Google — but only to run the bundled agent. The server
   itself needs no credentials at all.
@@ -89,9 +89,14 @@ Claude Code takes the same thing on the command line:
 claude mcp add gbif -- node /absolute/path/to/packages/mcp-server/dist/index.js
 ```
 
-The one optional setting is `GBIF_USER_AGENT_CONTACT` — an email address appended to the
-`User-Agent` this server sends. GBIF asks for a way to reach high-volume callers, and being
-reachable is how you get contacted rather than blocked.
+Two optional settings tune the server's behaviour:
+
+- `GBIF_USER_AGENT_CONTACT` — an email address appended to the `User-Agent` this server sends.
+  GBIF asks for a way to reach high-volume callers, and being reachable is how you get contacted
+  rather than blocked.
+- `GBIF_CALL_BUDGET_MS` — the total time (milliseconds) one tool call gets against GBIF, covering
+  every attempt, retry and backoff wait. Defaults to 60000 (60s); raise it if broad, unfiltered
+  queries are hitting `UPSTREAM_TIMEOUT` before a full retry sequence can clear a slow response.
 
 ## Layout
 
@@ -245,6 +250,53 @@ the build if an import appears.
 boundary. Bought: the boundary is real. Every guarantee the agent demonstrates is one an unrelated
 client gets too — which is why the guidance lives in the server's `instructions` and tool
 descriptions rather than in the agent's prompt.
+
+### Remembered resolutions are evicted in insertion order, not by least-recent use
+
+**Context.** The resolution store had no ceiling and no sweep, so it grew for as long as distinct
+names kept arriving — and the caller this server is built for is a language model generating name
+variants, each one a new key. A ceiling needs an eviction rule.
+
+**Decision.** Evict the entry recorded longest ago, which is simply the first key a `Map` yields.
+Not least-recently-*used*: reading an entry does not protect it.
+
+**Trade-off.** A name that is read often but recorded long ago can be evicted while a
+recently-recorded name nobody asks about survives. Bought: reads stay reads. True LRU would re-link
+on every `get`, turning every lookup into a write, for entries that expire on a one-hour clock in
+any case. The cost of being wrong is bounded and small — an evicted key is an ordinary miss, so it
+resolves upstream and returns the correct answer. Eviction can cost one extra upstream lookup; it
+can never produce a wrong answer.
+
+### Contradictory taxon inputs are refused, not reconciled
+
+**Context.** Both occurrence tools accept either a `taxonKey` or a `name`. A caller can supply both,
+and they can disagree. The key used to win, the name was discarded, and nothing said so — not the
+text, not the structured result, not the diagnostic record. A model holding a polar bear key while
+naming a cougar got polar bear counts labelled with nothing.
+
+**Decision.** Refuse the call with `CONTRADICTORY_TAXON`, before any upstream request, naming both
+supplied values and both remedies. The refusal applies whether or not the two agree.
+
+**Trade-off.** This is the one deliberate break in an otherwise behaviour-preserving change: a call
+that used to succeed now fails, so a client relying on key-precedence must drop one argument. It is
+also the reason the refusal cannot check agreement first — verifying that the key and the name match
+means resolving the name, which is exactly the lookup the key exists to avoid. Bought: consistency.
+Every other ambiguity here — a homonym, a weak fuzzy match, a name reaching only a genus — is
+returned to the caller as a recoverable question, and this was the last place the server guessed.
+
+### Coverage is reported, never enforced
+
+**Context.** The deterministic suite had no coverage measurement at all, so nobody could see which
+behaviours were untested — which is how ten of them stayed that way until a review found them.
+
+**Decision.** CI produces a coverage report on every run and uploads it as a retained artefact.
+There is no threshold, in `vitest.config.ts` or in the workflow, and adding one would change what
+the project promises.
+
+**Trade-off.** Nothing stops coverage drifting down; it takes a person looking. Bought: no unrelated
+change acquires a new way to fail. A threshold turns a number that should inform judgement into a
+gate that blocks correct work for being correct in an uncovered file, and the usual response is to
+write a test that moves the number rather than one that checks a behaviour.
 
 ### Server dependencies: three, and no transport in the core
 

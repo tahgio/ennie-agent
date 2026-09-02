@@ -226,3 +226,42 @@ describe('search_occurrences — composition', () => {
     }
   })
 })
+
+describe('search_occurrences — contradictory taxon inputs (FR-028)', () => {
+  it('refuses when both taxonKey and name are supplied, naming both values', async () => {
+    const harness = await createHarness()
+    try {
+      const result = (await harness.client.callTool({
+        name: 'search_occurrences',
+        arguments: { taxonKey: 2433451, name: 'Puma concolor' },
+      })) as { isError?: boolean; content?: unknown }
+
+      expect(result.isError).toBe(true)
+
+      const text = resultText(result)
+      // Both values, so the caller can drop the right one without guessing.
+      expect(text).toContain('2433451')
+      expect(text).toContain('Puma concolor')
+
+      // Refused *before* any upstream call — the whole point of catching it here.
+      expect(harness.upstream.count).toBe(0)
+    } finally {
+      await harness.close()
+    }
+  })
+
+  it('refuses even when the two agree, because checking agreement costs the lookup', async () => {
+    const harness = await createHarness()
+    try {
+      const result = (await harness.client.callTool({
+        name: 'search_occurrences',
+        arguments: { taxonKey: 2433451, name: 'Ursus maritimus' },
+      })) as { isError?: boolean }
+
+      expect(result.isError).toBe(true)
+      expect(harness.upstream.count).toBe(0)
+    } finally {
+      await harness.close()
+    }
+  })
+})

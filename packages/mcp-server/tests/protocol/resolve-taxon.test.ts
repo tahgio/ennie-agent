@@ -8,7 +8,9 @@
  * `isError: true` with a what/next sentence lands in the conversation, where
  * the next turn can act on it (Constitution I, V).
  */
-import { describe, expect, it } from 'vitest'
+import { LoggingMessageNotificationSchema } from '@modelcontextprotocol/sdk/types.js'
+import { describe, expect, it, vi } from 'vitest'
+import { logger, type ToolCallLog } from '../../src/logging.js'
 import { createHarness, type Harness, resultText } from '../helpers/mcp-harness.js'
 
 interface CallResult {
@@ -225,6 +227,44 @@ describe('resolve_taxon — caching', () => {
       expect(hinted.isError).toBeFalsy()
       expect(hinted.structuredContent).toMatchObject({ taxonKey: 2926553 })
     } finally {
+      await harness.close()
+    }
+  })
+})
+
+describe('resolve_taxon — the failure category reaches both channels', () => {
+  /**
+   * FR-002. The record on the developer channel and the record delivered to a
+   * subscribed client are the same record, so an operator reading either one
+   * reaches the same conclusion. Asserting they *match* is stronger than
+   * asserting each is non-empty: it is the drift between the two that would go
+   * unnoticed.
+   */
+  it('delivers the same errorCode to a subscribed client as it writes to stderr', async () => {
+    const warn = vi.spyOn(logger, 'warn').mockImplementation(() => undefined)
+    const harness = await createHarness()
+
+    const notified: ToolCallLog[] = []
+    harness.client.setNotificationHandler(LoggingMessageNotificationSchema, (notification) => {
+      notified.push(notification.params.data as ToolCallLog)
+    })
+
+    try {
+      const result = await resolve(harness, { name: 'Zzzzqqq xxxxyy' })
+      expect(result.isError).toBe(true)
+
+      // The notification is fire-and-forget, so give it a turn of the loop.
+      await vi.waitFor(() => expect(notified.length).toBeGreaterThan(0))
+
+      const stderrRecord = warn.mock.calls.at(-1)?.[0] as ToolCallLog
+      const clientRecord = notified.at(-1) as ToolCallLog
+
+      expect(stderrRecord.errorCode).toBe('NOT_FOUND')
+      expect(clientRecord.errorCode).toBe(stderrRecord.errorCode)
+      expect(clientRecord.tool).toBe(stderrRecord.tool)
+      expect(clientRecord.outcome).toBe('error')
+    } finally {
+      vi.restoreAllMocks()
       await harness.close()
     }
   })

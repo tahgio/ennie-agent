@@ -5,6 +5,13 @@ on:
     branches: [main]
   pull_request:
 
+# A superseded run tells you nothing a newer one does not, and holds a runner
+# while it says it. The ref is the key, so two pushes to one branch cancel the
+# older run while runs on different branches stay independent (FR-039).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 # Constitution VI: this workflow runs the deterministic suite only.
 # `pnpm test:live` (hits api.gbif.org) and `pnpm eval` (calls models, costs
 # money) are deliberately absent and must stay that way.
@@ -37,5 +44,17 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Test (unit + protocol, offline)
-        run: pnpm test
+      - name: Test (unit + protocol, offline) with coverage
+        run: pnpm test:coverage
+
+      # Reported, never enforced (FR-041, clarification Q2). There is no
+      # threshold anywhere in this pipeline or in vitest.config.ts: coverage is
+      # a number to look at, not a new way for an unrelated change to fail.
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 14
+          if-no-files-found: warn
