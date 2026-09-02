@@ -25,6 +25,7 @@
 import { existsSync } from 'node:fs'
 import { MCPConfiguration } from '@voltagent/core'
 import { createAgent, serverEntrypoint } from './agent.js'
+import { forwardedEnv } from './forwarded-env.js'
 import { ConfigError, createModel, describeModel, parseModel, requireCredential } from './model.js'
 import { createTracing } from './observability.js'
 import { Session } from './session.js'
@@ -34,25 +35,6 @@ import { Session } from './session.js'
  * Reported instead of 1, which means "this crashed" (contracts/agent-cli.md).
  */
 const SIGINT_EXIT_CODE = 130
-
-/**
- * The variables the launched server is allowed to see, and only those.
- *
- * `LOG_LEVEL` is forwarded because the alternative was documenting that a
- * documented setting silently has no effect: the server reads it, but a server
- * launched by this CLI never received it (FR-026).
- */
-function forwardedEnv(): Record<string, string> {
-  const allowlist = ['GBIF_USER_AGENT_CONTACT', 'LOG_LEVEL', 'GBIF_CALL_BUDGET_MS'] as const
-  const env: Record<string, string> = {}
-
-  for (const name of allowlist) {
-    const value = process.env[name]?.trim()
-    if (value !== undefined && value !== '') env[name] = value
-  }
-
-  return env
-}
 
 async function main(): Promise<number> {
   const route = parseModel(process.env.MODEL)

@@ -14,6 +14,7 @@ import { existsSync } from 'node:fs'
 import { createHooks, MCPConfiguration } from '@voltagent/core'
 import { createAgent, serverEntrypoint } from '../src/agent.js'
 import { emptyAnswerReason, type Generation } from '../src/empty-answer.js'
+import { forwardedEnv } from '../src/forwarded-env.js'
 import { createModel, describeModel, parseModel, requireCredential } from '../src/model.js'
 import type { Scenario } from './scenarios/index.js'
 import type { RunRecord, ToolCallRecord } from './scorers/run-record.js'
@@ -131,7 +132,11 @@ export async function runScenario(scenario: Scenario): Promise<RunRecord> {
 
   const mcp = new MCPConfiguration({
     servers: {
-      gbif: { type: 'stdio', command: process.execPath, args: [entrypoint], env: {} },
+      // Forwarding the same allowlist the CLI uses (FR-026) so the server the
+      // eval spawns is configured identically — otherwise a raised
+      // GBIF_CALL_BUDGET_MS would fix the interactive session while every
+      // eval run kept the client-side default.
+      gbif: { type: 'stdio', command: process.execPath, args: [entrypoint], env: forwardedEnv() },
     },
   })
 
