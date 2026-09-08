@@ -8,11 +8,11 @@
  */
 import * as z from 'zod'
 import { ResolvedTaxonSchema, resolveTaxon } from '../domain/resolution.js'
-import type { ToolContext } from '../server.js'
+import { resolveDeps, type ToolContext } from '../server.js'
 import { runTool, type ToolResult } from './run-tool.js'
 
 /** Exact text from contracts/resolve-taxon.md. */
-const DESCRIPTION = `Resolve a scientific or common species name to an accepted GBIF taxon. Call this first: the other tools take a taxonKey, and this tool absorbs the ambiguity of biological naming — synonyms, misspellings, and names shared across kingdoms. Returns the accepted taxon key, canonical name, rank, and full classification. Exact matches and close fuzzy matches (confidence 90+) resolve; a weaker match, a name that reaches only a genus or family, or a name borne by taxa in more than one kingdom returns an error naming what to try next rather than a guess.`
+const DESCRIPTION = `Resolve a scientific or common species name to an accepted GBIF taxon. Call this first: the other tools take a taxonKey, and this tool absorbs the ambiguity of biological naming — synonyms, misspellings, and names shared across kingdoms. Returns the accepted taxon key, canonical name, rank, and full classification. Exact matches and close fuzzy matches (confidence 90+) resolve; a weaker match, a name that reaches only a genus or family, or a name borne by taxa in more than one kingdom returns an error naming what to try next rather than a guess. Against a client that supports elicitation, an ambiguous name is put to the person directly and the taxon they choose is returned; never pick between candidate taxa yourself.`
 
 /**
  * `rank` and `kingdom` exist solely to break ambiguity (FR-002). They are not
@@ -75,16 +75,13 @@ export function registerResolveTaxon(context: ToolContext): void {
     },
     async (args, extra) => {
       return await runTool(context.server, 'resolve_taxon', extra, async (run) => {
-        const outcome = await resolveTaxon(
-          { client: context.client, cache: context.cache },
-          {
-            name: args.name,
-            rank: args.rank,
-            kingdom: args.kingdom,
-            budget: run.budget,
-            signal: run.signal,
-          },
-        )
+        const outcome = await resolveTaxon(resolveDeps(context), {
+          name: args.name,
+          rank: args.rank,
+          kingdom: args.kingdom,
+          budget: run.budget,
+          signal: run.signal,
+        })
 
         run.stats.cache = outcome.cache
         run.stats.upstreamRequests = outcome.upstreamRequests

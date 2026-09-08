@@ -305,3 +305,95 @@ describe('GbifClient request building', () => {
     expect(url).not.toContain('country')
   })
 })
+
+/**
+ * The clock stops while a person is thinking (FR-026a).
+ *
+ * The budget bounds how long this server may hold an upstream connection. An
+ * elicitation round trip is not upstream work — it is a human reading a list
+ * of taxa — and charging it to the same clock would make the ceiling mean "how
+ * fast the user types" and abort the call for anyone slow.
+ *
+ * The injected clock is what makes this checkable without spending real
+ * seconds; the timer is asserted separately, because a resumed budget that
+ * reports the right remainder but never fires again would pass every one of
+ * the arithmetic assertions.
+ */
+describe('CallBudget pause and resume', () => {
+  function budgetAt(totalMs: number) {
+    let clock = 0
+    const budget = new CallBudget({ totalMs, now: () => clock })
+    return {
+      budget,
+      advance: (ms: number) => {
+        clock += ms
+      },
+    }
+  }
+
+  it('does not charge paused time against the remainder', () => {
+    const { budget, advance } = budgetAt(30_000)
+
+    advance(5_000)
+    budget.pause()
+    advance(120_000) // a person taking two minutes to read four taxon names
+    budget.resume()
+
+    expect(budget.remainingMs()).toBe(25_000)
+    budget.dispose()
+  })
+
+  it('freezes the remainder while paused', () => {
+    const { budget, advance } = budgetAt(30_000)
+
+    advance(5_000)
+    budget.pause()
+    expect(budget.paused).toBe(true)
+    advance(120_000)
+
+    expect(budget.remainingMs()).toBe(25_000)
+    budget.dispose()
+  })
+
+  it('is idempotent, so a failed elicitation cannot stop the clock twice', () => {
+    const { budget, advance } = budgetAt(30_000)
+
+    budget.pause()
+    budget.pause()
+    advance(10_000)
+    budget.resume()
+    budget.resume()
+
+    expect(budget.remainingMs()).toBe(30_000)
+    expect(budget.paused).toBe(false)
+    budget.dispose()
+  })
+
+  it('still aborts after the deferred deadline', async () => {
+    // Real time here, deliberately: the arithmetic above says what the
+    // remainder *is*, and this says the timer was actually re-armed with it.
+    const budget = new CallBudget({ totalMs: 40 })
+
+    budget.pause()
+    await new Promise((resolve) => setTimeout(resolve, 60))
+    expect(budget.signal.aborted).toBe(false) // the pause held it off
+
+    budget.resume()
+    await new Promise((resolve) => setTimeout(resolve, 80))
+    expect(budget.signal.aborted).toBe(true)
+
+    budget.dispose()
+  })
+
+  it('resumes with nothing left when the budget ran out before the pause', async () => {
+    const budget = new CallBudget({ totalMs: 0 })
+
+    budget.pause()
+    budget.resume()
+    await new Promise((resolve) => setTimeout(resolve, 20))
+
+    // Pausing defers a deadline; it does not cancel one already due.
+    expect(budget.signal.aborted).toBe(true)
+    budget.dispose()
+  })
+})

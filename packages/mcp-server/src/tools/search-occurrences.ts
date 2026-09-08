@@ -27,7 +27,7 @@ import { ResolvedTaxonSchema } from '../domain/resolution.js'
 import { selectTaxon } from '../domain/taxon-input.js'
 import { OccurrenceRecordSchema, trimRecord } from '../domain/trim.js'
 import { pageSearch } from '../gbif/occurrence.js'
-import type { ToolContext } from '../server.js'
+import { resolveDeps, type ToolContext } from '../server.js'
 import { runTool } from './run-tool.js'
 
 /** Exact text from contracts/search-occurrences.md. */
@@ -107,10 +107,12 @@ export function registerSearchOccurrences(context: ToolContext): void {
         validateFilters(filters)
         validatePaging(limit, offset)
 
-        const selection = await selectTaxon(
-          { client: context.client, cache: context.cache },
-          { taxonKey: args.taxonKey, name: args.name, budget: run.budget, signal: run.signal },
-        )
+        const selection = await selectTaxon(resolveDeps(context), {
+          taxonKey: args.taxonKey,
+          name: args.name,
+          budget: run.budget,
+          signal: run.signal,
+        })
 
         const response = await pageSearch(
           context.client,

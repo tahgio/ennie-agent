@@ -21,6 +21,6 @@ export const SERVER_INSTRUCTIONS = `Tools for querying GBIF, the global biodiver
 
 **Prefer summaries.** For "where", "when", or "how many" questions, call \`summarize_occurrences\`. It aggregates inside GBIF and returns counts only — one call, a bounded response, whether the species has a hundred records or ten million. Use \`search_occurrences\` only when individual records are genuinely wanted; it returns at most 50 per call and paging through a large result set will exhaust your context long before it answers a distribution question.
 
-**Errors are recoverable.** A failed tool result names what went wrong and what to try instead — a corrected spelling, a kingdom hint to break a homonym, a narrower filter. Act on it rather than retrying the same call.
+**Errors are recoverable.** A failed tool result names what went wrong and what to try instead — a corrected spelling, a kingdom hint to break a homonym, a narrower filter. Act on it rather than retrying the same call. When a name is ambiguous, put the choice to the person rather than picking a candidate yourself; if this client supports elicitation the server will have asked them directly, and an ambiguity error means they were not asked or did not answer.
 
 **Interpretation.** Occurrence counts reflect recording effort as well as true distribution. Well-surveyed countries dominate the rankings. Say so when it matters to the answer.`

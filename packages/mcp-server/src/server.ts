@@ -12,7 +12,8 @@
  *      rather than a test double that resembles it (FR-039).
  */
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
-import type { ResolvedTaxon } from './domain/resolution.js'
+import type { ResolveDeps, ResolvedTaxon } from './domain/resolution.js'
+import { createElicitTaxon, type ElicitTaxon } from './elicitation.js'
 import { TtlCache } from './gbif/cache.js'
 import { GbifClient } from './gbif/client.js'
 import { SERVER_INSTRUCTIONS } from './instructions.js'
@@ -29,6 +30,11 @@ export interface CreateServerOptions {
   readonly client?: GbifClient
   /** Injected so tests can drive TTL expiry without waiting an hour. */
   readonly cache?: TtlCache<ResolvedTaxon>
+  /**
+   * Injected by tests that need to drive an elicitation without a client on
+   * the other end. In production this is always bound to the real server.
+   */
+  readonly elicit?: ElicitTaxon
 }
 
 /**
@@ -40,6 +46,20 @@ export interface ToolContext {
   readonly server: McpServer
   readonly client: GbifClient
   readonly cache: TtlCache<ResolvedTaxon>
+  /** Asks the person which taxon was meant; see `elicitation.ts`. */
+  readonly elicit: ElicitTaxon
+}
+
+/**
+ * The three things name resolution needs, assembled in one place.
+ *
+ * All three tools resolve, and all three previously built this object inline —
+ * which meant adding a dependency to resolution was three edits, and a missed
+ * one would have shown up as an ambiguity that silently stopped asking on one
+ * tool but not the others.
+ */
+export function resolveDeps(context: ToolContext): ResolveDeps {
+  return { client: context.client, cache: context.cache, elicit: context.elicit }
 }
 
 /**
@@ -68,6 +88,10 @@ export function createServer(options: CreateServerOptions = {}): McpServer {
     server,
     client: options.client ?? new GbifClient(),
     cache: options.cache ?? new TtlCache<ResolvedTaxon>(),
+    // Bound to this server, and therefore to whichever client connects to it.
+    // The capability check happens per call, because at this point no client
+    // has connected and there is nothing yet to check.
+    elicit: options.elicit ?? createElicitTaxon(server),
   }
 
   registerTools(context)

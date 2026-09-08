@@ -25,7 +25,9 @@
 import { existsSync } from 'node:fs'
 import { MCPConfiguration } from '@voltagent/core'
 import { createAgent, serverEntrypoint } from './agent.js'
+import { createTerminalElicitation } from './elicitation.js'
 import { forwardedEnv } from './forwarded-env.js'
+import { connectBridge, mcpLogLevel } from './mcp-bridge.js'
 import { ConfigError, createModel, describeModel, parseModel, requireCredential } from './model.js'
 import { createTracing } from './observability.js'
 import { Session } from './session.js'
@@ -80,14 +82,35 @@ async function main(): Promise<number> {
   process.once('SIGTERM', onSignal)
 
   try {
+    // Connect first and read what the server actually published: its
+    // `instructions`, its prompts, whether it can send logs. `getTools()`
+    // reuses the same connected client, so this is one server process and one
+    // handshake, not two.
+    const bridge = await connectBridge(mcp, 'gbif')
     const tools = await mcp.getTools()
+
     process.stdout.write(
       `Connected to the GBIF MCP server. Tools: ${tools.map((tool) => tool.name).join(', ')}\n`,
     )
+    if (bridge.prompts !== null) {
+      process.stdout.write(
+        `Prompts: ${bridge.prompts.all.map((prompt) => `/${prompt.name}`).join(', ')} (/help for commands)\n`,
+      )
+    }
+
+    // Server log records go to stderr at `MCP_LOG_LEVEL` (default: warnings
+    // and worse). stdout carries answers, and mixing diagnostics into them is
+    // the client-side version of the mistake the server's stdout guard exists
+    // to prevent.
+    await bridge.startLogRelay({
+      level: mcpLogLevel(),
+      write: (line) => process.stderr.write(line),
+    })
 
     const agent = createAgent({
       model: createModel(route),
       tools,
+      serverInstructions: bridge.instructions,
       ...(tracing === null ? {} : { observability: tracing.observability }),
     })
 
@@ -98,7 +121,19 @@ async function main(): Promise<number> {
       output: process.stdout,
       firstQuestion: firstQuestion === '' ? undefined : firstQuestion,
       signal: shutdown.signal,
+      prompts: bridge.prompts,
     })
+
+    // Registered after the session exists, because answering a server's
+    // question means reading a line, and the session owns the only reader.
+    // Safe to do here: an elicitation can only arrive during a tool call,
+    // which can only happen once `run()` is looping.
+    bridge.setElicitationHandler(
+      createTerminalElicitation({
+        ask: (question) => session.askLine(question),
+        write: (text) => process.stdout.write(text),
+      }),
+    )
 
     await session.run()
     return 0

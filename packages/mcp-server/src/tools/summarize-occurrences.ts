@@ -24,7 +24,7 @@ import {
   facetSearch,
   mapFacetsToDimensions,
 } from '../gbif/occurrence.js'
-import type { ToolContext } from '../server.js'
+import { resolveDeps, type ToolContext } from '../server.js'
 import { runTool } from './run-tool.js'
 
 /** Exact text from contracts/summarize-occurrences.md. */
@@ -107,15 +107,12 @@ export function registerSummarizeOccurrences(context: ToolContext): void {
 
         const topN = args.topN ?? DEFAULT_TOP_N
 
-        const selection = await selectTaxon(
-          { client: context.client, cache: context.cache },
-          {
-            taxonKey: args.taxonKey,
-            name: args.name,
-            budget: run.budget,
-            signal: run.signal,
-          },
-        )
+        const selection = await selectTaxon(resolveDeps(context), {
+          taxonKey: args.taxonKey,
+          name: args.name,
+          budget: run.budget,
+          signal: run.signal,
+        })
 
         const response = await facetSearch(
           context.client,

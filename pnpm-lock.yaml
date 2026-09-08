@@ -41,6 +41,9 @@ importers:
       '@ai-sdk/provider-utils':
         specifier: ^4.0.0
         version: 4.0.49(zod@4.5.2)
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.30.0
+        version: 1.30.0(zod@4.5.2)
       '@voltagent/core':
         specifier: ^2.10.0
         version: 2.10.0(@ai-sdk/provider-utils@4.0.49(zod@4.5.2))(@ai-sdk/provider@3.0.15)(@voltagent/logger@2.0.2(@opentelemetry/api@1.9.1))(ai@6.0.271(zod@4.5.2))(graphql@16.14.2)(ws@8.21.3)(zod@4.5.2)

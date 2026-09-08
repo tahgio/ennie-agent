@@ -73,7 +73,17 @@ export class CallBudget {
   readonly #totalMs: number
   readonly #now: () => number
   readonly #controller: AbortController
-  readonly #timer: ReturnType<typeof setTimeout>
+  #timer: ReturnType<typeof setTimeout>
+  /**
+   * Time already spent paused, credited back to the deadline on resume.
+   *
+   * Not the same thing as a longer budget: it only ever grows by exactly as
+   * long as the clock was stopped, so a call that never pauses is charged
+   * precisely what it was before this existed.
+   */
+  #pausedMs = 0
+  /** When the clock stopped, or null when it is running. */
+  #pausedAt: number | null = null
 
   constructor(options: { totalMs?: number; now?: () => number } = {}) {
     this.#totalMs = options.totalMs ?? DEFAULT_CALL_BUDGET_MS
@@ -81,12 +91,7 @@ export class CallBudget {
     this.#startedAt = this.#now()
     this.#controller = new AbortController()
     this.signal = this.#controller.signal
-    this.#timer = setTimeout(
-      () => this.#controller.abort(new Error('call budget exhausted')),
-      this.#totalMs,
-    )
-    // A pending budget timer must never hold the process open by itself.
-    this.#timer.unref?.()
+    this.#timer = this.#arm(this.#totalMs)
   }
 
   get totalMs(): number {
@@ -94,12 +99,61 @@ export class CallBudget {
   }
 
   remainingMs(): number {
-    return Math.max(0, this.#totalMs - (this.#now() - this.#startedAt))
+    // While paused the clock is frozen, so elapsed is measured to the moment
+    // it stopped rather than to now.
+    const elapsed = (this.#pausedAt ?? this.#now()) - this.#startedAt
+    return Math.max(0, this.#totalMs + this.#pausedMs - elapsed)
+  }
+
+  /** True while the clock is stopped. */
+  get paused(): boolean {
+    return this.#pausedAt !== null
+  }
+
+  /**
+   * Stop the clock (FR-026a).
+   *
+   * The budget exists to bound how long this server keeps *GBIF* waiting. When
+   * a tool call blocks on something that is not upstream work — an elicitation
+   * round trip, where the server is waiting on a person — charging that time
+   * to the budget would abort the call for a slow reader, and would make the
+   * ceiling mean "how fast the user types" rather than "how long we may hold
+   * an upstream connection".
+   *
+   * Idempotent, and paired with `resume()` in a `finally` at every call site.
+   */
+  pause(): void {
+    if (this.#pausedAt !== null) return
+    this.#pausedAt = this.#now()
+    clearTimeout(this.#timer)
+  }
+
+  /**
+   * Restart the clock with the remainder it had when it stopped.
+   *
+   * A budget that ran out *before* the pause resumes with zero left, which
+   * fires the abort immediately — the pause defers the deadline, it never
+   * cancels one that was already due.
+   */
+  resume(): void {
+    const pausedAt = this.#pausedAt
+    if (pausedAt === null) return
+    this.#pausedMs += this.#now() - pausedAt
+    this.#pausedAt = null
+    if (this.signal.aborted) return
+    this.#timer = this.#arm(this.remainingMs())
   }
 
   /** Always call this when the tool call ends, successfully or not. */
   dispose(): void {
     clearTimeout(this.#timer)
+  }
+
+  #arm(ms: number): ReturnType<typeof setTimeout> {
+    const timer = setTimeout(() => this.#controller.abort(new Error('call budget exhausted')), ms)
+    // A pending budget timer must never hold the process open by itself.
+    timer.unref?.()
+    return timer
   }
 }
 

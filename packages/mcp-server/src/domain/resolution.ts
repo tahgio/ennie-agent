@@ -12,6 +12,7 @@
  * being counted as if it were an answer.
  */
 import * as z from 'zod'
+import type { ElicitTaxon, TaxonOption } from '../elicitation.js'
 import { ToolError } from '../errors.js'
 import { cacheKey, type TtlCache } from '../gbif/cache.js'
 import type { CallBudget, GbifClient } from '../gbif/client.js'
@@ -323,6 +324,13 @@ export function selectVernacularCandidates(
 export interface ResolveDeps {
   readonly client: GbifClient
   readonly cache: TtlCache<ResolvedTaxon>
+  /**
+   * Ask the person which taxon was meant, when the connected client can carry
+   * the question (FR-005). Absent in unit tests and against clients with no
+   * elicitation support, and absence is not a degraded mode: the ambiguity
+   * error is the designed answer either way.
+   */
+  readonly elicit?: ElicitTaxon | undefined
 }
 
 export interface ResolveInput {
@@ -338,6 +346,12 @@ export interface ResolveOutcome {
   readonly cache: CacheOutcome
   readonly upstreamRequests: number
   readonly retries: number
+  /**
+   * True when a person picked this taxon out of an ambiguity, rather than the
+   * name resolving on its own. It is what keeps the choice out of the cache —
+   * see `resolveTaxon`.
+   */
+  readonly elicited: boolean
 }
 
 /**
@@ -373,7 +387,7 @@ export async function resolveTaxon(
   const cached = deps.cache.get(key)
   if (cached !== undefined) {
     if (cached.ok) {
-      return { taxon: cached.value, cache: 'hit', upstreamRequests: 0, retries: 0 }
+      return { taxon: cached.value, cache: 'hit', upstreamRequests: 0, retries: 0, elicited: false }
     }
     // The same failure, verbatim — including an ambiguity's candidate list.
     throw new ToolError(cached.error)
@@ -381,7 +395,14 @@ export async function resolveTaxon(
 
   try {
     const outcome = await resolveUncached(deps, { ...input, name })
-    deps.cache.setValue(key, outcome.taxon)
+
+    // An elicited taxon is **not** remembered, and this is the one place that
+    // rule can be enforced (FR-005, D2). The cache key is the ambiguous name —
+    // 'Prunella' with no hint — so caching the answer would mean the next
+    // person to ask about Prunella the bird silently receives Prunella the
+    // mint, an hour after somebody else answered a question they never saw.
+    // The choice is a fact about one conversation, not about the name.
+    if (!outcome.elicited) deps.cache.setValue(key, outcome.taxon)
     return outcome
   } catch (error) {
     // Remember a failure only when retrying it cannot help (FR-007, D2).
@@ -398,7 +419,19 @@ export async function resolveTaxon(
     // the caller rather than about the name, so it is excluded on its own
     // terms and stays excluded whichever way its retry semantics are set
     // later (FR-009).
-    if (error instanceof ToolError && error.retryable === false && error.code !== 'CANCELLED') {
+    //
+    // The third exclusion is `AMBIGUOUS` while elicitation is available. The
+    // ambiguity itself is a settled fact about the name, so by the rule above
+    // it would be remembered — but remembering it means the *next* call throws
+    // straight out of the cache, before reaching the code that would have
+    // asked the person. Declining the question once would quietly disable it
+    // for an hour, which is the opposite of what declining should mean.
+    if (
+      error instanceof ToolError &&
+      error.retryable === false &&
+      error.code !== 'CANCELLED' &&
+      !(error.code === 'AMBIGUOUS' && deps.elicit !== undefined)
+    ) {
       deps.cache.setNegative(key, error)
     }
     throw error
@@ -420,10 +453,28 @@ async function resolveUncached(deps: ResolveDeps, input: ResolveInput): Promise<
 
   switch (outcome.kind) {
     case 'resolved':
-      return { taxon: outcome.taxon, cache: 'miss', upstreamRequests, retries }
+      return { taxon: outcome.taxon, cache: 'miss', upstreamRequests, retries, elicited: false }
 
-    case 'ambiguous':
+    case 'ambiguous': {
+      // A cross-kingdom homonym is re-resolved by re-matching the original
+      // name with the chosen kingdom — the exact recovery `ambiguousError`
+      // advises in prose, performed for the caller instead of described to it.
+      const picked = await elicitAndResolve(
+        deps,
+        input,
+        kingdomOptions(input.name, outcome.candidates),
+      )
+      if (picked !== null) {
+        return {
+          taxon: picked.taxon,
+          cache: 'miss',
+          upstreamRequests: upstreamRequests + picked.upstreamRequests,
+          retries: retries + picked.retries,
+          elicited: true,
+        }
+      }
       throw ambiguousError(input.name, outcome.candidates)
+    }
 
     case 'higher-rank':
       throw new ToolError({
@@ -460,16 +511,31 @@ async function resolveUncached(deps: ResolveDeps, input: ResolveInput): Promise<
       }
 
       if (candidates.length > 1) {
-        throw ambiguousError(
-          input.name,
-          candidates.map((candidate) => ({
-            taxonKey: candidate.nubKey,
-            scientificName: candidate.canonicalName,
-            kingdom: candidate.kingdom,
-            rank: null,
-            confidence: 0,
-          })),
-        )
+        const competing: AmbiguousCandidate[] = candidates.map((candidate) => ({
+          taxonKey: candidate.nubKey,
+          scientificName: candidate.canonicalName,
+          kingdom: candidate.kingdom,
+          rank: null,
+          confidence: 0,
+        }))
+
+        // A common name borne by several taxa cannot be re-matched with a
+        // kingdom hint — `species/match` does not resolve vernacular names at
+        // all (research F3) — so the chosen *scientific* name is what gets
+        // matched, which is the same second lookup the single-candidate path
+        // below already performs.
+        const picked = await elicitAndResolve(deps, input, scientificNameOptions(candidates))
+        if (picked !== null) {
+          return {
+            taxon: { ...picked.taxon, matchType: 'VERNACULAR', matchedName: input.name },
+            cache: 'miss',
+            upstreamRequests: upstreamRequests + picked.upstreamRequests,
+            retries: retries + picked.retries,
+            elicited: true,
+          }
+        }
+
+        throw ambiguousError(input.name, competing)
       }
 
       // Exactly one survivor — but it may itself be a synonym, so it goes back
@@ -498,8 +564,104 @@ async function resolveUncached(deps: ResolveDeps, input: ResolveInput): Promise<
         cache: 'miss',
         upstreamRequests,
         retries,
+        elicited: false,
       }
     }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Elicitation (FR-005)
+// ---------------------------------------------------------------------------
+
+/**
+ * Offer the competing kingdoms, but only when the kingdom is what actually
+ * separates them.
+ *
+ * The retry is `name + kingdom`, so this is sound exactly when each candidate
+ * sits in a different, known kingdom — the cross-kingdom homonym the ambiguity
+ * error names in so many words. Two taxa that tie *within* one kingdom would
+ * be re-matched by a hint that cannot tell them apart, so the empty list is
+ * returned instead and the caller falls back to the error. Asking a person a
+ * question whose answer cannot be acted on is worse than not asking.
+ */
+function kingdomOptions(name: string, candidates: readonly AmbiguousCandidate[]): TaxonOption[] {
+  const kingdoms = new Set<string>()
+  const options: TaxonOption[] = []
+
+  for (const candidate of candidates) {
+    const kingdom = candidate.kingdom
+    if (kingdom === null || kingdoms.has(kingdom)) return []
+    kingdoms.add(kingdom)
+
+    const rank = candidate.rank === null ? '' : `, ${candidate.rank.toLowerCase()}`
+    options.push({
+      taxonKey: candidate.taxonKey,
+      label: `${candidate.scientificName} — ${kingdom}${rank}`,
+      retry: { name, kingdom },
+    })
+  }
+
+  return options
+}
+
+/** Offer the candidate scientific names, for the common-name path. */
+function scientificNameOptions(candidates: readonly VernacularCandidate[]): TaxonOption[] {
+  return candidates.map((candidate) => ({
+    taxonKey: candidate.nubKey,
+    label:
+      candidate.kingdom === null
+        ? candidate.canonicalName
+        : `${candidate.canonicalName} — ${candidate.kingdom}`,
+    retry: { name: candidate.canonicalName },
+  }))
+}
+
+/**
+ * Put the choice to the person, then resolve what they chose.
+ *
+ * Two things are load-bearing here:
+ *
+ *   - **The budget stops while a person is thinking.** The call budget bounds
+ *     how long this server may hold GBIF waiting; a human reading five taxon
+ *     names is not upstream work, and charging it would abort the call for a
+ *     slow reader and make the ceiling mean "how fast the user types". The
+ *     `finally` is what keeps the clock from staying stopped when the
+ *     elicitation throws.
+ *   - **One retry, never a loop.** The chosen lookup goes through
+ *     `applyMatchPolicy` like any other, and if it comes back anything other
+ *     than resolved — including ambiguous again — this returns `null` and the
+ *     caller raises the original error. There is no second question.
+ */
+async function elicitAndResolve(
+  deps: ResolveDeps,
+  input: ResolveInput,
+  options: readonly TaxonOption[],
+): Promise<{ taxon: ResolvedTaxon; upstreamRequests: number; retries: number } | null> {
+  const elicit = deps.elicit
+  if (elicit === undefined || options.length < 2) return null
+
+  input.budget.pause()
+  let chosen: TaxonOption | null
+  try {
+    chosen = await elicit({ name: input.name, options, signal: input.signal })
+  } finally {
+    input.budget.resume()
+  }
+
+  if (chosen === null) return null
+
+  const confirmed = await matchName(deps.client, chosen.retry, {
+    budget: input.budget,
+    signal: input.signal,
+  })
+  const outcome = applyMatchPolicy(confirmed.data)
+  if (outcome.kind !== 'resolved') return null
+
+  return {
+    taxon: outcome.taxon,
+    upstreamRequests: confirmed.upstreamRequests,
+    retries: confirmed.retries,
   }
 }
 

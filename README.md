@@ -19,7 +19,13 @@ Three tools:
 | `summarize_occurrences` | Distribution answers — by country, year, and basis of record — from GBIF's own faceting. One upstream request, no individual records, and the same response size whether the species has a hundred occurrences or ten million. |
 | `search_occurrences` | A bounded page of individual records (at most 50), trimmed from GBIF's 95 fields to nine, always with the total so the size of what you did not receive is visible. |
 
-And one prompt, `species_distribution_report`, which sequences them.
+And one prompt, `species_distribution_report`, which sequences them — reachable from the bundled
+agent as `/report`.
+
+Where a name is genuinely ambiguous the server does not guess, and does not hand the guess to the
+model either: *Prunella* is both a bird and a mint, so it asks the person, over MCP's
+`elicitation/create`, offering only the taxa it found. Clients that cannot carry that question get
+the recoverable error instead.
 
 ## Requirements
 
@@ -56,9 +62,22 @@ pnpm agent
 
 ```
 Model: anthropic:claude-opus-5 (direct)
+Connected to the GBIF MCP server. Tools: gbif_resolve_taxon, gbif_summarize_occurrences, gbif_search_occurrences
+Prompts: /species_distribution_report (/help for commands)
 
 > Where has the polar bear been recorded?
 ```
+
+The session takes commands as well as questions. `/help` lists them, `/prompts` lists what the
+connected server published, and any unambiguous part of a prompt's name runs it — so
+`/report Prunella` reaches `species_distribution_report`, and the server's own question about which
+*Prunella* was meant arrives as a numbered list to pick from. Nothing in the agent names that
+prompt: the commands are built from `prompts/list` at connect time, so a server that publishes a new
+one gets a new command without this client changing.
+
+`MCP_LOG_LEVEL` controls what the server reports back over the protocol — the default `warning`
+relays failed tool calls only, and `info` adds one line per call (duration, cache outcome, upstream
+request count) on stderr.
 
 `MODEL` takes two forms: `provider:model` goes direct through that provider's SDK
 (`anthropic`, `openai`, `google`), and `provider/model` goes through the
@@ -96,7 +115,8 @@ Two optional settings tune the server's behaviour:
   rather than blocked.
 - `GBIF_CALL_BUDGET_MS` — the total time (milliseconds) one tool call gets against GBIF, covering
   every attempt, retry and backoff wait. Defaults to 60000 (60s); raise it if broad, unfiltered
-  queries are hitting `UPSTREAM_TIMEOUT` before a full retry sequence can clear a slow response.
+  queries are hitting `UPSTREAM_TIMEOUT` before a full retry sequence can clear a slow response. The
+  clock stops while an elicitation waits on a person, so a slow reader cannot time out a call.
 
 ## Layout
 
@@ -214,6 +234,51 @@ silently returns 300 with HTTP 200 (so the 50-record cap is enforced locally, ne
 a 400 comes back as **plain text**, not JSON (so error bodies are read as text first and parsed only
 opportunistically).
 
+### The ambiguity is put to the person, not to the model
+
+**Context.** A cross-kingdom homonym is the one place this server has no defensible answer, and
+returning an `AMBIGUOUS` error naming both candidates is only half a solution: something still has
+to ask a human. That job was given to the model, by an instruction telling it to relay the choice
+rather than pick one.
+
+**Decision.** When the connected client declares `elicitation`, the server asks directly —
+`elicitation/create` with the competing taxa as the only accepted answers — and resolves whatever
+comes back. The instruction and the error both remain, unchanged, as the path for every client that
+cannot be asked.
+
+**Trade-off.** A tool call can now block on a person, which is why the 60s upstream budget is
+*paused* for the duration: it exists to bound how long GBIF is held waiting, and a human reading two
+taxon names is not upstream work. Two rules keep the addition from becoming a new failure mode.
+Every outcome that is not a confirmed choice — declined, cancelled, timed out, a value that was
+never offered — falls back to the error a client without elicitation would have received, so the
+feature can only ever help. And an elicited taxon is **not cached**: the cache key is the ambiguous
+name, so remembering the answer would serve the mint to the next person asking about the bird.
+Bought: "never guess" stops being an instruction a model may or may not follow and becomes something
+the server cannot do — it has no path from an ambiguous name to a taxon that does not go through a
+person.
+
+### The bundled agent is a complete MCP client, not a tool caller
+
+**Context.** Tools are one of three things an MCP server publishes, and the agent was consuming only
+tools. The consequences were quiet and specific. The server's `instructions` — the composition rule,
+the prefer-summaries steer, the recording-effort caveat, all deliberately placed in the server so
+that *every* client would receive them — were captured by the SDK client and then never read, so the
+model was choosing between three tools on their descriptions alone. `species_distribution_report`
+was published and unreachable. And the per-call log records the server emits on every tool call were
+discarded for want of a `logging/setLevel` and a notification handler.
+
+**Decision.** Read all of it: `instructions` are prepended to the agent's own prompt (marked as
+guidance from the server, and explicitly below the client's own rules, because a connected server
+must not be able to reorder itself above the operator's prompt just by saying so); prompts become
+slash commands; log notifications are rendered on stderr.
+
+**Trade-off.** Some of this reaches past `@voltagent/core`, which exposes neither prompts nor the
+`initialize` result — one narrow, documented cast in `mcp-bridge.ts`, naming only the two members it
+uses so a future release breaks there rather than downstream. Bought: the reference client actually
+exercises the surface the server ships. A client that ignored half the protocol would leave the
+other half of the server untested in practice, and the decision to put guidance in the server rather
+than the agent quietly undone by the one client in this repository.
+
 ### `ai@6` and `@ai-sdk/*@3`, pinned against the `latest` tags
 
 **Context.** `@voltagent/core@2.10.0` peer-requires `ai@^6.0.0` and depends on the provider packages
@@ -318,7 +383,11 @@ Recording what was excluded carries as much weight as recording what was built. 
 choice, not an oversight.
 
 - **No web or graphical interface.** The client is whatever MCP client the user already has; a UI
-  would be a second product with its own surface to keep correct.
+  would be a second product with its own surface to keep correct. The bundled CLI is a terminal, and
+  says so: URL-mode elicitation is declined rather than half-supported.
+- **No resources, and no sampling.** The server publishes tools and one prompt. There is no static
+  document worth exposing as a resource that a tool call does not already answer better, and nothing
+  here needs to ask the client's model a question of its own.
 - **No authentication, accounts, or persistence.** The one piece of state is an in-process
   resolution cache with a one-hour TTL, discarded when the process exits. Conversation context lives
   in memory for one session — no transcript file, no resumable session, no history across runs.

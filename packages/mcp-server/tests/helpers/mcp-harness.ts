@@ -17,14 +17,30 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js'
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
+import {
+  type ElicitRequest,
+  ElicitRequestSchema,
+  type ElicitResult,
+} from '@modelcontextprotocol/sdk/types.js'
 import type { ResolvedTaxon } from '../../src/domain/resolution.js'
 import { TtlCache } from '../../src/gbif/cache.js'
 import { GbifClient } from '../../src/gbif/client.js'
 import { createServer } from '../../src/server.js'
 import { createFixtureFetch, type FixtureFetchOptions, type StubbedFetch } from './stub-gbif.js'
 
+/**
+ * How a test client answers `elicitation/create`.
+ *
+ * Supplying one is what makes the client *declare* the capability, which is
+ * the thing the server checks — so a harness without this behaves exactly like
+ * the many real clients that cannot elicit at all, and that is the default.
+ */
+export type ElicitationResponder = (params: ElicitRequest['params']) => ElicitResult
+
 export interface Harness {
   readonly client: Client
+  /** Every elicitation the server sent, in order. */
+  readonly elicitations: Array<ElicitRequest['params']>
   readonly server: McpServer
   /** The stubbed upstream, for asserting how many requests a tool actually made. */
   readonly upstream: StubbedFetch
@@ -38,6 +54,8 @@ export interface HarnessOptions extends FixtureFetchOptions {
   readonly maxRetries?: number
   /** Replaces the real backoff sleep, so retry tests do not spend real seconds. */
   readonly sleep?: (ms: number, signal: AbortSignal) => Promise<void>
+  /** Omit to build a client with no elicitation support, which is the default. */
+  readonly elicit?: ElicitationResponder
 }
 
 /**
@@ -62,13 +80,30 @@ export async function createHarness(options: HarnessOptions = {}): Promise<Harne
   })
 
   const server = createServer({ client: gbif, cache })
-  const client = new Client({ name: 'harness', version: '0.0.0' })
+  const elicitations: Array<ElicitRequest['params']> = []
+  const client = new Client(
+    { name: 'harness', version: '0.0.0' },
+    // Declared only when the test supplies a responder. The server reads this
+    // declaration to decide whether to ask at all, so getting it from the same
+    // switch that provides the answer keeps the two from disagreeing.
+    options.elicit === undefined ? {} : { capabilities: { elicitation: {} } },
+  )
+
+  if (options.elicit !== undefined) {
+    const respond = options.elicit
+    client.setRequestHandler(ElicitRequestSchema, (request) => {
+      elicitations.push(request.params)
+      return respond(request.params)
+    })
+  }
+
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair()
 
   await Promise.all([server.connect(serverTransport), client.connect(clientTransport)])
 
   return {
     client,
+    elicitations,
     server,
     upstream,
     cache,

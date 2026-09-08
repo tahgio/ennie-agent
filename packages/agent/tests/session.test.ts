@@ -451,3 +451,92 @@ describe('Session with an opening question and piped input', () => {
     expect(output.text()).toContain('Exiting.')
   })
 })
+
+/**
+ * Reading a line *during* a turn (FR-036a).
+ *
+ * This is what an elicitation does: a server asks a question from inside a
+ * tool call, inside a generation, and somebody has to read the answer off the
+ * same stdin the loop is reading. Opening a second reader would steal lines
+ * from the loop, so the session lends out its own iterator — and these check
+ * that lending it out neither loses the answer nor loses the lines that follow.
+ */
+describe('Session.askLine', () => {
+  /**
+   * An agent that asks the person something mid-generation, as a tool would.
+   *
+   * It asks on the **first** turn only, because that is the shape of a real
+   * elicitation: a server asks once, when a name turns out to be ambiguous,
+   * and the turns either side of it are ordinary.
+   */
+  function askingAgent(question: string) {
+    const heard: Array<string | null> = []
+    const holder: { session?: { askLine(q: string): Promise<string | null> } } = {}
+    let turn = 0
+    return {
+      heard,
+      holder,
+      agent: {
+        async generateText() {
+          turn += 1
+          if (turn === 1) heard.push((await holder.session?.askLine(question)) ?? null)
+          return { text: 'An answer.' }
+        },
+      },
+    }
+  }
+
+  async function run(lines: string[], question = 'Choose 1-2: ') {
+    const asking = askingAgent(question)
+    const output = collector()
+    const session = new Session({
+      agent: asking.agent as never,
+      input: pipedInput(lines),
+      output: output.stream,
+    })
+    asking.holder.session = session
+    await session.run()
+    return { heard: asking.heard, output: output.text(), session }
+  }
+
+  it('reads the reply from the same stream the loop reads', async () => {
+    const { heard, output } = await run(['Where do polar bears live?', '2', '/exit'])
+
+    expect(heard).toEqual(['2'])
+    expect(output).toContain('Choose 1-2: ')
+  })
+
+  it('leaves the lines after the reply to the loop', async () => {
+    // The answer to a mid-turn question must be consumed exactly once: taking
+    // one line too many silently swallows the person's next question.
+    const { heard, session } = await run([
+      'First question.',
+      'Plantae',
+      'Second question.',
+      '/exit',
+    ])
+
+    expect(heard).toEqual(['Plantae'])
+    expect(
+      session.turns.filter((turn) => turn.role === 'user').map((turn) => turn.content),
+    ).toEqual(['First question.', 'Second question.'])
+  })
+
+  it('returns null at end of input rather than waiting for a line', async () => {
+    // A piped session with nothing left must decline, not hang forever.
+    const { heard } = await run(['Only question.'])
+
+    expect(heard).toEqual([null])
+  })
+
+  it('returns null when there is no session running', async () => {
+    const output = collector()
+    const session = new Session({
+      agent: stubAgent() as never,
+      input: pipedInput([]),
+      output: output.stream,
+    })
+
+    expect(await session.askLine('anyone there? ')).toBeNull()
+  })
+})

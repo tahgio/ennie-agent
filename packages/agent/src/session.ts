@@ -15,6 +15,7 @@
 import { createInterface } from 'node:readline/promises'
 import type { Agent } from '@voltagent/core'
 import { emptyAnswerAdvice, emptyAnswerReason, type Generation } from './empty-answer.js'
+import { AMBIGUOUS_PROMPT, type PromptCatalog, type PromptSummary } from './mcp-bridge.js'
 
 /** One turn of the transcript. Kept in memory, for the lifetime of the process. */
 export interface Turn {
@@ -34,6 +35,14 @@ export interface SessionOptions {
   /** Aborts the in-flight model call when the process is shutting down. */
   readonly signal?: AbortSignal | undefined
   /**
+   * The server's prompts, when it publishes any (FR-022).
+   *
+   * A prompt is the one part of an MCP surface a *person* invokes rather than
+   * a model, so a client that discovers prompts and then offers no way to run
+   * one has read the list for nothing.
+   */
+  readonly prompts?: PromptCatalog | null | undefined
+  /**
    * The transcript ceiling, in entries — two per exchange (FR-023, FR-025).
    *
    * Defaults to 40, i.e. 20 exchanges: comfortably beyond the multi-turn
@@ -46,6 +55,11 @@ export interface SessionOptions {
 
 const PROMPT = '\n> '
 const EXIT_COMMAND = '/exit'
+const HELP_COMMAND = '/help'
+const PROMPTS_COMMAND = '/prompts'
+
+/** `country=CA` — a named argument for a server prompt. */
+const NAMED_ARGUMENT = /^([A-Za-z_][A-Za-z0-9_-]*)=(.*)$/
 
 /** 20 exchanges. See `SessionOptions.maxTurns`. */
 const DEFAULT_MAX_TURNS = 40
@@ -55,6 +69,14 @@ export class Session {
   readonly #turns: Turn[] = []
   readonly #output: NodeJS.WritableStream
   readonly #maxTurns: number
+  /**
+   * The one reader of stdin, held so `askLine()` can borrow it.
+   *
+   * Null until `run()` starts and again once it ends, which is what makes an
+   * out-of-band question — an elicitation arriving before the loop, or after
+   * it — answerable with "there is nobody to ask" rather than a hang.
+   */
+  #lines: AsyncIterator<string> | null = null
 
   constructor(private readonly options: SessionOptions) {
     this.#agent = options.agent
@@ -109,6 +131,11 @@ export class Session {
     // Creating it here subscribes before the first `await`, so the buffered
     // lines and the close both land in the iterator rather than being missed.
     const lines = rl[Symbol.asyncIterator]()
+    // Elicitation borrows this same iterator rather than opening its own
+    // reader. The loop below is not pulling from it while a turn is being
+    // generated — which is exactly when a server can ask a question — so the
+    // two never compete for a line.
+    this.#lines = lines
 
     try {
       if (this.options.firstQuestion !== undefined && this.options.firstQuestion.trim() !== '') {
@@ -131,13 +158,39 @@ export class Session {
           break
         }
 
+        if (question.startsWith('/')) {
+          await this.#command(question)
+          this.write(PROMPT)
+          continue
+        }
+
         await this.ask(question)
         this.write(PROMPT)
       }
     } finally {
+      this.#lines = null
       this.options.signal?.removeEventListener('abort', onAbort)
       rl.close()
     }
+  }
+
+  /**
+   * Ask the person one question mid-turn and read their reply.
+   *
+   * Used by the elicitation handler, which is invoked from inside a tool call,
+   * inside a generation. Returns null when there is nobody to ask — before the
+   * loop starts, after it ends, or at end of piped input — so a caller can
+   * decline on the person's behalf instead of waiting for a line that will
+   * never arrive.
+   */
+  async askLine(question: string): Promise<string | null> {
+    const lines = this.#lines
+    if (lines === null) return null
+    if (this.options.signal?.aborted === true) return null
+
+    this.write(question)
+    const next = await lines.next()
+    return next.done === true ? null : next.value
   }
 
   /** Put one question to the agent, keeping the exchange in the transcript. */
@@ -192,6 +245,123 @@ export class Session {
     }
   }
 
+  // -------------------------------------------------------------------------
+  // Slash commands, and the server's prompts (FR-022)
+  // -------------------------------------------------------------------------
+
+  /**
+   * Dispatch a line beginning with `/`.
+   *
+   * Anything not built in is looked up as a **server prompt**, which is the
+   * point of this whole section: `prompts/list` is discovered at connect time,
+   * so a server that publishes a new prompt gets a new command here without
+   * this client being changed or even redeployed. Nothing about
+   * `species_distribution_report` is named in this package.
+   *
+   * An unknown command is reported rather than sent to the model. A person who
+   * mistypes a command wants to be told so, not to have the typo answered as
+   * though it were a question about biodiversity.
+   */
+  async #command(line: string): Promise<void> {
+    const body = line.slice(1)
+    const space = body.search(/\s/)
+    const name = (space === -1 ? body : body.slice(0, space)).trim()
+    const argText = space === -1 ? '' : body.slice(space + 1).trim()
+
+    if (`/${name}` === HELP_COMMAND) {
+      this.#writeHelp()
+      return
+    }
+
+    if (`/${name}` === PROMPTS_COMMAND) {
+      this.#writePrompts()
+      return
+    }
+
+    const catalog = this.options.prompts
+    if (catalog === null || catalog === undefined) {
+      this.write(`\nUnknown command /${name}. The connected server publishes no prompts.\n`)
+      return
+    }
+
+    const found = catalog.find(name)
+    if (found === AMBIGUOUS_PROMPT) {
+      this.write(`\n/${name} matches more than one prompt. Run /prompts and use a longer name.\n`)
+      return
+    }
+    if (found === null) {
+      this.write(`\nUnknown command /${name}. Try /help or /prompts.\n`)
+      return
+    }
+
+    await this.#runPrompt(catalog, found, argText)
+  }
+
+  /**
+   * Fetch a prompt from the server and put its text to the model as this
+   * turn's question.
+   *
+   * The rendered text is printed before it is sent. A prompt is somebody
+   * else's instructions being spoken in the user's name — they are entitled to
+   * see what was said on their behalf, and without this the answer would refer
+   * to steps that appear nowhere in the transcript they can read.
+   */
+  async #runPrompt(catalog: PromptCatalog, prompt: PromptSummary, argText: string): Promise<void> {
+    const args = parsePromptArguments(prompt, argText)
+
+    const missing = prompt.arguments
+      .filter((argument) => argument.required === true && (args[argument.name] ?? '') === '')
+      .map((argument) => argument.name)
+    if (missing.length > 0) {
+      this.write(`\n/${prompt.name} needs ${missing.join(', ')}. ${usageLine(prompt)}\n`)
+      return
+    }
+
+    let text: string
+    try {
+      text = await catalog.render(prompt.name, args)
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      this.write(`\nThe server could not build /${prompt.name}: ${message}\n`)
+      return
+    }
+
+    if (text.trim() === '') {
+      this.write(`\n/${prompt.name} returned nothing to ask.\n`)
+      return
+    }
+
+    this.write(`\n[/${prompt.name}]\n${text}\n`)
+    await this.ask(text)
+  }
+
+  #writeHelp(): void {
+    this.write(
+      `\nAsk a question in plain language, or use a command:\n` +
+        `  ${HELP_COMMAND}     this message\n` +
+        `  ${PROMPTS_COMMAND}  the prompts published by the connected server\n` +
+        `  ${EXIT_COMMAND}     end the session\n`,
+    )
+  }
+
+  #writePrompts(): void {
+    const catalog = this.options.prompts
+    if (catalog === null || catalog === undefined || catalog.all.length === 0) {
+      this.write('\nThe connected server publishes no prompts.\n')
+      return
+    }
+
+    this.write('\nPrompts published by the connected server:\n')
+    for (const prompt of catalog.all) {
+      this.write(`  /${prompt.name}\n`)
+      if (prompt.description !== undefined) this.write(`      ${prompt.description}\n`)
+      this.write(`      ${usageLine(prompt)}\n`)
+    }
+    // Any unique fragment of the name is enough, which is the difference
+    // between a usable command and one nobody types twice.
+    this.write('\nAn unambiguous part of the name is enough, e.g. /report.\n')
+  }
+
   /**
    * Drop the oldest exchanges once the transcript passes its ceiling (FR-023).
    *
@@ -223,4 +393,51 @@ export class Session {
   private write(text: string): void {
     this.#output.write(text)
   }
+}
+
+/**
+ * Read `key=value` pairs out of a command line, and treat whatever is left as
+ * the first required argument.
+ *
+ * Prompt arguments cross the wire as strings, so there is no parsing to do
+ * beyond splitting them up. The positional fallback exists because the common
+ * case is a single argument containing spaces — `/report polar bear` — and
+ * requiring `species="polar bear"` for that would be a quoting rule invented
+ * to serve the parser rather than the person.
+ */
+export function parsePromptArguments(
+  prompt: PromptSummary,
+  argText: string,
+): Record<string, string> {
+  const args: Record<string, string> = {}
+  const positional: string[] = []
+
+  for (const token of argText.split(/\s+/).filter((part) => part !== '')) {
+    const named = NAMED_ARGUMENT.exec(token)
+    // A named argument is only named if the prompt actually declares it;
+    // otherwise `Ursus x=1` would silently drop a word out of a species name.
+    if (named !== null && prompt.arguments.some((argument) => argument.name === named[1])) {
+      args[named[1] as string] = named[2] as string
+    } else {
+      positional.push(token)
+    }
+  }
+
+  if (positional.length > 0) {
+    const target =
+      prompt.arguments.find(
+        (argument) => argument.required === true && args[argument.name] === undefined,
+      ) ?? prompt.arguments.find((argument) => args[argument.name] === undefined)
+    if (target !== undefined) args[target.name] = positional.join(' ')
+  }
+
+  return args
+}
+
+/** `usage: /name <required> [optional=…]` */
+export function usageLine(prompt: PromptSummary): string {
+  const parts = prompt.arguments.map((argument) =>
+    argument.required === true ? `<${argument.name}>` : `[${argument.name}=…]`,
+  )
+  return `usage: /${prompt.name}${parts.length === 0 ? '' : ` ${parts.join(' ')}`}`
 }

@@ -15,6 +15,7 @@ import { createHooks, MCPConfiguration } from '@voltagent/core'
 import { createAgent, serverEntrypoint } from '../src/agent.js'
 import { emptyAnswerReason, type Generation } from '../src/empty-answer.js'
 import { forwardedEnv } from '../src/forwarded-env.js'
+import { connectBridge } from '../src/mcp-bridge.js'
 import { createModel, describeModel, parseModel, requireCredential } from '../src/model.js'
 import type { Scenario } from './scenarios/index.js'
 import type { RunRecord, ToolCallRecord } from './scorers/run-record.js'
@@ -149,11 +150,25 @@ export async function runScenario(scenario: Scenario): Promise<RunRecord> {
   }
 
   try {
+    // The same bridge the CLI uses, for the same reason: an eval that scored
+    // an agent without the server's `instructions` would be measuring a
+    // shorter prompt than the one that ships, and reporting the number as if
+    // it were the shipped agent's (Constitution VII).
+    //
+    // What is deliberately *not* set up here is an elicitation handler. There
+    // is no person in an eval run, and VoltAgent answers `cancel` when no
+    // handler is registered — so these scenarios exercise the fallback path,
+    // where an ambiguity comes back as a tool error and the model has to put
+    // the question to the user in prose. That is the right thing to measure:
+    // it is what every client that cannot elicit will do, and the scripted
+    // replies in the scenarios are the simulated person answering it.
+    const bridge = await connectBridge(mcp, 'gbif')
     const tools = await mcp.getTools()
 
     const agent = createAgent({
       model: createModel(route),
       tools,
+      serverInstructions: bridge.instructions,
       hooks: createHooks({
         // The recorded sequence is the entire basis of the structural score.
         onToolStart: ({ tool, args, options }) => {
