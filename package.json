@@ -24,7 +24,7 @@
     "capture-fixtures": "node scripts/capture-fixtures.ts"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.11",
+    "@biomejs/biome": "^2.5.15",
     "@types/node": "^24.10.1",
     "@vitest/coverage-v8": "^4.1.11",
     "typescript": "^5.9.3",
